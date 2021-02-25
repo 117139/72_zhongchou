@@ -85,6 +85,20 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "my_zc/my_zc",
+			"style": {
+				"navigationBarTitleText": "我的众筹",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "my_cyzc/my_cyzc",
+			"style": {
+				"navigationBarTitleText": "我参与的众筹",
+				"enablePullDownRefresh": true
+			}
+
 		}]
 	}],
 	"preloadRule": {

@@ -18,7 +18,9 @@
       "root": "pagesA",
       "pages": [
         "my_tx/my_tx",
-        "about/about"
+        "about/about",
+        "my_zc/my_zc",
+        "my_cyzc/my_cyzc"
       ]
     }
   ],
