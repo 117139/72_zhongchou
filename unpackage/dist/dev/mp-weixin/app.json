@@ -1,0 +1,82 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/tabbar/tabbar-3/tabbar-3",
+    "pages/tabbar/tabbar-4/tabbar-4",
+    "pages/tabbar/tabbar-5/tabbar-5",
+    "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release",
+    "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video",
+    "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa",
+    "pages/goodlist/goodlist",
+    "pages/jinzhan/jinzhan",
+    "pages/my/my",
+    "pages/login/login",
+    "pages/login_tel/login_tel"
+  ],
+  "subPackages": [
+    {
+      "root": "pagesA",
+      "pages": [
+        "my_tx/my_tx",
+        "about/about"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "爱心筹",
+    "navigationBarBackgroundColor": "#fff",
+    "backgroundColor": "#fff"
+  },
+  "tabBar": {
+    "borderStyle": "black",
+    "backgroundColor": "#fff",
+    "color": "#666666",
+    "selectedColor": "#F54248",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/img/tabbar/home.png",
+        "selectedIconPath": "static/img/tabbar/homeactive.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/goodlist/goodlist",
+        "iconPath": "static/img/tabbar/guanzhu.png",
+        "selectedIconPath": "static/img/tabbar/guanzhuactive.png",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/jinzhan/jinzhan",
+        "iconPath": "static/images/center_03.png",
+        "selectedIconPath": "static/images/center_03.png",
+        "text": "发起"
+      },
+      {
+        "pagePath": "pages/jinzhan/jinzhan",
+        "iconPath": "static/img/tabbar/news.png",
+        "selectedIconPath": "static/img/tabbar/newsactive.png",
+        "text": "进展"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "static/img/tabbar/me.png",
+        "selectedIconPath": "static/img/tabbar/meactive.png",
+        "text": "我们"
+      }
+    ]
+  },
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "all",
+      "packages": [
+        "pagesA"
+      ]
+    }
+  },
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom",
+    "bao-jing": "/components/baojing/baojing",
+    "tx_share": "/components/tx_share/tx_share"
+  }
+}

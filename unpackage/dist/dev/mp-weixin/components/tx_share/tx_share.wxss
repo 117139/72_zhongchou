@@ -1,0 +1,40 @@
+
+.tx_share.data-v-37aa7a84{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 900;
+	background: #FF9541;
+}
+.tx_share_bg.data-v-37aa7a84{
+	width: 100%;
+}
+.share_btn.data-v-37aa7a84{
+	width: 450rpx;
+	height: 67rpx;
+	/* background: #CF3127; */
+	border-radius: 34px;
+	position: absolute;
+	top: 923rpx;
+	left: 152rpx;
+}
+.share_btn button.data-v-37aa7a84{
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	z-index: 990;
+}
+.share_off.data-v-37aa7a84{
+	width: 450rpx;
+	height: 67rpx;
+	/* background: #CF3127; */
+	border-radius: 34px;
+	position: absolute;
+	top: 1077rpx;
+	left: 152rpx;
+}
+

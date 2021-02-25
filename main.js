@@ -8,6 +8,8 @@ import cuCustom from './colorui/components/cu-custom.vue'
 Vue.component('cu-custom',cuCustom)
 import baoJing from './components/baojing/baojing.vue'
 Vue.component('bao-jing',baoJing)
+import tx_share from './components/tx_share/tx_share.vue'
+Vue.component('tx_share',tx_share)
 
 Vue.config.productionTip = false
 

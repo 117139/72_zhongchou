@@ -1,0 +1,31 @@
+{
+  "description": "项目配置文件。",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "",
+  "appid": "wxa86c7396bd0f2eec",
+  "projectname": "72_zhongchou",
+  "condition": {
+    "search": {
+      "current": -1,
+      "list": []
+    },
+    "conversation": {
+      "current": -1,
+      "list": []
+    },
+    "game": {
+      "current": -1,
+      "list": []
+    },
+    "miniprogram": {
+      "current": -1,
+      "list": []
+    }
+  }
+}

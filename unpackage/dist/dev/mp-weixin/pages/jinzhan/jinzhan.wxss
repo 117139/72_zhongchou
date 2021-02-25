@@ -1,0 +1,33 @@
+
+.minh100.data-v-34b81048{
+	height: 1334rpx;
+	
+	/* background: #FF9261; */
+	overflow: hidden;
+}
+.jiazhan.data-v-34b81048{
+	width: 100%;
+	height: 1334rpx;
+}
+.tx_btn.data-v-34b81048{
+	width: 622rpx;
+	height: 85rpx;
+	border-radius: 45rpx;
+	background: -webkit-linear-gradient(right, #FC5534, #FFBE33);
+	background: linear-gradient(-90deg, #FC5534, #FFBE33);
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	font-size: 30rpx;
+	color: #fff;
+	position: absolute;
+	top: 1122rpx;
+	left: 63rpx;
+}
+

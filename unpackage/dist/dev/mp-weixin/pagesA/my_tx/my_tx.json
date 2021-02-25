@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "提现",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "tx_share": "/components/tx_share/tx_share"
+  }
+}

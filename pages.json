@@ -2,14 +2,12 @@
 	"pages": [
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/tabbar/tabbar-1/tabbar-1",
+			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "爱心筹",
+				"enablePullDownRefresh": true
 			}
-		},
-		{
-			"path": "pages/tabbar/tabbar-2/tabbar-2",
-			"style": {}
+
 		},
 		{
 			"path": "pages/tabbar/tabbar-3/tabbar-3",
@@ -34,13 +32,73 @@
 		{
 			"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa",
 			"style": {}
+		}, {
+			"path": "pages/goodlist/goodlist",
+			"style": {
+				"navigationBarTitleText": "爱心筹",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/jinzhan/jinzhan",
+			"style": {
+				"navigationBarTitleText": "爱心筹",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": "爱心筹",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "爱心筹",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/login_tel/login_tel",
+			"style": {
+				"navigationBarTitleText": "爱心筹",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	],
+	"subPackages": [{
+		"root": "pagesA",
+		"pages": [{
+			"path": "my_tx/my_tx",
+			"style": {
+				"navigationBarTitleText": "提现",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "about/about",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}]
+	}],
+	"preloadRule": {
+		"pages/index/index": {
+			"network": "all",
+			"packages": ["pagesA"]
+		}
+
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarTitleText": "爱心筹",
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#fff"
 	},
 	"tabBar": {
 		"borderStyle": "black",
@@ -48,37 +106,48 @@
 		"color": "#666666",
 		"selectedColor": "#F54248",
 		"list": [{
-				"pagePath": "pages/tabbar/tabbar-1/tabbar-1",
-				"iconPath": "static/img/tabbar/home.png",
-				"selectedIconPath": "static/img/tabbar/homeactive.png",
-				"text": "首页"
-			},
-			{
-				"pagePath": "pages/tabbar/tabbar-2/tabbar-2",
-				"iconPath": "static/img/tabbar/guanzhu.png",
-				"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
-				"text": "关注"
-			},
-			
-			{
-				"pagePath": "pages/tabbar/tabbar-4/tabbar-4",
-				"iconPath": "static/img/tabbar/news.png",
-				"selectedIconPath": "static/img/tabbar/newsactive.png",
-				"text": "消息"
-			},
-			{
-				"pagePath": "pages/tabbar/tabbar-5/tabbar-5",
-				"iconPath": "static/img/tabbar/me.png",
-				"selectedIconPath": "static/img/tabbar/meactive.png",
-				"text": "我"
-			}
-		],
+					"pagePath": "pages/index/index",
+					"iconPath": "static/img/tabbar/home.png",
+					"selectedIconPath": "static/img/tabbar/homeactive.png",
+					"text": "首页"
+				},
+				{
+					"pagePath": "pages/goodlist/goodlist",
+					"iconPath": "static/img/tabbar/guanzhu.png",
+					"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
+					"text": "分类"
+				},
+
+				// #ifdef MP-WEIXIN
+				{
+					"pagePath": "pages/jinzhan/jinzhan",
+					"iconPath": "static/images/center_03.png",
+					"selectedIconPath": "static/images/center_03.png",
+					"text": "发起"
+				},
+				// #endif
+				{
+					"pagePath": "pages/jinzhan/jinzhan",
+					"iconPath": "static/img/tabbar/news.png",
+					"selectedIconPath": "static/img/tabbar/newsactive.png",
+					"text": "进展"
+				},
+				{
+					"pagePath": "pages/my/my",
+					"iconPath": "static/img/tabbar/me.png",
+					"selectedIconPath": "static/img/tabbar/meactive.png",
+					"text": "我们"
+				}
+			]
+			// #ifndef MP-WEIXIN
+			,
 		"midButton": {
 			"width": "80px",
 			"height": "70px",
-			"text": "发布",
+			"text": "发起",
 			"iconPath": "static/images/center_03.png",
 			"iconWidth": "50px"
 		}
+		// #endif
 	}
 }
