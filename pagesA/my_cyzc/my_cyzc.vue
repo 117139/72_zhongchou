@@ -18,7 +18,7 @@
 					 			<view class="pthz_num"  :style="'width:' + (item.num/item.znum) * 100 + '%'"></view>
 					 		</view>
 					 		<view class="pthz_pri">还需:<text>250000</text>元</view>
-					 		<view class="hz_btn hz_btn1" @tap="jump" :data-url="'/pages/index/index'">立即查看</view>
+					 		<view class="hz_btn hz_btn1" @tap="jump" :data-url="'/pagesA/details/details'">立即查看</view>
 					 	</view>
 					 </view>
 					 <view v-if="datas.length==0" class="zanwu">暂无数据</view>

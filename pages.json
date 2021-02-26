@@ -10,29 +10,6 @@
 
 		},
 		{
-			"path": "pages/tabbar/tabbar-3/tabbar-3",
-			"style": {}
-		},
-		{
-			"path": "pages/tabbar/tabbar-4/tabbar-4",
-			"style": {}
-		},
-		{
-			"path": "pages/tabbar/tabbar-5/tabbar-5",
-			"style": {}
-		},
-		{
-			"path": "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release",
-			"style": {}
-		},
-		{
-			"path": "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video",
-			"style": {}
-		},
-		{
-			"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa",
-			"style": {}
-		}, {
 			"path": "pages/goodlist/goodlist",
 			"style": {
 				"navigationBarTitleText": "爱心筹",
@@ -99,7 +76,62 @@
 				"enablePullDownRefresh": true
 			}
 
-		}]
+		}, {
+			"path": "my_fans/my_fans",
+			"style": {
+				"navigationBarTitleText": "我的粉丝",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "bangzhu/bangzhu",
+			"style": {
+				"navigationBarTitleText": "帮助他",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "renzheng/renzheng",
+			"style": {
+				"navigationBarTitleText": "信息认证",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "my_msg/my_msg",
+			"style": {
+				"navigationBarTitleText": "个人资料",
+				"enablePullDownRefresh": false
+			}
+
+		}    ,{
+                    "path" : "pc_login/pc_login",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "my_settel/my_settel",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "修改手机号",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "details/details",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "爱心筹",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
 	}],
 	"preloadRule": {
 		"pages/index/index": {
@@ -121,14 +153,14 @@
 		"selectedColor": "#F54248",
 		"list": [{
 					"pagePath": "pages/index/index",
-					"iconPath": "static/img/tabbar/home.png",
-					"selectedIconPath": "static/img/tabbar/homeactive.png",
+					"iconPath": "static/images/tabbar/tab1.png",
+					"selectedIconPath": "static/images/tabbar/tab12.png",
 					"text": "首页"
 				},
 				{
 					"pagePath": "pages/goodlist/goodlist",
-					"iconPath": "static/img/tabbar/guanzhu.png",
-					"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
+					"iconPath": "static/images/tabbar/tab2.png",
+					"selectedIconPath": "static/images/tabbar/tab22.png",
 					"text": "分类"
 				},
 
@@ -142,14 +174,14 @@
 				// #endif
 				{
 					"pagePath": "pages/jinzhan/jinzhan",
-					"iconPath": "static/img/tabbar/news.png",
-					"selectedIconPath": "static/img/tabbar/newsactive.png",
+					"iconPath": "static/images/tabbar/tab3.png",
+					"selectedIconPath": "static/images/tabbar/tab32.png",
 					"text": "进展"
 				},
 				{
 					"pagePath": "pages/my/my",
-					"iconPath": "static/img/tabbar/me.png",
-					"selectedIconPath": "static/img/tabbar/meactive.png",
+					"iconPath": "static/images/tabbar/tab4.png",
+					"selectedIconPath": "static/images/tabbar/tab42.png",
 					"text": "我们"
 				}
 			]

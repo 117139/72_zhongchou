@@ -47,7 +47,7 @@
 								<text class="flex_1 text-cut hz_li_name">李三林发起</text>
 							</view>
 							<view class="hz_xq">还需:<text>14503</text>元</view>
-							<view class="hz_btn" @tap="jump" :data-url="'/pages/index/index'">立即帮助</view>
+							<view class="hz_btn" @tap="jump" :data-url="'/pagesA/details/details'">立即帮助</view>
 						</view>
 					</view>
 				</scroll-view>
@@ -62,7 +62,7 @@
 								<view class="pthz_num"  :style="'width:' + (item.num/item.znum) * 100 + '%'"></view>
 							</view>
 							<view class="pthz_pri">还需:<text>250000</text>元</view>
-							<view class="hz_btn hz_btn1" @tap="jump" :data-url="'/pages/index/index'">立即帮助</view>
+							<view class="hz_btn hz_btn1" @tap="jump" :data-url="'/pagesA/details/details'">立即帮助</view>
 						</view>
 					</view>
 					<view v-if="datas.length==0" class="zanwu">暂无数据</view>
@@ -89,7 +89,7 @@
 				htmlReset:-1,
 				data_last:false,
 				indicatorDots: false,
-				autoplay: false,
+				autoplay: true,
 				interval: 3000,
 				duration: 500,
 				current_swp:0,

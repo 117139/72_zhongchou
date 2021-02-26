@@ -80,9 +80,16 @@ function request(url, params, method, onSuccess, onFailed) {
 				})
 				store.commit('logout')
 				setTimeout(function (){
+					// #ifdef MP-WEIXIN
 					uni.navigateTo({
 						url: './pages/login/login?haslogin=false'
 					})
+					// #endif
+					// #ifndef MP-WEIXIN
+					uni.navigateTo({
+						url: '/pagesA/pc_login/pc_login'
+					})
+					// #endif
 				},1000)
 				return
 
@@ -144,9 +151,16 @@ const jump = function(e) {
 	
 	if(datas.login==true){
 		if(!datas.haslogin){
+			// #ifdef MP-WEIXIN
 			uni.navigateTo({
-				url: '../login/login',
+				url: '/pages/login/login',
 			});
+			// #endif
+			// #ifndef MP-WEIXIN
+			uni.navigateTo({
+				url: '/pagesA/pc_login/pc_login'
+			})
+			// #endif
 			return
 		}
 	}
@@ -506,14 +520,28 @@ const http =({url ='',param ={},method='',header={'content-type': 'application/x
 					console.log(res)
 						if(res.data.code==-1){
 							store.commit('logout')
+							// #ifdef MP-WEIXIN
 							uni.navigateTo({
 								url:'/pages/login/login'
 							})
+							// #endif
+							// #ifndef MP-WEIXIN
+							uni.navigateTo({
+								url: '/pagesA/pc_login/pc_login'
+							})
+							// #endif
 							return
 						}else if(res.data.code==0&&res.msg=='请先登录账号~'){
+							// #ifdef MP-WEIXIN
 							uni.navigateTo({
 								url:'/pages/login/login'
 							})
+							// #endif
+							// #ifndef MP-WEIXIN
+							uni.navigateTo({
+								url: '/pagesA/pc_login/pc_login'
+							})
+							// #endif
 							return
 						}else if(res.data.code==0){
 							if(res.data.msg){

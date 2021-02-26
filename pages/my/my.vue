@@ -7,9 +7,9 @@
 		<block v-if="htmlReset==0">
 				<view class="my_top">
 					<image class="my_top_bg" :src="getimg('/static/images/my_banner_02.png')" mode=""></image>
-					<view v-if="hasLogin" class="my_top_box">
+					<view v-if="!hasLogin" class="my_top_box">
 						<!-- 签到 -->
-						<view class="qiandao_box" @tap="jump" :data-url="'/pagesA/my_qiandao/my_qiandao?type='+0">
+						<view class="qiandao_box" @tap="jump" :data-url="'/pagesA/renzheng/renzheng?type='+0">
 							<view class="qd_nbox">
 								<text class="iconfont icon-Authentication"></text>
 								<text>去认证</text>
@@ -19,8 +19,9 @@
 						<!-- 签到 -->
 						<view class="top_user">
 							<view class="dis_flex">
-								<view class="user_tximg">
+								<view class="user_tximg" @tap="jump" data-url="/pagesA/my_msg/my_msg">
 									<image class="user_tximg" :src="getimg(loginDatas.avatarurl)" mode="aspectFill"></image>
+									<view class="user_edit"><text class="iconfont icon-xiugai"></text></view>
 								</view>
 								<view class="user_msg">
 									<view class="dis_flex aic">
@@ -33,7 +34,12 @@
 						</view>
 					</view>
 					<view v-else class="my_top_box dis_flex_c aic ju_c">
+						<!-- #ifdef MP-WEIXIN -->
 						<view class="user_name" data-url="/pages/login/login" @tap='jump'>登录/注册</view>
+						<!-- #endif -->
+						<!-- #ifndef MP-WEIXIN -->
+						<view class="user_name" data-url="/pagesA/pc_login/pc_login" @tap='jump'>登录/注册</view>
+						<!-- #endif -->
 					</view>
 				</view>
 				<!-- 服务 -->
@@ -51,12 +57,12 @@
 							<view class="flex_1">我参与的众筹</view>
 							<text class="iconfont icon-next-m"></text>
 						</view>
-						<view class="fuwu_li" @tap="jump" data-url="/pagesA/about/about?type=about" :data-login='false' :data-haslogin='hasLogin'>
+						<view class="fuwu_li" @tap="jump" data-url="/pagesA/my_fans/my_fans?type=about" :data-login='false' :data-haslogin='hasLogin'>
 							<view class="my_icon"><text class="iconfont icon-fensi"></text></view>
 							<view class="flex_1">我的粉丝</view>
 							<text class="iconfont icon-next-m"></text>
 						</view>
-						<view class="fuwu_li" @tap="jump" data-url="/pagesA/about/about?type=about" :data-login='false' :data-haslogin='hasLogin'>
+						<view class="fuwu_li" @tap="jump" data-url="/pagesA/my_settel/my_settel?type=about" :data-login='false' :data-haslogin='hasLogin'>
 							<view class="my_icon"><text class="iconfont icon-shouji"></text></view>
 							<view class="flex_1">我的手机</view>
 							<text class="iconfont icon-next-m"></text>
@@ -225,6 +231,24 @@
 		width: 100%;
 		height: 100%;
 		border-radius: 50%;
+	}
+	.user_edit{
+		position: absolute;
+		bottom: 0;
+		right: 0;
+	/* 	width: 35upx;
+		height: 35upx; */
+		padding: 9upx;
+		background: #FFFFFF;
+		border: 1px solid #CCAE7E;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.user_edit text{
+		font-size: 16upx;
+		color: #FD7934;
 	}
 	.user_msg {
 		height: 118upx;
