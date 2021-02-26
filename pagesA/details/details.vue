@@ -179,4 +179,9 @@
 		padding-top: 40upx;
 		padding-bottom: 25upx;
 	}
+	.fq_user_tx{
+		width: 43upx;
+		height: 43upx;
+		border-radius: 50%;
+	}
 </style>
