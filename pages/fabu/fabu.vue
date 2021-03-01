@@ -230,12 +230,18 @@
 				setTimeout(function(){
 					// that.show_tk=true
 					that.datas={
-						total_raise_funds:'',
-						initiator_name:'',
-						initiator_phone:'',
-						
-						category_id:'1',
-						content:'',
+						title:'',//title
+						genre:'',//众筹类型（自己填写）
+						total_raise_funds:'',//众筹金额
+						initiator_name:'',//发起人
+						initiator_phone:'',//发起人联系方式
+						patient_name:'', //患者姓名
+						patient_age:'', //患者年龄
+						patient_address:'', //患者家庭住址
+						patient_illness:'', //患者疾病名称
+						label:'', //标签
+						category_id:'1', //所属类别
+						content:'', //详情
 					}
 				},1000)
 			},
