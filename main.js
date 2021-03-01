@@ -10,6 +10,8 @@ import baoJing from './components/baojing/baojing.vue'
 Vue.component('bao-jing',baoJing)
 import tx_share from './components/tx_share/tx_share.vue'
 Vue.component('tx_share',tx_share)
+import QSPopup from '@/components/QS-popup/QS-popup.vue'
+Vue.component('QSPopup', QSPopup)
 
 Vue.config.productionTip = false
 

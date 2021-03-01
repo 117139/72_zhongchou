@@ -87,6 +87,20 @@
 			this.onRetry()
 		},
 		methods: {
+			jump(e) {
+				var that = this
+			
+				if (that.btnkg == 1) {
+					return
+				} else {
+					that.btnkg = 1
+					setTimeout(function() {
+						that.btnkg = 0
+					}, 1000)
+				}
+			
+				service.jump(e)
+			},
 			getimg(img){
 				return service.getimg(img)
 			},

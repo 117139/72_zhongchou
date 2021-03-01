@@ -44,6 +44,13 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "pages/fabu/fabu",
+			"style": {
+				"navigationBarTitleText": "发起众筹",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	],
 	"subPackages": [{
@@ -104,34 +111,35 @@
 				"enablePullDownRefresh": false
 			}
 
-		}    ,{
-                    "path" : "pc_login/pc_login",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "my_settel/my_settel",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "修改手机号",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-                ,{
-                    "path" : "details/details",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "爱心筹",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
+		}, {
+			"path": "pc_login/pc_login",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "my_settel/my_settel",
+			"style": {
+				"navigationBarTitleText": "修改手机号",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "details/details",
+			"style": {
+				"navigationBarTitleText": "爱心筹",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "jubao/jubao",
+			"style": {
+				"navigationBarTitleText": "投诉举报",
+				"enablePullDownRefresh": false
+			}
+
+		}]
 	}],
 	"preloadRule": {
 		"pages/index/index": {
@@ -164,9 +172,9 @@
 					"text": "分类"
 				},
 
-				// #ifdef MP-WEIXIN
+				// #ifndef APP-PLUS
 				{
-					"pagePath": "pages/jinzhan/jinzhan",
+					"pagePath": "pages/fabu/fabu",
 					"iconPath": "static/images/center_03.png",
 					"selectedIconPath": "static/images/center_03.png",
 					"text": "发起"

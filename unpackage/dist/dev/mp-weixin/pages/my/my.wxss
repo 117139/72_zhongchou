@@ -79,6 +79,30 @@ image.user_tximg.data-v-0be17cc6{
 	height: 100%;
 	border-radius: 50%;
 }
+.user_edit.data-v-0be17cc6{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+/* 	width: 35upx;
+	height: 35upx; */
+	padding: 9rpx;
+	background: #FFFFFF;
+	border: 1px solid #CCAE7E;
+	border-radius: 50%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+}
+.user_edit text.data-v-0be17cc6{
+	font-size: 16rpx;
+	color: #FD7934;
+}
 .user_msg.data-v-0be17cc6 {
 	height: 118rpx;
 	display: -webkit-box;

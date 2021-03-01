@@ -1,12 +1,6 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/tabbar/tabbar-3/tabbar-3",
-    "pages/tabbar/tabbar-4/tabbar-4",
-    "pages/tabbar/tabbar-5/tabbar-5",
-    "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release",
-    "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video",
-    "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa",
     "pages/goodlist/goodlist",
     "pages/jinzhan/jinzhan",
     "pages/my/my",
@@ -20,7 +14,15 @@
         "my_tx/my_tx",
         "about/about",
         "my_zc/my_zc",
-        "my_cyzc/my_cyzc"
+        "my_cyzc/my_cyzc",
+        "my_fans/my_fans",
+        "bangzhu/bangzhu",
+        "renzheng/renzheng",
+        "my_msg/my_msg",
+        "pc_login/pc_login",
+        "my_settel/my_settel",
+        "details/details",
+        "jubao/jubao"
       ]
     }
   ],
@@ -38,14 +40,14 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "static/img/tabbar/home.png",
-        "selectedIconPath": "static/img/tabbar/homeactive.png",
+        "iconPath": "static/images/tabbar/tab1.png",
+        "selectedIconPath": "static/images/tabbar/tab12.png",
         "text": "首页"
       },
       {
         "pagePath": "pages/goodlist/goodlist",
-        "iconPath": "static/img/tabbar/guanzhu.png",
-        "selectedIconPath": "static/img/tabbar/guanzhuactive.png",
+        "iconPath": "static/images/tabbar/tab2.png",
+        "selectedIconPath": "static/images/tabbar/tab22.png",
         "text": "分类"
       },
       {
@@ -56,14 +58,14 @@
       },
       {
         "pagePath": "pages/jinzhan/jinzhan",
-        "iconPath": "static/img/tabbar/news.png",
-        "selectedIconPath": "static/img/tabbar/newsactive.png",
+        "iconPath": "static/images/tabbar/tab3.png",
+        "selectedIconPath": "static/images/tabbar/tab32.png",
         "text": "进展"
       },
       {
         "pagePath": "pages/my/my",
-        "iconPath": "static/img/tabbar/me.png",
-        "selectedIconPath": "static/img/tabbar/meactive.png",
+        "iconPath": "static/images/tabbar/tab4.png",
+        "selectedIconPath": "static/images/tabbar/tab42.png",
         "text": "我们"
       }
     ]
@@ -79,6 +81,7 @@
   "usingComponents": {
     "cu-custom": "/colorui/components/cu-custom",
     "bao-jing": "/components/baojing/baojing",
-    "tx_share": "/components/tx_share/tx_share"
+    "tx_share": "/components/tx_share/tx_share",
+    "q-s-popup": "/components/QS-popup/QS-popup"
   }
 }

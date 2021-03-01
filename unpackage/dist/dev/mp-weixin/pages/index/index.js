@@ -281,7 +281,7 @@ var that;var _default =
       htmlReset: -1,
       data_last: false,
       indicatorDots: false,
-      autoplay: false,
+      autoplay: true,
       interval: 3000,
       duration: 500,
       current_swp: 0,

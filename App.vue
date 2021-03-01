@@ -46,7 +46,7 @@ export default {
 				// #endif
 			}
 		})
-		
+		this.centerBtn()
 	},
 	onShow: function() {
 		console.log('App Show');
@@ -64,6 +64,10 @@ export default {
 		centerBtn() {
 			// #ifndef MP-WEIXIN
 			uni.onTabBarMidButtonTap(function() {
+				uni.navigateTo({
+					url: "/pages/fabu/fabu"
+				})
+				return
 				if (isTapCenter) {
 					return;
 				}
@@ -74,7 +78,7 @@ export default {
 					})
 				} else {
 					uni.navigateTo({
-						url: "/pages/add/add"
+						url: "/pages/fabu/fabu"
 					})
 		
 				}

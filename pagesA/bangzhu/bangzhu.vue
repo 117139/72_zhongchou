@@ -138,21 +138,22 @@
 							icon:'none',
 							title:'请输入充值金额'
 						})
-						
+						return
 					}else if(that.other_mon>=1){
 						uni.showToast({
 							icon:'none',
 							title:'帮助'+that.other_mon+'元'
 						})
 						
-						setTimeout(function(){
-							that.show_tk=true
-						},1000)
+						// setTimeout(function(){
+						// 	that.show_tk=true
+						// },1000)
 					}else{
 						uni.showToast({
 							icon:'none',
 							title:'金额不能小于1元'
 						})
+						return
 					}
 					
 				}else{
@@ -161,9 +162,19 @@
 						title:that.cz_list[that.cz_cur].name+'元'
 					})
 					setTimeout(function(){
-						that.show_tk=true
+						// that.show_tk=true
+						uni.navigateBack({
+							delta:1
+						})
 					},1000)
 				}
+				
+				setTimeout(function(){
+					// that.show_tk=true
+					uni.navigateBack({
+						delta:1
+					})
+				},1000)
 			},
 			getbanner() {
 			
