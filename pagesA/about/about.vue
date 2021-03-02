@@ -1,8 +1,8 @@
 <template>
 	<view class="content_wrap">
 	
-		<!-- <view v-if="datas" class="xieyi_main" v-html="get_fwb(datas)"></view> -->
-		<view class="xieyi_main">
+		<view v-if="datas" class="xieyi_main" v-html="get_fwb(datas)"></view>
+		<!-- <view class="xieyi_main">
 			<view v-if="type=='ysxy'" style="font-size: 28upx;color: #444;">
 			<view style="font-size: 46upx;color: #444;text-align: center;margin-bottom: 20px;font-weight: bold;">“爱心筹”隐私协议</view>
 				欢迎您使用“爱心筹”软件及相关服务
@@ -45,7 +45,7 @@
 				版协议条款。在公司修改《协议》条款后，如果用户不接受修改后的款，请立即停止使用公司提供的软件和服务，用户继续使用公司提供的软件和服务将被视为已接受了修改后的协议。 除本《协议》有明确规定外，本《协议》并未对利用本“软件”使用的公司或合作单位的其他服务规定
 				相关的服务条款。对于这些服务，一般有单独的服务条款加以规范，用户须在使用有关服务时另行了解与确认。单独的服务条款与本协议有冲突的地方，以单独的服务条款为准。如用户使用该服务，视为对相关服务条款的接受
 			</view>
-		</view>
+		</view> -->
 		<!-- <view>{{datas}}</view> -->
 	</view>
 </template>
@@ -75,7 +75,7 @@
 				uni.setNavigationBarTitle({
 					title:'服务声明'
 				})
-				// this.getdata('ysxy')
+				this.getdata('fwsm')
 			}
 			if(Option.type=='ysxy'){
 				that.type=Option.type
@@ -83,7 +83,7 @@
 				uni.setNavigationBarTitle({
 					title:'隐私协议'
 				})
-				// this.getdata('ysxy')
+				this.getdata('ysxy')
 			}
 			if(Option.type=='yhxy'){
 				that.type=Option.type
@@ -91,7 +91,7 @@
 				uni.setNavigationBarTitle({
 					title:'用户协议'
 				})
-				// this.getdata('ysxy')
+				this.getdata('yhxy')
 			}
 			if(Option.type=='about'){
 				that.type=Option.type
@@ -99,8 +99,9 @@
 				uni.setNavigationBarTitle({
 					title:'关于我们'
 				})
-				that.datas=that.about_content
-				console.log(that.about_content)
+				this.getdata('about')
+				// that.datas=that.about_content
+				// console.log(that.about_content)
 			}
 		
 			// this.getdata()

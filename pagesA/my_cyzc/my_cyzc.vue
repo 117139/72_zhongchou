@@ -11,14 +11,14 @@
 				 @refresherabort="onAbort" @scrolltolower="getdata"> -->
 				 <view class="fl_list">
 					 <view class="pthz_li" v-for="(item,index) in datas">
-					 	<image class="pthz_li_img" :src="getimg(item.img)" mode="aspectFill"></image>
+					 	<image class="pthz_li_img" :src="getimg(item.pic[0])" mode="aspectFill"></image>
 					 	<view class="pthz_box">
 					 		<view class="pthz_li_tit oh2">{{item.title}}</view>
 					 		<view class="pthz_znum">
-					 			<view class="pthz_num"  :style="'width:' + (item.num/item.znum) * 100 + '%'"></view>
+					 			<view class="pthz_num"  :style="'width:' + (item.yet_raise_funds*1/item.total_raise_funds*1) * 100 + '%'"></view>
 					 		</view>
-					 		<view class="pthz_pri">还需:<text>250000</text>元</view>
-					 		<view class="hz_btn hz_btn1" @tap="jump" :data-url="'/pagesA/details/details'">立即查看</view>
+					 		<view class="pthz_pri">还需:<text>{{item.residue_raise_funds}}</text>元</view>
+					 		<view class="hz_btn hz_btn1" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">立即查看</view>
 					 	</view>
 					 </view>
 					 <view v-if="datas.length==0" class="zanwu">暂无数据</view>
@@ -67,79 +67,79 @@
 				
 				datas:[
 					{
-						img:'/static/images/index_12.jpg',
+						img:'/static/web/images/index_12.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'300000',
 						num:'150000'
 					},
 					{
-						img:'/static/images/index_14.jpg',
+						img:'/static/web/images/index_14.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'400000',
 						num:'250000'
 					},
 					{
-						img:'/static/images/index_12.jpg',
+						img:'/static/web/images/index_12.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'300000',
 						num:'50000'
 					},
 					{
-						img:'/static/images/index_14.jpg',
+						img:'/static/web/images/index_14.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'400000',
 						num:'150000'
 					},
 					{
-						img:'/static/images/index_14.jpg',
+						img:'/static/web/images/index_14.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'400000',
 						num:'250000'
 					},
 					{
-						img:'/static/images/index_12.jpg',
+						img:'/static/web/images/index_12.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'300000',
 						num:'50000'
 					},
 					{
-						img:'/static/images/index_14.jpg',
+						img:'/static/web/images/index_14.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'400000',
 						num:'150000'
 					},
 					{
-						img:'/static/images/index_14.jpg',
+						img:'/static/web/images/index_14.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'400000',
 						num:'250000'
 					},
 					{
-						img:'/static/images/index_12.jpg',
+						img:'/static/web/images/index_12.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'300000',
 						num:'50000'
 					},
 					{
-						img:'/static/images/index_14.jpg',
+						img:'/static/web/images/index_14.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'400000',
 						num:'150000'
 					},
 					{
-						img:'/static/images/index_14.jpg',
+						img:'/static/web/images/index_14.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'400000',
 						num:'250000'
 					},
 					{
-						img:'/static/images/index_12.jpg',
+						img:'/static/web/images/index_12.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'300000',
 						num:'50000'
 					},
 					{
-						img:'/static/images/index_14.jpg',
+						img:'/static/web/images/index_14.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'400000',
 						num:'150000'
@@ -193,7 +193,10 @@
 			...mapMutations(['login','logindata','logout','setplatform']),
 			
 			onRetry(){
-				that.htmlReset=0
+				
+				that.datas=[]
+				that.data_last=false
+				that.page=1
 				that.getdata()
 			},
 			fwcur_fuc(num){
@@ -201,43 +204,26 @@
 				
 				this.onRetry()
 			},
-			onPulling(e) {
-				console.log("onpulling", e);
-			},
-			onRefresh() {
-				var that =this
-				if (this._freshing) return;
-				this._freshing = true;
-				that.getdata()
-				setTimeout(()=>{
-					this.triggered=false
-					this._freshing =false
-				},1000)
-			},
-			onRestore() {
-				this.triggered = 'restore'; // 需要重置
-				console.log("onRestore");
-			},
-			onAbort() {
-				console.log("onAbort");
-			},
 			getdata() {
 				
-				///api/info/list
-				var that = this
-				var data = {}
+				var data = {
+					page: that.page,
+					size: that.size,
+					token: that.$store.state.loginDatas.userToken
+				}
 			
 				//selectSaraylDetailByUserCard
-				var jkurl = '/entrance'
+				var jkurl = '/user/participationProject'
 				uni.showLoading({
 					title: '正在获取数据'
 				})
-				setTimeout(()=>{
-					uni.hideLoading()
-				},1000)
-				return
+				// setTimeout(()=>{
+				// 	uni.hideLoading()
+				// },1000)
+				// return
 				service.P_get(jkurl, data).then(res => {
 					that.btn_kg = 0
+					that.htmlReset=0
 					console.log(res)
 					if (res.code == 1) {
 						var datas = res.data

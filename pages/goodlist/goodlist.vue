@@ -6,21 +6,21 @@
 		</view>
 		<view v-if="htmlReset==0">
 			<scroll-view  scroll-x="true" class="scroll_x list_tit">
-				<view class="list_tit_li" :class="fw_cur==index?' cur':''" @tap="fwcur_fuc(index)" v-for="(item,index) in tabs">{{item.name}}</view>
+				<view class="list_tit_li" :class="fw_cur==item.id?' cur':''" @tap="fwcur_fuc(item.id)" v-for="(item,index) in tabs">{{item.title}}</view>
 			</scroll-view>
 			<scroll-view class="scroll_list1"   scroll-y="true" refresher-enabled='true' :refresher-triggered="triggered"
 				 :refresher-threshold="100" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 				 @refresherabort="onAbort" @scrolltolower="getdata">
 				 <view class="fl_list">
 					 <view class="pthz_li" v-for="(item,index) in datas">
-					 	<image class="pthz_li_img" :src="getimg(item.img)" mode="aspectFill"></image>
+					 	<image class="pthz_li_img" :src="getimg(item.pic[0])" mode="aspectFill"></image>
 					 	<view class="pthz_box">
 					 		<view class="pthz_li_tit oh2">{{item.title}}</view>
 					 		<view class="pthz_znum">
-					 			<view class="pthz_num"  :style="'width:' + (item.num/item.znum) * 100 + '%'"></view>
+					 			<view class="pthz_num"  :style="'width:' + (item.yet_raise_funds*1/item.total_raise_funds*1) * 100 + '%'"></view>
 					 		</view>
-					 		<view class="pthz_pri">还需:<text>250000</text>元</view>
-					 		<view class="hz_btn hz_btn1" @tap="jump" :data-url="'/pagesA/details/details'">立即帮助</view>
+					 		<view class="pthz_pri">还需:<text>{{item.residue_raise_funds}}</text>元</view>
+					 		<view class="hz_btn hz_btn1" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">立即帮助</view>
 					 	</view>
 					 </view>
 					 <view v-if="datas.length==0" class="zanwu">暂无数据</view>
@@ -69,25 +69,25 @@
 				
 				datas:[
 					{
-						img:'/static/images/index_12.jpg',
+						img:'/static/web/images/index_12.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'300000',
 						num:'150000'
 					},
 					{
-						img:'/static/images/index_14.jpg',
+						img:'/static/web/images/index_14.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'400000',
 						num:'250000'
 					},
 					{
-						img:'/static/images/index_12.jpg',
+						img:'/static/web/images/index_12.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'300000',
 						num:'50000'
 					},
 					{
-						img:'/static/images/index_14.jpg',
+						img:'/static/web/images/index_14.jpg',
 						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
 						znum:'400000',
 						num:'150000'
@@ -150,8 +150,9 @@
 				
 				page: 1,
 				size: 15,
-				triggered: true, //设置当前下拉刷新状态
 				data_last:false,
+				triggered: true, //设置当前下拉刷新状态
+				show_num:0
 			}
 		},
 		computed: {
@@ -185,13 +186,46 @@
 		},
 		onLoad() {
 			that=this
-			that.onRetry()
+			if(uni.getStorageSync('type_id')){
+				that.fw_cur=uni.getStorageSync('type_id')
+			}
+			if(!uni.getStorageSync('cate_list')){
+				
+				that.getcate()
+			}else{
+				if(uni.getStorageSync('cate_list')){
+					console.log(uni.getStorageSync('cate_list'))
+					var cate_list=JSON.parse(uni.getStorageSync('cate_list'))
+					that.tabs=cate_list
+					that.fw_cur=cate_list[0].id
+					that.getdata()
+				}else{
+					that.getcate()
+				}
+				
+			}
+			// that.onRetry()
+		},
+		onShow() {
+			if(that.show_num>1){
+				var type_id=uni.getStorageSync('type_id')
+				console.log(that.fw_cur!=type_id)
+				console.log(that.fw_cur,type_id)
+				if(that.fw_cur!=type_id){
+					that.fw_cur=type_id
+					that.onRetry()
+				}
+			}
+			that.show_num++
 		},
 		methods: {
 			...mapMutations(['login','logindata','logout','setplatform']),
 			
 			onRetry(){
-				that.htmlReset=0
+				
+				that.datas=[]
+				that.data_last=false
+				that.page=1
 				that.getdata()
 			},
 			fwcur_fuc(num){
@@ -206,7 +240,7 @@
 				var that =this
 				if (this._freshing) return;
 				this._freshing = true;
-				that.getdata()
+				that.onRetry()
 				setTimeout(()=>{
 					this.triggered=false
 					this._freshing =false
@@ -219,23 +253,82 @@
 			onAbort() {
 				console.log("onAbort");
 			},
+			getcate(){
+				 var data = {
+					 type:1
+				 }
+				 			
+				 //selectSaraylDetailByUserCard
+				 var jkurl = '/cate/list'
+				
+				service.P_get(jkurl, data).then(res => {
+				 	that.btn_kg = 0
+				 	console.log(res)
+				 	if (res.code == 1) {
+				 		var datas = res.data
+				 		console.log(typeof datas)
+				 			
+				 		if (typeof datas == 'string') {
+				 			datas = JSON.parse(datas)
+				 		}
+				 			
+				 		that.tabs = datas
+						that.fw_cur=datas[0].id
+						that.getdata()
+						if(datas.length>0){
+							var cate_list=JSON.stringify(datas)
+							uni.setStorageSync('cate_list',cate_list)
+						}
+						
+				 		console.log(datas)
+				 			
+				 			
+				 	} else {
+				 		if (res.msg) {
+				 			uni.showToast({
+				 				icon: 'none',
+				 				title: res.msg
+				 			})
+				 		} else {
+				 			uni.showToast({
+				 				icon: 'none',
+				 				title: '获取失败'
+				 			})
+				 		}
+				 	}
+				}).catch(e => {
+				 	that.btn_kg = 0
+				 	console.log(e)
+				 	uni.showToast({
+				 		icon: 'none',
+				 		title: '获取数据失败'
+				 	})
+				})
+			},
+			
 			getdata() {
 				
 				///api/info/list
-				var that = this
-				var data = {}
+				// var that = this
+				var data = {
+					page:that.page,
+					size:that.size,
+					type:that.fw_cur
+				}
 			
 				//selectSaraylDetailByUserCard
-				var jkurl = '/entrance'
+				var jkurl = '/getCrowdfund'
 				uni.showLoading({
 					title: '正在获取数据'
 				})
-				setTimeout(()=>{
-					uni.hideLoading()
-				},1000)
-				return
+				// setTimeout(()=>{
+				// 	uni.hideLoading()
+				// },1000)
+				// return
+				var page_now=that.page
 				service.P_get(jkurl, data).then(res => {
 					that.btn_kg = 0
+					that.htmlReset=0
 					console.log(res)
 					if (res.code == 1) {
 						var datas = res.data
@@ -244,8 +337,18 @@
 						if (typeof datas == 'string') {
 							datas = JSON.parse(datas)
 						}
-			
-						that.banner = datas
+						if(page_now==1){
+				
+							that.datas = datas
+						} else {
+							if (datas.length == 0) {
+								that.data_last = true
+								return
+							}
+							that.data_last = false
+							that.datas = that.datas.concat(datas)
+						}
+						that.page++
 						console.log(datas)
 			
 			

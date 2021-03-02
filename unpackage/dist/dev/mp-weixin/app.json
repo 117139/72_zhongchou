@@ -5,7 +5,8 @@
     "pages/jinzhan/jinzhan",
     "pages/my/my",
     "pages/login/login",
-    "pages/login_tel/login_tel"
+    "pages/login_tel/login_tel",
+    "pages/fabu/fabu"
   ],
   "subPackages": [
     {
@@ -22,7 +23,8 @@
         "pc_login/pc_login",
         "my_settel/my_settel",
         "details/details",
-        "jubao/jubao"
+        "jubao/jubao",
+        "my_zc_edit/my_zc_edit"
       ]
     }
   ],
@@ -51,7 +53,7 @@
         "text": "分类"
       },
       {
-        "pagePath": "pages/jinzhan/jinzhan",
+        "pagePath": "pages/fabu/fabu",
         "iconPath": "static/images/center_03.png",
         "selectedIconPath": "static/images/center_03.png",
         "text": "发起"

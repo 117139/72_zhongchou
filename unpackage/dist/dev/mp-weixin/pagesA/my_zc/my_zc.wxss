@@ -1,7 +1,7 @@
 
-.minh100.data-v-e1184436{
+.minh100.data-v-e1184436 {
 }
-.scroll_list1.data-v-e1184436{
+.scroll_list1.data-v-e1184436 {
 	position: absolute;
 	top: 0rpx;
 	left: 0;
@@ -12,7 +12,7 @@
 	-webkit-flex: 1;
 	        flex: 1;
 }
-.fl_list.data-v-e1184436{
+.fl_list.data-v-e1184436 {
 	width: 100%;
 	padding: 30rpx;
 	display: -webkit-box;
@@ -21,7 +21,7 @@
 	-webkit-flex-wrap: wrap;
 	        flex-wrap: wrap;
 }
-.pthz_li.data-v-e1184436{
+.pthz_li.data-v-e1184436 {
 	width: 335rpx;
 	height: 480rpx;
 	background: #FFFFFF;
@@ -29,19 +29,19 @@
 	border-radius: 10rpx;
 	margin-bottom: 15rpx;
 }
-.pthz_li.data-v-e1184436:nth-child(odd){
+.pthz_li.data-v-e1184436:nth-child(odd) {
 	margin-right: 14rpx;
 }
-.pthz_li_img.data-v-e1184436{
+.pthz_li_img.data-v-e1184436 {
 	width: 100%;
 	height: 211rpx;
 	border-radius: 10rpx 10rpx 0 0;
 }
-.pthz_box.data-v-e1184436{
+.pthz_box.data-v-e1184436 {
 	width: 100%;
 	padding: 15rpx;
 }
-.pthz_li_tit.data-v-e1184436{
+.pthz_li_tit.data-v-e1184436 {
 	width: 100%;
 	height: 90rpx;
 	line-height: 45rpx;
@@ -49,30 +49,30 @@
 	font-family: PingFang SC;
 	color: #333;
 }
-.pthz_znum.data-v-e1184436{
+.pthz_znum.data-v-e1184436 {
 	width: 100%;
 	height: 5rpx;
 	background: #E5E5E5;
 	border-radius: 3rpx;
 	margin: 15rpx 0;
 }
-.pthz_num.data-v-e1184436{
+.pthz_num.data-v-e1184436 {
 	max-width: 100%;
 	height: 5rpx;
 	background: -webkit-linear-gradient(right, rgba(252, 85, 52, 0.89), rgba(255, 190, 51, 0.89));
 	background: linear-gradient(-90deg, rgba(252, 85, 52, 0.89), rgba(255, 190, 51, 0.89));
 	border-radius: 3rpx;
 }
-.pthz_pri.data-v-e1184436{
+.pthz_pri.data-v-e1184436 {
 	font-size: 24rpx;
 	color: #333;
 	margin-bottom: 30rpx;
 }
-.pthz_pri text.data-v-e1184436{
+.pthz_pri text.data-v-e1184436 {
 	color: #F92929;
 	font-weight: bold;
 }
-.hz_btn.data-v-e1184436{
+.hz_btn.data-v-e1184436 {
 	width: 278rpx;
 	height: 49rpx;
 	background: #F54248;
@@ -90,10 +90,10 @@
 	font-size: 26rpx;
 	color: #fff;
 }
-.hz_btn1.data-v-e1184436{
-	
+.hz_btn1.data-v-e1184436 {
+
 	background: -webkit-linear-gradient(right, rgba(252, 85, 52, 0.89), rgba(255, 190, 51, 0.89));
-	
+
 	background: linear-gradient(-90deg, rgba(252, 85, 52, 0.89), rgba(255, 190, 51, 0.89));
 	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.21);
 }

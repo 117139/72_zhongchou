@@ -10,7 +10,10 @@ export default {
 		var that =this
 		console.log('App Launch')
 		// #ifdef MP-WEIXIN
-		// service.wxlogin()
+		service.wxlogin()
+		// #endif
+		// #ifndef MP-WEIXIN
+		service.login_tel()
 		// #endif
 		uni.getSystemInfo({
 			success: function(e) {
@@ -60,6 +63,7 @@ export default {
 	},
 	methods: {
 			...mapMutations(['login','logindata','logout','setplatform']),
+			
 		//点击中间按钮
 		centerBtn() {
 			// #ifndef MP-WEIXIN

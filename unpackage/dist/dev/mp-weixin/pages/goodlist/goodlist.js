@@ -102,7 +102,7 @@ var render = function() {
       ? _vm.__map(_vm.datas, function(item, index) {
           var $orig = _vm.__get_orig(item)
 
-          var m0 = _vm.getimg(item.img)
+          var m0 = _vm.getimg(item.pic[0])
           return {
             $orig: $orig,
             m0: m0
@@ -221,25 +221,25 @@ var that;var _default =
 
       datas: [
       {
-        img: '/static/images/index_12.jpg',
+        img: '/static/web/images/index_12.jpg',
         title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
         znum: '300000',
         num: '150000' },
 
       {
-        img: '/static/images/index_14.jpg',
+        img: '/static/web/images/index_14.jpg',
         title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
         znum: '400000',
         num: '250000' },
 
       {
-        img: '/static/images/index_12.jpg',
+        img: '/static/web/images/index_12.jpg',
         title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
         znum: '300000',
         num: '50000' },
 
       {
-        img: '/static/images/index_14.jpg',
+        img: '/static/web/images/index_14.jpg',
         title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
         znum: '400000',
         num: '150000' },
@@ -302,8 +302,9 @@ var that;var _default =
 
       page: 1,
       size: 15,
+      data_last: false,
       triggered: true, //设置当前下拉刷新状态
-      data_last: false };
+      show_num: 0 };
 
   },
   computed: _objectSpread(_objectSpread({},
@@ -337,13 +338,46 @@ var that;var _default =
   },
   onLoad: function onLoad() {
     that = this;
-    that.onRetry();
+    if (uni.getStorageSync('type_id')) {
+      that.fw_cur = uni.getStorageSync('type_id');
+    }
+    if (!uni.getStorageSync('cate_list')) {
+
+      that.getcate();
+    } else {
+      if (uni.getStorageSync('cate_list')) {
+        console.log(uni.getStorageSync('cate_list'));
+        var cate_list = JSON.parse(uni.getStorageSync('cate_list'));
+        that.tabs = cate_list;
+        that.fw_cur = cate_list[0].id;
+        that.getdata();
+      } else {
+        that.getcate();
+      }
+
+    }
+    // that.onRetry()
+  },
+  onShow: function onShow() {
+    if (that.show_num > 1) {
+      var type_id = uni.getStorageSync('type_id');
+      console.log(that.fw_cur != type_id);
+      console.log(that.fw_cur, type_id);
+      if (that.fw_cur != type_id) {
+        that.fw_cur = type_id;
+        that.onRetry();
+      }
+    }
+    that.show_num++;
   },
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['login', 'logindata', 'logout', 'setplatform'])), {}, {
 
     onRetry: function onRetry() {
-      that.htmlReset = 0;
+
+      that.datas = [];
+      that.data_last = false;
+      that.page = 1;
       that.getdata();
     },
     fwcur_fuc: function fwcur_fuc(num) {
@@ -358,7 +392,7 @@ var that;var _default =
       var that = this;
       if (this._freshing) return;
       this._freshing = true;
-      that.getdata();
+      that.onRetry();
       setTimeout(function () {
         _this.triggered = false;
         _this._freshing = false;
@@ -371,21 +405,14 @@ var that;var _default =
     onAbort: function onAbort() {
       console.log("onAbort");
     },
-    getdata: function getdata() {
+    getcate: function getcate() {
+      var data = {
+        type: 1 };
 
-      ///api/info/list
-      var that = this;
-      var data = {};
 
       //selectSaraylDetailByUserCard
-      var jkurl = '/entrance';
-      uni.showLoading({
-        title: '正在获取数据' });
+      var jkurl = '/cate/list';
 
-      setTimeout(function () {
-        uni.hideLoading();
-      }, 1000);
-      return;
       _service.default.P_get(jkurl, data).then(function (res) {
         that.btn_kg = 0;
         console.log(res);
@@ -397,7 +424,83 @@ var that;var _default =
             datas = JSON.parse(datas);
           }
 
-          that.banner = datas;
+          that.tabs = datas;
+          that.fw_cur = datas[0].id;
+          that.getdata();
+          if (datas.length > 0) {
+            var cate_list = JSON.stringify(datas);
+            uni.setStorageSync('cate_list', cate_list);
+          }
+
+          console.log(datas);
+
+
+        } else {
+          if (res.msg) {
+            uni.showToast({
+              icon: 'none',
+              title: res.msg });
+
+          } else {
+            uni.showToast({
+              icon: 'none',
+              title: '获取失败' });
+
+          }
+        }
+      }).catch(function (e) {
+        that.btn_kg = 0;
+        console.log(e);
+        uni.showToast({
+          icon: 'none',
+          title: '获取数据失败' });
+
+      });
+    },
+
+    getdata: function getdata() {
+
+      ///api/info/list
+      // var that = this
+      var data = {
+        page: that.page,
+        size: that.size,
+        type: that.fw_cur };
+
+
+      //selectSaraylDetailByUserCard
+      var jkurl = '/getCrowdfund';
+      uni.showLoading({
+        title: '正在获取数据' });
+
+      // setTimeout(()=>{
+      // 	uni.hideLoading()
+      // },1000)
+      // return
+      var page_now = that.page;
+      _service.default.P_get(jkurl, data).then(function (res) {
+        that.btn_kg = 0;
+        that.htmlReset = 0;
+        console.log(res);
+        if (res.code == 1) {
+          var datas = res.data;
+          console.log(typeof datas);
+
+          if (typeof datas == 'string') {
+            datas = JSON.parse(datas);
+          }
+          if (page_now == 1) {
+
+            that.datas = datas;
+          } else {
+            if (datas.length == 0) {
+              that.data_last = true;
+              return;
+            }
+            that.data_last = false;
+            that.datas = that.datas.concat(datas);
+          }
+          that.page++;
           console.log(datas);
 
 

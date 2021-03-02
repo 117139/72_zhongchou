@@ -6,7 +6,7 @@
 		</view>
 		<block v-if="htmlReset==0">
 			<view class="top_box">
-				<image class="top_box_bg" :src="getimg('/static/images/fans_bg_02.jpg')" mode=""></image>
+				<image class="top_box_bg" :src="getimg('/static/web/images/fans_bg_02.jpg')" mode=""></image>
 				<view class="top_box_btn" @tap="jump" data-url="/pagesA/my_tx/my_tx">
 					提现<text class="iconfont icon-next-m"></text>
 				</view>
@@ -22,7 +22,7 @@
 				</view>
 				<block v-for="(item,index) in 10">
 					<view class="hy_li">
-						<image class="hy_li_tx" :src="getimg('/static/images/tx_m2.jpg')" mode="aspectFill"></image>
+						<image class="hy_li_tx" :src="getimg('/static/web/images/tx_m2.jpg')" mode="aspectFill"></image>
 						<view class="hy_li_msg">
 							<view class="hy_li_msg1">
 								<view class="hy_name">会员{{tab_cur}}</view>

@@ -1,0 +1,122 @@
+
+.minh100.data-v-041f1fcb{
+	padding-bottom: 50rpx;
+}
+.box_bg.data-v-041f1fcb{
+	width: 100%;
+	height: auto;
+	position: absolute;
+	top: 0;
+	z-index: 0;
+}
+.box_main.data-v-041f1fcb{
+	position: relative;
+	top: 0;
+	z-index: 1;
+	padding: 170rpx 30rpx 0;
+}
+.box_main_form.data-v-041f1fcb{
+	width: 100%;
+	background: #fff;
+	border-radius: 10rpx;
+	padding: 0 30rpx;
+}
+.box_main_form_li.data-v-041f1fcb{
+	width: 690rpx;
+	width: 100%;
+	border-bottom: 1px solid #eee;
+}
+.form_li_tit.data-v-041f1fcb{
+	font-size: 30rpx;
+	color: #222;
+	height: 90rpx;
+	width: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+.form_li_main.data-v-041f1fcb{
+	padding-bottom: 25rpx;
+	font-size: 30rpx;
+	color: #222;
+}
+.form_li_main input.data-v-041f1fcb{
+	min-width: 0;
+	font-size: 30rpx;
+}
+.content_text.data-v-041f1fcb{
+	width: 100%;
+	height: 283rpx;
+	background: #EFEFEF;
+	border-radius: 4rpx;
+	padding: 20rpx;
+	font-size: 30rpx
+}
+.sub_btn.data-v-041f1fcb{
+	width: 100%;
+	height: 86rpx;
+	background: -webkit-linear-gradient(right, #FC5534, #FFBE33);
+	background: linear-gradient(-90deg, #FC5534, #FFBE33);
+	border-radius: 4rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	font-size: 30rpx;
+	color: #fff;
+	margin: 50rpx auto 0;
+}
+.pz1_box.data-v-041f1fcb {
+	width: 100%;
+	background: #FFFFFF;
+	padding: 0 30rpx 50rpx;
+}
+.pz1_tit.data-v-041f1fcb {
+	width: 100%;
+	font-size: 30rpx;
+	color: #222;
+	line-height: 88rpx;
+}
+.pz_imgs.data-v-041f1fcb {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	        flex-wrap: wrap;
+	padding-bottom: 30rpx;
+	border-bottom: 1px solid #eee;
+}
+.pz_img.data-v-041f1fcb {
+	/* width: 180upx;
+	height: 140upx; */
+	width: 190rpx;
+	border-radius: 10rpx;
+	margin-right: 15rpx;
+	margin-bottom: 15rpx;
+	position: relative;
+}
+.pz_img image.data-v-041f1fcb {
+	/* width: 180upx;
+	height: 140upx; */
+	width: 190rpx;
+	height: 190rpx;
+}
+.pz_img .img_del.data-v-041f1fcb {
+	width: 30rpx;
+	height: 30rpx;
+	/* background: #FF4B4B; */
+	border-radius: 15rpx;
+	position: absolute;
+	top: -10rpx;
+	right: -10rpx;
+	z-index: 10;
+}
+

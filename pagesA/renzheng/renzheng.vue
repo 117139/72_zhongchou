@@ -13,11 +13,11 @@
 				<view class="rz_tit" style="height: 100upx;">上传证件*</view>
 				<view class="up_rzimg dis_flex aic">
 					<view class="up_rzimg_li" @tap="scpic" data-type="1">
-						<image :src="sfimg1?getimg(sfimg1):getimg('/static/images/rz_img_03.jpg')" mode="aspectFill"></image>
+						<image :src="sfimg1?getimg(sfimg1):getimg('/static/web/images/rz_img_03.jpg')" mode="aspectFill"></image>
 						<text>上传身份证正面</text>
 					</view>
 					<view class="up_rzimg_li" @tap="scpic" data-type="2">
-						<image :src="sfimg2?getimg(sfimg2):getimg('/static/images/rz_img_05.jpg')" mode="aspectFill"></image>
+						<image :src="sfimg2?getimg(sfimg2):getimg('/static/web/images/rz_img_05.jpg')" mode="aspectFill"></image>
 						<text>上传身份证反面</text>
 					</view>
 				</view>

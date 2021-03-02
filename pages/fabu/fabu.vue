@@ -56,11 +56,11 @@
 							<input class="flex_1" type="text" v-model="datas.patient_illness" placeholder="请填写患者疾病名称"/>
 						</view>
 					</view>
-					<picker mode="selector" :range="zc_list" range-key="name" @change="getPicker" data-type="1">
+					<picker mode="selector" :range="zc_list" range-key="title" @change="getPicker" data-type="1">
 						<view class="box_main_form_li">
 							<view class="form_li_tit">所属类别</view>
 							<view class="dis_flex aic form_li_main">
-								<view class="flex_1">{{zc_list[zc_index].name}}</view>
+								<view class="flex_1">{{zc_list[zc_index].title}}</view>
 							</view>
 						</view>
 					</picker>
@@ -197,23 +197,155 @@
 		},
 		onLoad() {
 			that=this
+			if(!uni.getStorageSync('cate_list')){
+				
+				that.getcate()
+			}else{
+				if(uni.getStorageSync('cate_list')){
+					console.log(uni.getStorageSync('cate_list'))
+					var cate_list=JSON.parse(uni.getStorageSync('cate_list'))
+					that.zc_list = cate_list
+					that.fw_cur=cate_list[0].id
+					// that.fw_cur=cate_list[0].id
+					Vue.set(that.datas,'category_id',cate_list[0].id)
+				}else{
+					that.getcate()
+				}
+				
+			}
 			that.onRetry()
 		},
 		methods: {
 			...mapMutations(['login','logindata','logout','setplatform']),
 			onRetry(){
 				that.htmlReset=0
-				that.zc_index=that.getindex(that.zc_list,that.datas.category_id)
+				// that.zc_index=that.getindex(that.zc_list,that.datas.category_id)
 				// that.getdata()
 			},
+			getcate(){
+				 var data = {
+					 type:1
+				 }
+				 			
+				 //selectSaraylDetailByUserCard
+				 var jkurl = '/cate/list'
+				
+				service.P_get(jkurl, data).then(res => {
+				 	that.btn_kg = 0
+				 	console.log(res)
+				 	if (res.code == 1) {
+				 		var datas = res.data
+				 		console.log(typeof datas)
+				 			
+				 		if (typeof datas == 'string') {
+				 			datas = JSON.parse(datas)
+				 		}
+				 			
+				 		that.zc_list = datas
+						that.fw_cur=datas[0].id
+						// that.fw_cur=datas[0].id
+						Vue.set(that.datas,'category_id',datas[0].id)
+						if(datas.length>0){
+							// var cate_list=JSON.stringify(datas)
+							uni.setStorageSync('cate_list',cate_list)
+						}
+						
+				 		console.log(datas)
+				 			
+				 			
+				 	} else {
+				 		if (res.msg) {
+				 			uni.showToast({
+				 				icon: 'none',
+				 				title: res.msg
+				 			})
+				 		} else {
+				 			uni.showToast({
+				 				icon: 'none',
+				 				title: '获取失败'
+				 			})
+				 		}
+				 	}
+				}).catch(e => {
+				 	that.btn_kg = 0
+				 	console.log(e)
+				 	uni.showToast({
+				 		icon: 'none',
+				 		title: '获取数据失败'
+				 	})
+				})
+			},
+			
 			sub(){
 				console.log(that.datas)
 				///user/crowdfundProject/save
 				var datas=JSON.parse(JSON.stringify(that.datas))
+				if (!that.datas.title) {
+					uni.showToast({
+						icon: 'none',
+						title: '请输入标题'
+					});
+					return;
+				}
+				if (!that.datas.total_raise_funds) {
+					uni.showToast({
+						icon: 'none',
+						title: '请输入目标金额'
+					});
+					return;
+				}
+				if (!that.datas.initiator_name) {
+					uni.showToast({
+						icon: 'none',
+						title: '请输入发起人'
+					});
+					return;
+				}
+				if (!that.datas.initiator_phone) {
+					uni.showToast({
+						icon: 'none',
+						title: '请输入发起人联系方式'
+					});
+					return;
+				}
+				if (!that.datas.patient_name) {
+					uni.showToast({
+						icon: 'none',
+						title: '请输入患者姓名'
+					});
+					return;
+				}
+				if (!that.datas.patient_age) {
+					uni.showToast({
+						icon: 'none',
+						title: '请输入患者年龄'
+					});
+					return;
+				}
+				if (!that.datas.patient_address) {
+					uni.showToast({
+						icon: 'none',
+						title: '请输入患者家庭住址'
+					});
+					return;
+				}
+				if (!that.datas.patient_illness) {
+					uni.showToast({
+						icon: 'none',
+						title: '请输入患者疾病名称'
+					});
+					return;
+				}
 				var sj_img=''
 				console.log(that.sj_img)
 				if(that.sj_img.length>0){
 					sj_img=that.sj_img.join(',')
+				}else{
+					uni.showToast({
+						icon: 'none',
+						title: '请上传封面图'
+					});
+					return
 				}
 				var sj_img2=''
 				
@@ -222,28 +354,78 @@
 				}
 				Vue.set(datas,'banner_pic',sj_img)
 				Vue.set(datas,'content_img',sj_img2)
-				uni.showToast({
-					icon:'none',
-					title:'提交成功'
-				})
+				Vue.set(datas,'token',that.$store.state.loginDatas.userToken)
+				// uni.showToast({
+				// 	icon:'none',
+				// 	title:'提交成功'
+				// })
 				console.log(datas)
-				setTimeout(function(){
-					// that.show_tk=true
-					that.datas={
-						title:'',//title
-						genre:'',//众筹类型（自己填写）
-						total_raise_funds:'',//众筹金额
-						initiator_name:'',//发起人
-						initiator_phone:'',//发起人联系方式
-						patient_name:'', //患者姓名
-						patient_age:'', //患者年龄
-						patient_address:'', //患者家庭住址
-						patient_illness:'', //患者疾病名称
-						label:'', //标签
-						category_id:'1', //所属类别
-						content:'', //详情
+				var jkurl="/user/crowdfundProject/save"
+				if(that.btn_kg==1){
+					return
+					
+				}
+				that.btn_kg=1
+				uni.showLoading({
+					title: '正在提交'
+				})
+				service.P_post(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+							
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						uni.showToast({
+							icon:'none',
+							title:'提交成功'
+						})
+						setTimeout(function(){
+							// that.show_tk=true
+							that.datas={
+								title:'',//title
+								genre:'',//众筹类型（自己填写）
+								total_raise_funds:'',//众筹金额
+								initiator_name:'',//发起人
+								initiator_phone:'',//发起人联系方式
+								patient_name:'', //患者姓名
+								patient_age:'', //患者年龄
+								patient_address:'', //患者家庭住址
+								patient_illness:'', //患者疾病名称
+								label:'', //标签
+								category_id:'1', //所属类别
+								content:'', //详情
+							}
+							that.sj_img=''
+							that.sj_img2=''
+						},1000)
+							
+							
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
 					}
-				},1000)
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败'
+					})
+				})
+				
 			},
 			getPicker(e){
 				console.log(e.currentTarget.dataset.type)
@@ -360,15 +542,16 @@
 								const tempFilePaths = res.tempFilePaths
 			
 			
-								if(datas.type==2){
-									that.sj_img2=that.sj_img2.concat(res.tempFilePaths).slice(0,9)
-								}else{
-									that.sj_img=that.sj_img.concat(res.tempFilePaths).slice(0,9)
-								}
+								// if(datas.type==2){
+								// 	that.sj_img2=that.sj_img2.concat(res.tempFilePaths).slice(0,9)
+								// }else{
+								// 	that.sj_img=that.sj_img.concat(res.tempFilePaths).slice(0,9)
+								// }
 			
-								return
-								that.upimg1(tempFilePaths, 0, datas.type)
-			
+								// return
+								// that.upimg1(tempFilePaths, 0, datas.type)
+								that.upimg1(tempFilePaths,datas.type, 0)
+								
 							}
 						});
 					},
@@ -379,14 +562,14 @@
 			
 			
 			},
-			upimg1(imgs, i, type) {
+			upimg1(imgs, type, i) {
 				var that = this
 				service.wx_upload(imgs[i]).then(res => {
 			
 					that.btn_kg = 0
 					console.log(res)
 					if (res.code == 1) {
-						var datas = res.data
+						var datas = res.msg
 						console.log(i)
 						var newdata
 						if (type == 2) {
@@ -403,7 +586,7 @@
 						console.log(newdata < 9 && i < imgs.length - 1)
 						if (newdata < 9 && i < imgs.length - 1) {
 							i++
-							that.upimg1(imgs, i, type)
+							that.upimg1(imgs, type, i)
 						}
 					} else {
 						if (res.msg) {

@@ -26,23 +26,23 @@
 					<view class="login_icon">
 						<text class="iconfont icon-mima"></text>
 					</view>
-					<input class="login_input" type="password" placeholder="请输入验证号" v-model="code">
+					<input class="login_input" type="text" placeholder="请输入验证号" v-model="code">
 					<view v-if="yzm_type==0" class="getyzm" @tap="getCode">获取验证码</view>
 					<view v-if="yzm_type==1" class="getyzm">{{yztime}}s</view>
 				</view>
-				<view class="login_li">
+				<view v-if="login_type!=2" class="login_li">
 					<view class="login_icon">
 						<text class="iconfont icon-mima"></text>
 					</view>
 					<input class="login_input" type="password" placeholder="请输入密码" v-model="pwd">
 				</view>
-				<view v-if="login_type!=1" class="login_li">
+				<view v-if="login_type!=1&&login_type!=2" class="login_li">
 					<view class="login_icon">
 						<text class="iconfont icon-mima"></text>
 					</view>
 					<input class="login_input" type="password" placeholder="请再次输入密码" v-model="pwd1">
 				</view>
-				<view v-if="login_type==1" class="login_btn" @tap="login_fuc">登录</view>
+				<view v-if="login_type==1||login_type==2" class="login_btn" @tap="login_fuc">登录</view>
 				<view v-if="login_type==0" class="login_btn" @tap="reg_fuc">注册</view>
 				<view v-if="login_type==-1" class="login_btn" @tap="reg_fuc">确定</view>
 				<view  class="login_cz dis_flex aic ju_b">
@@ -50,20 +50,21 @@
 					<view v-if="login_type==0" @tap="login_type=1">已有账号？去登录</view>
 					<view v-if="login_type==1" @tap="login_type=-1">忘记密码？</view>
 					<view v-if="login_type==-1" @tap="login_type=1">去登录</view>
+					<view v-if="login_type==1" @tap="login_type=2">验证码登录</view>
+					<view v-if="login_type==2" @tap="login_type=1">密码登录</view>
 				</view>
 				<view class="login_yx" @tap="jump" data-url="/pagesA/about/about?type=fwsm">登录即代表您同意《爱心筹服务声明》</view>
-				<view v-if="yhxy" class="yhxy_box">
-					<view class="dyxy_box">
-						<view class="dyxy_tit">爱心筹服务声明</view>
-						<scroll-view class="dyxy_inr" v-html="datas">
-							<!-- {{datas.body}} -->
-							<!-- <view v-if="datas" class="xieyi_main" v-html="datas.body"></view> -->
-						</scroll-view>
-						<!-- <view class="dis_flex ydxy_btn" :class="xdxy_type==1?'cur':''" @tap="xdxy_type_fuc"><view class="d1 dis_flex"><image  v-if="xdxy_type==1" src="../../static/images/duigou.png"></image></view>我已阅读并同意该协议</view> -->
-						<view class="dis_flex">
-							<view class="next_btn next_btn_cal dis_flex" @tap="xy_off">拒绝</view>
-							<view class="next_btn dis_flex" @tap="xy_on">同意</view>
-						</view>
+				
+			</view>
+			<view v-if="yhxy" class="yhxy_box">
+				<view class="dyxy_box">
+					<view class="dyxy_tit">爱心筹服务声明</view>
+					<scroll-view class="dyxy_inr" scroll-y>
+						<view  v-html="datas"></view>
+					</scroll-view>
+					<view class="dis_flex">
+						<view class="next_btn next_btn_cal dis_flex" @tap="xy_off">拒绝</view>
+						<view class="next_btn dis_flex" @tap="xy_on">同意</view>
 					</view>
 				</view>
 			</view>
@@ -92,7 +93,7 @@
 				pwd: '',
 				pwd1: '',
 				yhxy: true,
-				datas: '爱心筹服务声明爱心筹服务声明爱心筹服务声明爱心筹服务声明爱心筹服务声明爱心筹服务声明爱心筹服务声明爱心筹服务声明',
+				datas: '',
 				login_type: 1
 			}
 		},
@@ -117,13 +118,15 @@
 		onLoad() {
 			that = this
 			var yhxy = uni.getStorageSync('yhxy')
-			// this.getdata()
-			if (yhxy) {
-				this.yhxy = false
+			that.getdata()
+			if (!yhxy) {
+				// that.yhxy = true
+			}else{
+				that.yhxy = false
 			}
 		},
 		onPageScroll(e) {
-			console.log(e)
+			// console.log(e)
 			this.PageScroll = e.scrollTop
 			// if(e.scrollTop>10){
 			// 	uni.showToast({
@@ -164,18 +167,19 @@
 				} else {
 					that.btnkg = 1
 				}
-				uni.showToast({
-					icon: 'none',
-					title: '发送成功'
-				})
-				that.codetime()
-				that.btnkg = 0
-				return
-				var jkurl = '/api/login/register'
+				// uni.showToast({
+				// 	icon: 'none',
+				// 	title: '发送成功'
+				// })
+				// that.codetime()
+				// that.btnkg = 0
+				// return
+				var jkurl = '/sendCode'
 				var data = {
-					phone: that.account
+					type:that.login_type==0?1:that.login_type==2?3:2,
+					phone: that.tel
 				}
-				service.post(jkurl, data,
+				service.get(jkurl, data,
 					function(res) {
 						that.btnkg = 0
 						if (res.data.code == 1) {
@@ -185,7 +189,7 @@
 								title: '发送成功'
 							})
 							console.log(res)
-							that.verification_key = res.data.data.key
+							// that.verification_key = res.data.data.key
 							that.codetime()
 
 						} else {
@@ -274,89 +278,55 @@
 					return;
 				}
 
-				const data = {
+				const datas = {
 					phone: that.tel,
 					code: that.code,
 					password: that.pwd,
-					password1: that.pwd1,
-					device_id: that.uuid ? that.uuid : 'h5'
+					affirm_password: that.pwd1
 				}
-				console.log(data)
+				console.log(datas)
+				var jkurl = ''
 				if (that.login_type == 0) {
-					uni.showToast({
-						icon: 'none',
-						title: '注册成功'
-					});
+					jkurl='/user/register'
+					uni.showLoading({
+						title: '正在注册'
+					})
 				}
 				if (that.login_type == -1) {
-					uni.showToast({
-						icon: 'none',
-						title: '修改成功'
-					});
-				}
-			},
-			login_fuc() {
-				if (that.tel == '' || !(/^1\d{10}$/.test(that.tel))) {
-					wx.showToast({
-						icon: 'none',
-						title: '手机号有误'
+					jkurl = '/user/forgetVerify'
+					uni.showLoading({
+						title: '正在提交'
 					})
-					return
 				}
-
-				if (!that.pwd) {
-					uni.showToast({
-						icon: 'none',
-						title: '请输入密码'
-					});
-					return;
-				}
-
-				const data = {
-					phone: that.tel,
-					password: that.pwd,
-					device_id: that.uuid ? that.uuid : 'h5'
-				}
-				console.log(data)
-				uni.showToast({
-					icon: 'none',
-					title: '登录成功'
-				});
-
-				that.logindata(data)
-				that.login('问心')
-				setTimeout(()=>{
-					uni.navigateBack({
-						delta:1
-					})
-				},1000)
-			},
-			getbanner() {
-
-				///api/info/list
-				var that = this
-				var data = {}
-
-				//selectSaraylDetailByUserCard
-				var jkurl = '/entrance'
-				uni.showLoading({
-					title: '正在获取数据'
-				})
-				service.P_get(jkurl, data).then(res => {
+				
+				
+				service.P_post(jkurl, datas).then(res => {
 					that.btn_kg = 0
 					console.log(res)
 					if (res.code == 1) {
 						var datas = res.data
 						console.log(typeof datas)
-
+				
 						if (typeof datas == 'string') {
 							datas = JSON.parse(datas)
 						}
-
-						that.banner = datas
-						console.log(datas)
-
-
+				
+						if (that.login_type == 0) {
+							uni.showToast({
+								icon: 'none',
+								title: '注册成功'
+							});
+						}
+						if (that.login_type == -1) {
+							uni.setStorageSync('tel', that.tel)
+							uni.setStorageSync('password', that.pwd)
+							uni.showToast({
+								icon: 'none',
+								title: '修改成功'
+							});
+						}
+						that.login_type =1
+				
 					} else {
 						if (res.msg) {
 							uni.showToast({
@@ -375,7 +345,160 @@
 					console.log(e)
 					uni.showToast({
 						icon: 'none',
-						title: '获取数据失败'
+						title: '操作失败'
+					})
+				})
+			},
+			login_fuc() {
+				if (that.tel == '' || !(/^1\d{10}$/.test(that.tel))) {
+					wx.showToast({
+						icon: 'none',
+						title: '手机号有误'
+					})
+					return
+				}
+
+				
+				if(that.login_type==1){
+					if (!that.pwd) {
+						uni.showToast({
+							icon: 'none',
+							title: '请输入密码'
+						});
+						return;
+					}
+				}else{
+					if (!that.code) {
+						uni.showToast({
+							icon: 'none',
+							title: '请输入验证码'
+						});
+						return;
+					}
+				}
+				var datas = {}
+				if(that.login_type==1){
+					datas = {
+						type:3,
+						phone: that.tel,
+						pwd: that.pwd
+					}
+				}
+				if(that.login_type==2){
+					datas = {
+						type:2,
+						phone: that.tel,
+						verificationCode: that.code
+					}
+				}
+				console.log(datas)
+				// uni.showToast({
+				// 	icon: 'none',
+				// 	title: '登录成功'
+				// });
+
+				// that.logindata(data)
+				// that.login('问心')
+				uni.showLoading({
+					mask:true,
+					title:'正在登录'
+				})
+				var jkurl='/login'
+				service.P_post(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+				
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						uni.showToast({
+							icon: 'none',
+							title: '登录成功'
+						});
+						uni.setStorageSync('tel', that.tel)
+						uni.setStorageSync('password', that.pwd)
+						uni.setStorageSync('token', datas.userToken)
+						uni.setStorageSync('loginmsg', datas)
+						that.logindata(datas)
+						that.login(datas.nickname)
+						setTimeout(()=>{
+							uni.navigateBack({
+								delta:1
+							})
+						},1000)
+				
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '操作失败'
+					})
+				})
+				
+			},
+			getdata() {
+				var that =this
+				var data = {
+					keyword:'fwsm'
+				}
+				
+				//selectSaraylDetailByUserCard
+				var jkurl = '/getClause'
+				uni.showLoading({
+					title: '正在获取数据'
+				})
+				service.P_get(jkurl, data).then(res => {
+					that.btn_kg = 0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+							
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						
+						that.datas = datas[0].content
+						that.yhxy=true
+						console.log(datas)
+							
+							
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败，请检查您的网络连接'
 					})
 				})
 			},

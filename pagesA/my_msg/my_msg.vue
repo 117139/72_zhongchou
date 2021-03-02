@@ -95,21 +95,17 @@
 					title:'操作成功'
 				})
 				// service.wxlogin()
-				setTimeout(()=>{
-					uni.navigateBack({
-						delta:1
-					})
-				},1000)
-				return
+				// setTimeout(()=>{
+				// 	uni.navigateBack({
+				// 		delta:1
+				// 	})
+				// },1000)
+				// return
 				var jkurl='/user/amendInfo'
 				var datas={
 					token: that.loginDatas.userToken || '',
 					avatarurl:this.loginDatas_data.avatarurl,
 					nickname:this.loginDatas_data.nickname,
-					real_name:this.loginDatas_data.real_name,
-					age:this.loginDatas_data.age,
-					occupation:this.loginDatas_data.occupation,
-					region:this.loginDatas_data.region,
 				}
 				if(this.btn_kg==1){
 					return
@@ -132,7 +128,7 @@
 							icon:'none',
 							title:'操作成功'
 						})
-						service.wxlogin()
+						service.wxlogin('token')
 						setTimeout(()=>{
 							uni.navigateBack({
 								delta:1
@@ -167,8 +163,9 @@
 			myUpload(rsp) {
 				var that = this
 				var tximg = rsp.path; //更新头像方式一
-				Vue.set(that.loginDatas_data,'avatarurl',tximg)
-				return
+				// Vue.set(that.loginDatas_data,'avatarurl',tximg)
+				// return
+				// #ifndef H5
 				uni.uploadFile({
 					url: service.IPurl + '/upload/streamImg', //仅为示例，非真实的接口地址
 					filePath: tximg,
@@ -185,6 +182,49 @@
 						}
 					}
 				});
+				// #endif
+				// #ifdef H5
+				uni.request({
+						url: rsp.path,
+						method: 'GET',
+						responseType: 'arraybuffer',
+						success: (res) => {
+								let base64 = wx.arrayBufferToBase64(res.data); //把arraybuffer转成base64
+								console.log('base64')
+								base64 = 'data:image/jpeg;base64,' + base64; //不加上这串字符，在页面无法显示
+								var datas={
+									file:base64,
+									type:1,
+								}
+								var jkurl='/upload/base64Img'
+								console.log('h5 upload')
+								// 单个请求
+								service.P_post(jkurl, datas).then(res => {
+									that.btn_kg=0
+									console.log(res)
+									if (res.code == 1) {
+										Vue.set(that.loginDatas_data,'avatarurl',res.msg)
+										
+									} else {
+										uni.showToast({
+											icon: "none",
+											title: "上传失败"
+										})
+									}
+								}).catch(e => {
+									that.btn_kg=0
+									console.log(e)
+									uni.showToast({
+										icon: 'none',
+										title: '获取数据失败'
+									})
+								})
+						},
+						fail: (err) => {
+							console.log(err)
+						}
+				});
+				// #endif
 				//rsp.avatar.imgSrc = rsp.path; //更新头像方式二
 			},
 			getbanner() {

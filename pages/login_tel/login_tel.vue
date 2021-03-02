@@ -1,12 +1,12 @@
 <template>
 	<view class="login_bg">
 		<view class="login_box dis_flex_c ju_c aic">
-			<image class="logo" :src="getimg('/static/images/logo.png')" mode=""></image>
+			<image class="logo" :src="getimg('/static/web/images/logo.png')" mode=""></image>
 		</view>
 		<view class="dis_flex aic ju_c login_tip">登录表示您同意<text @tap="jump" data-url="/pagesA/about/about?type=ysxy">《法律声明和隐私政策》</text></view>
 		<view class="dis_flex aic ju_c login_btn">
 			<button class='bottom' open-type="getPhoneNumber" @getphonenumber="onGetPhoneNumber">
-				<image class="wx_icon" :src="getimg('/static/images/wx.png')"></image>
+				<image class="wx_icon" :src="getimg('/static/web/images/wx.png')"></image>
 				绑定手机号
 			</button>
 		</view>
@@ -89,10 +89,10 @@
 									encryptedData:e.detail.encryptedData,
 									iv:e.detail.iv,
 									code:res.code,
-									token:token,
+									// token:token,
 									nickname:that.nickname,
 									avatarurl:that.avatarurl,
-									type:3
+									type:1
 								}
 								//selectSaraylDetailByUserCard
 								var jkurl = '/login'

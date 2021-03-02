@@ -98,9 +98,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   var m0 =
-    _vm.htmlReset == 0 ? _vm.getimg("/static/images/my_banner_02.png") : null
+    _vm.htmlReset == 0
+      ? _vm.getimg("/static/web/images/my_banner_02.png")
+      : null
   var m1 =
-    _vm.htmlReset == 0 && !_vm.hasLogin
+    _vm.htmlReset == 0 && _vm.hasLogin
       ? _vm.getimg(_vm.loginDatas.avatarurl)
       : null
 

@@ -5,42 +5,37 @@
 				<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
 		</view>
 		<view v-if="htmlReset==0">
-			<view class="top_box">
+			<view  v-if="xqData" class="top_box">
 				<swiper class="swiper" :indicator-dots="indicatorDots"
 					indicator-color="rgba(255,255,255,.9)" indicator-active-color="#F54248"  
 				 :autoplay="autoplay" :interval="interval" :duration="duration" circular='true' >
-						<swiper-item v-for="(item,idx) in bannerData">
-								
-								<image  class="swi_img" :src="getimg(item)" lazy-load="true" mode="aspectFill"></image>
-								<!-- <image v-else class="swi_img" :src="getimg(item.body)" mode="aspectFill"
-								 @tap="jump" data-url="../ad_zz/ad_zz"></image> -->
-						</swiper-item>
+					<swiper-item v-for="(item,idx) in xqData.pic">
+						<image  class="swi_img" :src="getimg(item)" lazy-load="true" mode="aspectFill"></image>
+					</swiper-item>
 						
 				</swiper>
 				<view class="fq_user dis_flex aic">
-					<image class="fq_user_tx" :src="getimg('/static/images/tx_m2.jpg')" mode="aspectFill"></image>
-					<view class="fq_user_name">小二郎发起<text>发起筹款</text></view>
-					<view class="grqz">个人求助</view>
+					<image class="fq_user_tx" :src="getimg(xqData.use_head_portrait)" mode="aspectFill"></image>
+					<view class="fq_user_name">{{xqData.user_nickname}}<text>发起筹款</text></view>
+					<view v-if="xqData.genre" class="grqz">{{xqData.genre}}</view>
 				</view>
-				<view class="xq_tit">爱心接力！父亲意外摔伤！恳请大家援手 相助！</view>
-				<view class="xq_bqs">
-					<view class="xq_bq">河北</view>
-					<view class="xq_bq">40岁</view>
-					<view class="xq_bq">男性患者</view>
+				<view class="xq_tit">{{xqData.title}}</view>
+				<view class="xq_bqs" v-if="xqData.label.length>0">
+					<view v-if="item" class="xq_bq" v-for="(item,index) in xqData.label">{{item}}</view>
 				</view>
 				<view class="xq_datas">
-					<image class="xq_datas_bg" :src="getimg('/static/images/xqimg_06.jpg')" mode="aspectFill"></image>
+					<image class="xq_datas_bg" :src="getimg('/static/web/images/xqimg_06.jpg')" mode="aspectFill"></image>
 					<view class="xq_datas_box">
 						<view class="xq_datas_li">
-							<view class="xq_datas_li_num">150000</view>
+							<view class="xq_datas_li_num">{{xqData.total_raise_funds}}</view>
 							<view class="xq_datas_li_name">需要筹款(元)</view>
 						</view>
 						<view class="xq_datas_li">
-							<view class="xq_datas_li_num">14862</view>
+							<view class="xq_datas_li_num">{{xqData.yet_raise_funds}}</view>
 							<view class="xq_datas_li_name">已经筹款(元)</view>
 						</view>
 						<view class="xq_datas_li">
-							<view class="xq_datas_li_num">320</view>
+							<view class="xq_datas_li_num">{{xqData.help_number}}</view>
 							<view class="xq_datas_li_name">帮助次数</view>
 						</view>
 					</view>
@@ -53,17 +48,16 @@
 					<view class="jb_btn" @tap="jump" data-url="/pagesA/jubao/jubao"><text class="iconfont icon-jubao"></text>举报</view>
 				</view>
 				<view class="mian_inr">
-					患者姓名：赵庆丰
-					<br>患者年龄：40岁
-					<br>家庭住址：沧州市河间市沙洼乡南冬村
-					<br>所患疾病名称：意外摔伤导致ICU救治
-					<br>各位爱心人士，大家好，实属无奈在轻松筹平台向大家求助！请您帮帮我，救救我的弟弟
-					<br>我叫赵庆雷，是患者的亲哥哥，来自农村，弟弟就一个人未成家，是一位残疾人...
+					患者姓名：{{xqData.patient_name}}
+					<br>患者年龄：{{xqData.patient_age}}
+					<br>家庭住址：{{xqData.patient_address}}
+					<br>所患疾病名称：{{xqData.patient_illness}}
+					<br>{{xqData.content}}
 				</view>
-				<view class="main_imgs">
-					<image class="main_img" @tap="pveimg" data-array="" :data-src="getimg('/static/images/index_12.jpg')" :src="getimg('/static/images/index_12.jpg')" mode="aspectFill"></image>
-					<image class="main_img" @tap="pveimg" data-array="" :data-src="getimg('/static/images/index_12.jpg')" :src="getimg('/static/images/index_12.jpg')" mode="aspectFill"></image>
-					<image class="main_img" @tap="pveimg" data-array="" :data-src="getimg('/static/images/index_12.jpg')" :src="getimg('/static/images/index_12.jpg')" mode="aspectFill"></image>
+				<view class="main_imgs" v-if="xqData.content_img.length>0">
+					<image v-for="(item,index) in xqData.content_img" class="main_img" 
+					@tap="pveimg" data-array="" :data-src="getimg(item)" :src="getimg(item)" mode="aspectFill"></image>
+					
 				</view>
 			</view>
 			<view style="height: 10upx;width: 100%;background: #F1F1F1;"></view>
@@ -75,7 +69,7 @@
 				</view>
 				<view class="jz_list">
 					<view class="jz_li" v-for="(item,index) in datas">
-						<image class="jz_li_tx" :src="getimg('/static/images/tx_m2.jpg')" mode="aspectFill"></image>
+						<image class="jz_li_tx" :src="getimg('/static/web/images/tx_m2.jpg')" mode="aspectFill"></image>
 						<view class="jz_li_msg dis_flex aic ju_b">
 							<view class="jz_li_msg_l">
 								<view class="jz_li_msg_l_d1 dis_flex aic">
@@ -152,10 +146,10 @@
 				autoplay: true,
 				interval: 3000,
 				duration: 500,
-				bannerData:[
-					'/static/images/xqimg_03.jpg',
-					'/static/images/xqimg_03.jpg',
-					'/static/images/xqimg_03.jpg',
+				xqData:[
+					'/static/web/images/xqimg_03.jpg',
+					'/static/web/images/xqimg_03.jpg',
+					'/static/web/images/xqimg_03.jpg',
 				],
 				datas:[
 					{},
@@ -209,8 +203,9 @@
 		onPullDownRefresh() {
 			uni.stopPullDownRefresh()
 		},
-		onLoad() {
+		onLoad(option) {
 			that=this
+			that.id=option.id
 			that.onRetry()
 			jweixin.ready(function(){
 					// TODO  
@@ -219,8 +214,8 @@
 		methods: {
 			...mapMutations(['login','logindata','logout','setplatform']),
 			onRetry(){
-				that.htmlReset=0
-				// that.getdata()
+				// that.htmlReset=0
+				that.getdata()
 			},
 			async shareFc() {
 				let _this = this;
@@ -524,19 +519,22 @@
 			pveimg(e){
 				service.pveimg(e)
 			},
-			getbanner() {
+			getdata() {
 			
 				///api/info/list
 				var that = this
-				var data = {}
+				var data = {
+					id:that.id
+				}
 			
 				//selectSaraylDetailByUserCard
-				var jkurl = '/entrance'
+				var jkurl = '/crowdfundDetails'
 				uni.showLoading({
 					title: '正在获取数据'
 				})
 				service.P_get(jkurl, data).then(res => {
 					that.btn_kg = 0
+				that.htmlReset=0
 					console.log(res)
 					if (res.code == 1) {
 						var datas = res.data
@@ -546,7 +544,7 @@
 							datas = JSON.parse(datas)
 						}
 			
-						that.banner = datas
+						that.xqData = datas
 						console.log(datas)
 			
 			
@@ -588,6 +586,9 @@
 			},
 			getimg(img) {
 				return service.getimg(img)
+			},
+			getimgarr(img,type) {
+				return service.getimgarr(img,type)
 			},
 		}
 	}

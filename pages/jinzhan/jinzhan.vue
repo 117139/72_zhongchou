@@ -5,7 +5,7 @@
 				<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
 		</view>
 		<view v-if="htmlReset==0">
-			<image class="jiazhan" :src="getimg('/static/images/jinzhan.jpg')" mode="widthFix"></image>
+			<image class="jiazhan" :src="getimg('/static/web/images/jinzhan.jpg')" mode="widthFix"></image>
 			<view class="tx_btn" @tap="jump" data-url="/pagesA/my_tx/my_tx">提现</view>
 		</view>
 	</view>

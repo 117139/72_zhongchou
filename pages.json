@@ -139,7 +139,16 @@
 				"enablePullDownRefresh": false
 			}
 
-		}]
+		}    ,{
+                    "path" : "my_zc_edit/my_zc_edit",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "编辑",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
 	}],
 	"preloadRule": {
 		"pages/index/index": {

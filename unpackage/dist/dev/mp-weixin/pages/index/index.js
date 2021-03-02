@@ -111,10 +111,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   var l0 =
     _vm.htmlReset == 0
-      ? _vm.__map(_vm.bannerData, function(item, idx) {
+      ? _vm.__map(_vm.index_datas.bannerData, function(item, idx) {
           var $orig = _vm.__get_orig(item)
 
-          var m0 = _vm.getimg(item)
+          var m0 = _vm.getimg(item.img)
           return {
             $orig: $orig,
             m0: m0
@@ -133,14 +133,26 @@ var render = function() {
           }
         })
       : null
-  var m2 = _vm.getimg("/static/images/index_05.jpg")
-  var m3 = _vm.getimg("/static/images/tx_m2.jpg")
   var l2 =
-    _vm.htmlReset == 0
+    _vm.htmlReset == 0 && _vm.index_datas && _vm.index_datas.tjProjectData
+      ? _vm.__map(_vm.index_datas.tjProjectData, function(item, index) {
+          var $orig = _vm.__get_orig(item)
+
+          var m2 = _vm.getimg(item.pic[0])
+          var m3 = _vm.getimg(item.head_portrait)
+          return {
+            $orig: $orig,
+            m2: m2,
+            m3: m3
+          }
+        })
+      : null
+  var l3 =
+    _vm.htmlReset == 0 && _vm.index_datas
       ? _vm.__map(_vm.datas, function(item, index) {
           var $orig = _vm.__get_orig(item)
 
-          var m4 = _vm.getimg(item.img)
+          var m4 = _vm.getimg(item.pic[0])
           return {
             $orig: $orig,
             m4: m4
@@ -153,9 +165,8 @@ var render = function() {
       $root: {
         l0: l0,
         l1: l1,
-        m2: m2,
-        m3: m3,
-        l2: l2
+        l2: l2,
+        l3: l3
       }
     }
   )
@@ -263,9 +274,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _service = _interopRequireDefault(__webpack_require__(/*! ../../service.js */ 8));
 var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
@@ -279,7 +287,6 @@ var that;var _default =
       StatusBar: this.StatusBar,
       CustomBar: this.CustomBar,
       htmlReset: -1,
-      data_last: false,
       indicatorDots: false,
       autoplay: true,
       interval: 3000,
@@ -287,58 +294,37 @@ var that;var _default =
       current_swp: 0,
       swp_cur: 0,
       bannerData: [
-      '/static/images/index_02.jpg',
-      '/static/images/index_02.jpg',
-      '/static/images/index_02.jpg'],
+      '/static/web/images/index_02.jpg',
+      '/static/web/images/index_02.jpg',
+      '/static/web/images/index_02.jpg'],
 
+      index_datas: {},
       index_url: [
       {
         url: '',
-        img: '/static/images/index_icon_05.png',
+        img: '/static/web/images/index_icon_05.png',
         title: '项目众筹' },
 
       {
         url: '',
-        img: '/static/images/index_icon_07.png',
+        img: '/static/web/images/index_icon_07.png',
         title: '爱心众筹' },
 
       {
         url: '',
-        img: '/static/images/index_icon_09.png',
+        img: '/static/web/images/index_icon_09.png',
         title: '疾病众筹' },
 
       {
         url: '',
-        img: '/static/images/index_icon_12.png',
+        img: '/static/web/images/index_icon_12.png',
         title: '公司众筹' }],
 
 
-      datas: [
-      {
-        img: '/static/images/index_12.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '300000',
-        num: '150000' },
-
-      {
-        img: '/static/images/index_14.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '400000',
-        num: '250000' },
-
-      {
-        img: '/static/images/index_12.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '300000',
-        num: '50000' },
-
-      {
-        img: '/static/images/index_14.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '400000',
-        num: '150000' }] };
-
-
+      datas: [],
+      page: 1,
+      size: 15,
+      data_last: false };
 
   },
   computed: _objectSpread(_objectSpread({},
@@ -359,7 +345,7 @@ var that;var _default =
     } }),
 
   onPageScroll: function onPageScroll(e) {
-    console.log(e);
+    // console.log(e)
     this.PageScroll = e.scrollTop;
     // if(e.scrollTop>10){
     // 	uni.showToast({
@@ -368,7 +354,12 @@ var that;var _default =
     // }
   },
   onPullDownRefresh: function onPullDownRefresh() {
-    uni.stopPullDownRefresh();
+
+    that.onRetry();
+  },
+  onReachBottom: function onReachBottom() {
+
+    that.getdata();
   },
   onShareAppMessage: function onShareAppMessage() {
 
@@ -381,14 +372,70 @@ var that;var _default =
   (0, _vuex.mapMutations)(['login', 'logindata', 'logout', 'setplatform'])), {}, {
 
     sweiper_change: function sweiper_change(e) {
-      console.log(e.detail.current);
+      // console.log(e.detail.current)
       this.swp_cur = e.detail.current;
     },
     change_swp: function change_swp(num) {
       this.current_swp = num;
     },
     onRetry: function onRetry() {
+      that.getcate();
+      that.getbanner();
+      that.datas = [];
+      that.data_last = false;
+      that.page = 1;
+      that.getdata();
       that.htmlReset = 0;
+    },
+    getcate: function getcate() {
+      var data = {
+        type: 1 };
+
+
+      //selectSaraylDetailByUserCard
+      var jkurl = '/cate/list';
+
+      _service.default.P_get(jkurl, data).then(function (res) {
+        that.btn_kg = 0;
+        console.log(res);
+        if (res.code == 1) {
+          var datas = res.data;
+          console.log(typeof datas);
+
+          if (typeof datas == 'string') {
+            datas = JSON.parse(datas);
+          }
+
+          that.index_url = datas;
+          if (datas.length > 0) {
+            var cate_list = JSON.stringify(datas);
+            uni.setStorageSync('cate_list', cate_list);
+          }
+
+          console.log(datas);
+
+
+        } else {
+          if (res.msg) {
+            uni.showToast({
+              icon: 'none',
+              title: res.msg });
+
+          } else {
+            uni.showToast({
+              icon: 'none',
+              title: '获取失败' });
+
+          }
+        }
+      }).catch(function (e) {
+        that.btn_kg = 0;
+        console.log(e);
+        uni.showToast({
+          icon: 'none',
+          title: '获取数据失败' });
+
+      });
     },
     getbanner: function getbanner() {
 
@@ -397,7 +444,7 @@ var that;var _default =
       var data = {};
 
       //selectSaraylDetailByUserCard
-      var jkurl = '/entrance';
+      var jkurl = '/index';
       uni.showLoading({
         title: '正在获取数据' });
 
@@ -412,7 +459,7 @@ var that;var _default =
             datas = JSON.parse(datas);
           }
 
-          that.banner = datas;
+          that.index_datas = datas;
           console.log(datas);
 
 
@@ -437,6 +484,80 @@ var that;var _default =
           title: '获取数据失败' });
 
       });
+    },
+    getdata: function getdata() {
+
+      ///api/info/list
+      var that = this;
+      var data = {
+        page: that.page,
+        size: that.size,
+        type: that.fw_cur };
+
+
+      //selectSaraylDetailByUserCard
+      var jkurl = '/getCrowdfund';
+      uni.showLoading({
+        title: '正在获取数据' });
+
+      // setTimeout(()=>{
+      // 	uni.hideLoading()
+      // },1000)
+      // return
+      var page_now = that.page;
+      _service.default.P_get(jkurl, data).then(function (res) {
+        that.btn_kg = 0;
+        that.htmlReset = 0;
+        console.log(res);
+        if (res.code == 1) {
+          var datas = res.data;
+          console.log(typeof datas);
+
+          if (typeof datas == 'string') {
+            datas = JSON.parse(datas);
+          }
+          if (page_now == 1) {
+
+            that.datas = datas;
+          } else {
+            if (datas.length == 0) {
+              that.data_last = true;
+              return;
+            }
+            that.data_last = false;
+            that.datas = that.datas.concat(datas);
+          }
+          that.page++;
+          console.log(datas);
+
+
+        } else {
+          if (res.msg) {
+            uni.showToast({
+              icon: 'none',
+              title: res.msg });
+
+          } else {
+            uni.showToast({
+              icon: 'none',
+              title: '操作失败' });
+
+          }
+        }
+      }).catch(function (e) {
+        that.btn_kg = 0;
+        console.log(e);
+        uni.showToast({
+          icon: 'none',
+          title: '获取数据失败' });
+
+      });
+    },
+    jump_fuc: function jump_fuc(id) {
+      uni.setStorageSync('type_id', id);
+      uni.switchTab({
+        url: '/pages/goodlist/goodlist' });
+
     },
     jump: function jump(e) {
       var that = this;

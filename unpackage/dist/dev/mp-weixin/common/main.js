@@ -12,13 +12,13 @@ var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));
 
 var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 9));
 var _event = _interopRequireDefault(__webpack_require__(/*! common/event.js */ 11));
-var _base = _interopRequireDefault(__webpack_require__(/*! common/base64.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuCustom = function cuCustom() {__webpack_require__.e(/*! require.ensure | colorui/components/cu-custom */ "colorui/components/cu-custom").then((function () {return resolve(__webpack_require__(/*! ./colorui/components/cu-custom.vue */ 167));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _base = _interopRequireDefault(__webpack_require__(/*! common/base64.js */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var cuCustom = function cuCustom() {__webpack_require__.e(/*! require.ensure | colorui/components/cu-custom */ "colorui/components/cu-custom").then((function () {return resolve(__webpack_require__(/*! ./colorui/components/cu-custom.vue */ 175));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
-_vue.default.component('cu-custom', cuCustom);var baoJing = function baoJing() {__webpack_require__.e(/*! require.ensure | components/baojing/baojing */ "components/baojing/baojing").then((function () {return resolve(__webpack_require__(/*! ./components/baojing/baojing.vue */ 174));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+_vue.default.component('cu-custom', cuCustom);var baoJing = function baoJing() {__webpack_require__.e(/*! require.ensure | components/baojing/baojing */ "components/baojing/baojing").then((function () {return resolve(__webpack_require__(/*! ./components/baojing/baojing.vue */ 182));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
-_vue.default.component('bao-jing', baoJing);var tx_share = function tx_share() {__webpack_require__.e(/*! require.ensure | components/tx_share/tx_share */ "components/tx_share/tx_share").then((function () {return resolve(__webpack_require__(/*! ./components/tx_share/tx_share.vue */ 179));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+_vue.default.component('bao-jing', baoJing);var tx_share = function tx_share() {__webpack_require__.e(/*! require.ensure | components/tx_share/tx_share */ "components/tx_share/tx_share").then((function () {return resolve(__webpack_require__(/*! ./components/tx_share/tx_share.vue */ 187));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
-_vue.default.component('tx_share', tx_share);var QSPopup = function QSPopup() {__webpack_require__.e(/*! require.ensure | components/QS-popup/QS-popup */ "components/QS-popup/QS-popup").then((function () {return resolve(__webpack_require__(/*! @/components/QS-popup/QS-popup.vue */ 186));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+_vue.default.component('tx_share', tx_share);var QSPopup = function QSPopup() {__webpack_require__.e(/*! require.ensure | components/QS-popup/QS-popup */ "components/QS-popup/QS-popup").then((function () {return resolve(__webpack_require__(/*! @/components/QS-popup/QS-popup.vue */ 194));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 _vue.default.component('QSPopup', QSPopup);
 
@@ -116,7 +116,10 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
     var that = this;
     console.log('App Launch');
 
-    // service.wxlogin()
+    _service.default.wxlogin();
+
+
+
 
     uni.getSystemInfo({
       success: function success(e) {
@@ -152,7 +155,7 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
 
       } });
 
-
+    this.centerBtn();
   },
   onShow: function onShow() {
     console.log('App Show');
@@ -166,8 +169,13 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
 
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['login', 'logindata', 'logout', 'setplatform'])), {}, {
+
     //点击中间按钮
     centerBtn: function centerBtn() {
+
+
+
+
 
 
 

@@ -3178,18 +3178,18 @@ module.exports = {
 
 /***/ }),
 
-/***/ 150:
+/***/ 158:
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 151);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 159);
 
 /***/ }),
 
-/***/ 151:
+/***/ 159:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -3220,7 +3220,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 152);
+module.exports = __webpack_require__(/*! ./runtime */ 160);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -3237,7 +3237,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 152:
+/***/ 160:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -3969,7 +3969,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 153:
+/***/ 161:
 /*!***************************************************************!*\
   !*** E:/phpStudy/WWW/72_zhongchou/util/QS-SharePoster/app.js ***!
   \***************************************************************/
@@ -4531,7 +4531,7 @@ module.exports = _app;
 
 /***/ }),
 
-/***/ 154:
+/***/ 162:
 /*!**************************************************************************!*\
   !*** E:/phpStudy/WWW/72_zhongchou/util/QS-SharePoster/QS-SharePoster.js ***!
   \**************************************************************************/
@@ -4539,9 +4539,9 @@ module.exports = _app;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 150));var _app2 = _interopRequireDefault(__webpack_require__(/*! ./app.js */ 153));
-var _QRCodeAlg = _interopRequireDefault(__webpack_require__(/*! ./QRCodeAlg.js */ 155));
-var _imageTools = __webpack_require__(/*! ./image-tools.js */ 156);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
+/* WEBPACK VAR INJECTION */(function(uni) {var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 158));var _app2 = _interopRequireDefault(__webpack_require__(/*! ./app.js */ 161));
+var _QRCodeAlg = _interopRequireDefault(__webpack_require__(/*! ./QRCodeAlg.js */ 163));
+var _imageTools = __webpack_require__(/*! ./image-tools.js */ 164);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
 
 
 var ShreUserPosterBackgroundKey = 'ShrePosterBackground_'; // 背景图片缓存名称前缀
@@ -5964,7 +5964,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 155:
+/***/ 163:
 /*!*********************************************************************!*\
   !*** E:/phpStudy/WWW/72_zhongchou/util/QS-SharePoster/QRCodeAlg.js ***!
   \*********************************************************************/
@@ -6983,7 +6983,7 @@ QRBitBuffer.prototype = {
 
 /***/ }),
 
-/***/ 156:
+/***/ 164:
 /*!***********************************************************************!*\
   !*** E:/phpStudy/WWW/72_zhongchou/util/QS-SharePoster/image-tools.js ***!
   \***********************************************************************/
@@ -13248,7 +13248,7 @@ var STATE_KEY = 'STATE_KEY';
 // const imgurl = 'https://datixcx.com.aa.800123456.top/';
 // const imgurl = 'http://192.168.129.246/';
 var map_key = "7FEBZ-WLWK2-PMGUE-C4BFT-EKXB6-BFFNR";
-var imgurl = "https://wanuzn.com.aa.800123456.top/";
+var imgurl = "https://cchapp.com.aa.800123456.top/";
 var IPurl = imgurl + 'api/';
 // const IPurl='http://192.168.129.246/api/'
 // const adminurl='https://datixcx.com.aa.800123456.top/admin/';
@@ -13467,170 +13467,255 @@ var call = function call(e) {
 
   }
 };
-
+// 微信登录
 var wxlogin = function wxlogin(num) {
   var that = this;
-  // 获取用户信息
   if (num == 1) {
     uni.showLoading({
-      title: '正在登录',
-      mask: true });
+      mask: true,
+      title: '正在登录' });
 
   }
-  uni.getSetting({
-    success: function success(res) {
-      console.log(res);
-      if (res.authSetting['scope.userInfo'] == true) {
-        // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-        console.log('已经授权');
-        uni.getUserInfo({
-          success: function success(res) {
-            var userInfo = res.userInfo;
-            console.log(userInfo);
-            uni.setStorageSync('userInfo', res.userInfo);
-            if (!userInfo) {
+  if (num == 'token') {
+    var data = {
+      token: uni.getStorageSync('token'),
+      type: 4 };
 
-            } else {
-              uni.login({
-                success: function success(res) {
 
-                  // 发送 res.code 到后台换取 openId, sessionKey, unionId
-                  var uinfo = userInfo;
-                  var data = {
-                    code: res.code,
-                    nickname: uinfo.nickName,
-                    cover: uinfo.avatarUrl };
+    uni.request({
+      url: IPurl + '/login',
+      data: data,
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' },
 
-                  var rcode = res.code;
-                  console.log(res.code);
-                  uni.request({
-                    url: IPurl + 'user/login',
-                    data: data,
-                    header: {
-                      'content-type': 'application/x-www-form-urlencoded' },
+      dataType: 'json',
+      method: 'POST',
+      success: function success(res) {
+        uni.hideLoading();
+        console.log(res.data);
+        if (res.data.code == -2) {
+          if (num == 1) {
+            uni.redirectTo({
+              url: '/pages/login_tel/login_tel?nickname=' + uinfo.nickName + '&avatarurl=' + uinfo.avatarUrl });
 
-                    dataType: 'json',
-                    method: 'POST',
-                    success: function success(res) {
-                      uni.hideLoading();
-                      console.log(res.data);
-                      if (res.data.code == 1) {
-                        console.log('登录成功');
+          } else {
+            uni.navigateTo({
+              url: '/pages/login_tel/login_tel?nickname=' + uinfo.nickName + '&avatarurl=' + uinfo.avatarUrl });
+
+          }
+          return;
+        }
+        if (res.data.code == 1) {
+          console.log('登录成功');
+          console.log(res.data);
+          uni.setStorageSync('token', res.data.data.userToken);
+
+          _index.default.commit('logindata', res.data.data);
+          _index.default.commit('login', res.data.data.nickname);
+          uni.setStorageSync('loginmsg', res.data.data);
+
+        } else {
+          uni.removeStorageSync('userInfo');
+          uni.removeStorageSync('token');
+          uni.showToast({
+            icon: 'none',
+            title: '登录失败' });
+
+        }
+
+      },
+      fail: function fail() {
+        uni.hideLoading();
+        uni.showToast({
+          icon: 'none',
+          title: '登录失败' });
+
+      } });
+
+  } else {
+
+    uni.getSetting({
+      success: function success(res) {
+        console.log(res);
+        if (res.authSetting['scope.userInfo'] == true) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          console.log('已经授权');
+          uni.getUserInfo({
+            success: function success(res) {
+              var userInfo = res.userInfo;
+              console.log(userInfo);
+              uni.setStorageSync('userInfo', res.userInfo);
+              if (!userInfo) {
+
+              } else {
+                uni.login({
+                  success: function success(res) {
+
+                    // 发送 res.code 到后台换取 openId, sessionKey, unionId
+                    var uinfo = userInfo;
+                    var data = {
+                      code: res.code,
+                      nickname: uinfo.nickName,
+                      avatarurl: uinfo.avatarUrl,
+                      type: 1 };
+
+                    if (num == 'token') {
+                      data = {
+                        token: uni.getStorageSync('token') };
+
+                    }
+                    var rcode = res.code;
+                    console.log(res.code);
+                    uni.request({
+                      url: IPurl + '/login',
+                      data: data,
+                      header: {
+                        'content-type': 'application/x-www-form-urlencoded' },
+
+                      dataType: 'json',
+                      method: 'POST',
+                      success: function success(res) {
+                        uni.hideLoading();
                         console.log(res.data);
-                        uni.setStorageSync('token', res.data.data.token);
-                        //获取手机号
-                        /*
-                        if(!res.data.data.phone){
-                        	if(num==1){
-                        		uni.redirectTo({
-                        			url:'/pages/login_tel/login_tel'
-                        		})
-                        	}
-                        	return
-                        }*/
-                        _index.default.commit('logindata', res.data.data);
-                        _index.default.commit('login', res.data.data.nickname);
+                        if (res.data.code == -2) {
+                          if (num == 1) {
+                            uni.redirectTo({
+                              url: '/pages/login_tel/login_tel?nickname=' + uinfo.nickName + '&avatarurl=' + uinfo.avatarUrl });
 
-                        uni.setStorageSync('loginmsg', res.data.data);
-                        //0 商家端  1 用户端  2智能安装端
-                        console.log('store.xcx_status');
-                        console.log(_index.default.state.xcx_status);
-                        if (num == 1) {
-                          console.log(res.data.data.is_engineer);
-                          if (res.data.data.is_owner == 1) {
-                            _index.default.commit('set_xcx', 1);
-                            return;
+                          } else {
+                            uni.navigateTo({
+                              url: '/pages/login_tel/login_tel?nickname=' + uinfo.nickName + '&avatarurl=' + uinfo.avatarUrl });
+
                           }
-                          if (res.data.data.is_engineer == 1) {
-                            _index.default.commit('set_xcx', 2);
-                            return;
-                          }
-                          if (res.data.data.is_seller == 1) {
-                            _index.default.commit('set_xcx', 0);
-                          }
+                          return;
                         }
-                        // im login
+                        if (res.data.code == 1) {
+                          console.log('登录成功');
+                          console.log(res.data);
+                          uni.setStorageSync('token', res.data.data.userToken);
+
+                          _index.default.commit('logindata', res.data.data);
+                          _index.default.commit('login', res.data.data.nickname);
+                          uni.setStorageSync('loginmsg', res.data.data);
+
+                          // event.trigger({
+                          //     type:'test',
+                          //     page:'/pages/index/index',
+                          //     //obj和test是举的例子，随意啥都行，这个传过去在on中的args中都可以获取到
+                          //     obj:{
+
+                          //     },
+                          //     test:{
+                          // 			'loginmsg': res.data.data
+                          //     },
+                          //     success:function(data){
+                          //         //data为on中返回的数据
+                          //     }
+                          // });
+                          // im login
 
 
 
-                        if (num == 1) {
-                          uni.showToast({
-                            icon: 'none',
-                            title: '登录成功' });
+                          if (num == 1) {
+                            uni.showToast({
+                              icon: 'none',
+                              title: '登录成功' });
 
-                          setTimeout(function () {
-                            _event.default.trigger({
-                              type: 'test',
-                              page: '/pages/index/index',
-                              //obj和test是举的例子，随意啥都行，这个传过去在on中的args中都可以获取到
-                              obj: {},
-
-
-                              test: {
-                                'loginmsg': res.data.data },
-
-                              success: function success(data) {
-                                //data为on中返回的数据
-                              } });
-
-                          }, 1000);
-                          setTimeout(function () {
-                            uni.navigateBack();
-                          }, 1500);
+                            setTimeout(function () {
+                              uni.navigateBack();
+                            }, 1000);
+                          }
                         } else {
-                          _event.default.trigger({
-                            type: 'test',
-                            page: '/pages/index/index',
-                            //obj和test是举的例子，随意啥都行，这个传过去在on中的args中都可以获取到
-                            obj: {},
-
-
-                            test: {
-                              'loginmsg': res.data.data },
-
-                            success: function success(data) {
-                              //data为on中返回的数据
-                            } });
-
-                        }
-                      } else {
-                        uni.removeStorageSync('userInfo');
-                        uni.removeStorageSync('token');
-                        if (res.msg) {
-                          uni.showToast({
-                            icon: 'none',
-                            title: res.msg });
-
-                        } else {
+                          uni.removeStorageSync('userInfo');
+                          uni.removeStorageSync('token');
                           uni.showToast({
                             icon: 'none',
                             title: '登录失败' });
 
                         }
-                      }
 
-                    },
-                    fail: function fail() {
-                      uni.hideLoading();
-                      uni.showToast({
-                        icon: 'none',
-                        title: '登录失败' });
+                      },
+                      fail: function fail() {
+                        uni.hideLoading();
+                        uni.showToast({
+                          icon: 'none',
+                          title: '登录失败' });
 
-                    } });
+                      } });
 
-                } });
+                  } });
 
-            }
-          } });
+              }
+            } });
 
+
+        } else {
+          uni.hideLoading();
+        }
+      } });
+
+
+  }
+};
+// 手机号登录
+var login_tel = function login_tel(num) {
+  var datas;
+  var tel;
+  var password;
+  if (uni.getStorageSync('tel')) {
+    tel = uni.getStorageSync('tel');
+    password = uni.getStorageSync('password');
+    datas = {
+      type: 3,
+      phone: tel,
+      pwd: password };
+
+  }
+
+  var jkurl = '/login';
+  P_post(jkurl, datas).then(function (res) {
+    console.log(res);
+    if (res.code == 1) {
+      var datas = res.data;
+      console.log(typeof datas);
+
+      if (typeof datas == 'string') {
+        datas = JSON.parse(datas);
+      }
+      console.log('登录成功');
+      uni.setStorageSync('tel', tel);
+      uni.setStorageSync('password', password);
+      uni.setStorageSync('token', datas.userToken);
+      uni.setStorageSync('loginmsg', datas);
+      _index.default.commit('logindata', datas);
+      _index.default.commit('login', datas.nickname);
+      // setTimeout(() => {
+      // 	uni.navigateBack({
+      // 		delta: 1
+      // 	})
+      // }, 1000)
+
+    } else {
+      if (res.msg) {
+        uni.showToast({
+          icon: 'none',
+          title: res.msg });
 
       } else {
-        uni.hideLoading();
+        uni.showToast({
+          icon: 'none',
+          title: '操作失败' });
+
       }
-    } });
+    }
+  }).catch(function (e) {
+    console.log(e);
+    uni.showToast({
+      icon: 'none',
+      title: '操作失败' });
 
+  });
 };
-
 var setUsermsg = function setUsermsg(data) {
   var jkurl = '/user/amendInfo';
 
@@ -13683,6 +13768,7 @@ var wx_upload = function wx_upload(tximg) {
       mask: true,
       title: '正在上传' });
 
+
     uni.uploadFile({
       url: IPurl + 'user/upload_img',
       filePath: tximg,
@@ -13729,6 +13815,69 @@ var wx_upload = function wx_upload(tximg) {
         }
       } });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   });
 
 };
@@ -13738,7 +13887,14 @@ var wx_upload = function wx_upload(tximg) {
 
 
 // 配置接口请求的公共方法
-var http = function http() {var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},_ref$url = _ref.url,url = _ref$url === void 0 ? '' : _ref$url,_ref$param = _ref.param,param = _ref$param === void 0 ? {} : _ref$param,_ref$method = _ref.method,method = _ref$method === void 0 ? '' : _ref$method,_ref$header = _ref.header,header = _ref$header === void 0 ? { 'content-type': 'application/x-www-form-urlencoded' } : _ref$header;
+var http = function http()
+
+
+
+
+
+
+{var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},_ref$url = _ref.url,url = _ref$url === void 0 ? '' : _ref$url,_ref$param = _ref.param,param = _ref$param === void 0 ? {} : _ref$param,_ref$method = _ref.method,method = _ref$method === void 0 ? '' : _ref$method,_ref$header = _ref.header,header = _ref$header === void 0 ? { 'content-type': 'application/x-www-form-urlencoded' } : _ref$header;
 
   var timeStart = Date.now();
   return new Promise(function (resolve, reject) {
@@ -13877,7 +14033,7 @@ var P_delete = function P_delete(url) {var param = arguments.length > 1 && argum
 //   console.log(e)
 // })
 var getimg = function getimg(img) {
-  return img;
+  // return img
 
 
 
@@ -13893,7 +14049,10 @@ var getimgarr = function getimgarr(imgs, type) {
   if (!type) {
     type = ',';
   }
-  imgs = imgs.split(type);
+  if (type != 'arr') {
+
+    imgs = imgs.split(type);
+  }
   // console.log(imgurl+img)
   var newimgs = [];
   for (var i = 0; i < imgs.length; i++) {
@@ -13994,6 +14153,7 @@ var get_fwb = function get_fwb(str) {
   jump: jump,
   call: call,
   wxlogin: wxlogin,
+  login_tel: login_tel,
   setUsermsg: setUsermsg,
   P_get: P_get,
   P_post: P_post,

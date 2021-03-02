@@ -97,7 +97,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var m0 = _vm.htmlReset == 0 ? _vm.getimg("/static/images/jinzhan.jpg") : null
+  var m0 =
+    _vm.htmlReset == 0 ? _vm.getimg("/static/web/images/jinzhan.jpg") : null
   _vm.$mp.data = Object.assign(
     {},
     {

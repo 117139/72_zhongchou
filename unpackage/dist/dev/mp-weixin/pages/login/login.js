@@ -97,8 +97,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var m0 = _vm.getimg("/static/images/logo.png")
-  var m1 = _vm.getimg("/static/images/wx.png")
+  var m0 = _vm.getimg("/static/web/images/logo.png")
+  var m1 = _vm.getimg("/static/web/images/wx.png")
   _vm.$mp.data = Object.assign(
     {},
     {

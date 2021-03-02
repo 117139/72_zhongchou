@@ -6,10 +6,10 @@
 		</view>
 		<block v-if="htmlReset==0">
 				<view class="my_top">
-					<image class="my_top_bg" :src="getimg('/static/images/my_banner_02.png')" mode=""></image>
-					<view v-if="!hasLogin" class="my_top_box">
+					<image class="my_top_bg" :src="getimg('/static/web/images/my_banner_02.png')" mode=""></image>
+					<view v-if="hasLogin" class="my_top_box">
 						<!-- 签到 -->
-						<view class="qiandao_box" @tap="jump" :data-url="'/pagesA/renzheng/renzheng?type='+0">
+						<view v-if="!loginDatas.id_number" class="qiandao_box" @tap="jump" :data-url="'/pagesA/renzheng/renzheng?type='+0">
 							<view class="qd_nbox">
 								<text class="iconfont icon-Authentication"></text>
 								<text>去认证</text>
