@@ -6,10 +6,10 @@
 		</view>
 		<view v-if="htmlReset==0">
 			<view class="bz_user dis_flex">
-				<image class="bz_user_tx" :src="getimg('/static/images/tx_m2.jpg')" mode="aspectFill"></image>
+				<image class="bz_user_tx" :src="getimg(xqData.use_head_portrait)" mode="aspectFill"></image>
 				<view class="flex_1 bz_yuser_box">
-					<view class="bz_yuser_d1">小二郎发起<text>筹款人</text></view>
-					<view class="bz_yuser_d2">谢谢你帮助我</view>
+					<view class="bz_yuser_d1">{{xqData.user_nickname}}<text>筹款人</text></view>
+					<view class="bz_yuser_d2">{{xqData.title}}</view>
 				</view>
 			</view>
 			<view class="bz_box">
@@ -47,6 +47,8 @@
 				CustomBar: this.CustomBar,
 				htmlReset:-1,
 				data_last:false,
+				id:'',
+				xqData:'',
 				cz_list:[
 					{
 						name:'10',
@@ -114,17 +116,98 @@
 		onPullDownRefresh() {
 			uni.stopPullDownRefresh()
 		},
-		onLoad() {
+		onLoad(option) {
 			that=this
+			that.id=option.id
 			that.onRetry()
 		},
 		methods: {
 			...mapMutations(['login','logindata','logout','setplatform']),
 			onRetry(){
 				that.htmlReset=0
-				// that.getdata()
+				that.getdata()
 			},
 			sub(){
+				var money=0
+				if(that.cz_cur==-1){
+					if(!that.other_mon){
+						uni.showToast({
+							icon:'none',
+							title:'请输入充值金额'
+						})
+						return
+					}else if(that.other_mon>=1){
+						money=that.other_mon
+					}else{
+						uni.showToast({
+							icon:'none',
+							title:'金额不能小于1元'
+						})
+						return
+					}
+					
+				}else{
+					uni.showToast({
+						icon:'none',
+						title:that.cz_list[that.cz_cur].name+'元'
+					})
+					money=that.cz_list[that.cz_cur].name*1
+				}
+				//selectSaraylDetailByUserCard
+				var jkurl = '/pay/donate'
+				var data={
+					token: that.$store.state.loginDatas.userToken,
+					id:that.id,
+					// #ifdef MP-WEIXIN
+					payType:1, //1：小程序支付   2：APP支付  3：h5支付
+					// #endif
+					// #ifdef APP-PLUS
+					payType:2,
+					// #endif
+					// #ifdef H5
+					payType:3,
+					// #endif
+					money: money
+				}
+				service.P_post(jkurl, data).then(res => {
+					that.btn_kg = 0
+					that.htmlReset=0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+							
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						
+							
+							
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '操作失败'
+					})
+				})
+				
+			},
+			
+			sub1(){
 				// if (that.phone == '' || !(/^1\d{10}$/.test(that.phone))) {
 				// 	wx.showToast({
 				// 		icon: 'none',
@@ -176,19 +259,22 @@
 					})
 				},1000)
 			},
-			getbanner() {
+			getdata() {
 			
 				///api/info/list
 				var that = this
-				var data = {}
+				var data = {
+					id:that.id
+				}
 			
 				//selectSaraylDetailByUserCard
-				var jkurl = '/entrance'
+				var jkurl = '/crowdfundDetails'
 				uni.showLoading({
 					title: '正在获取数据'
 				})
 				service.P_get(jkurl, data).then(res => {
 					that.btn_kg = 0
+					that.htmlReset=0
 					console.log(res)
 					if (res.code == 1) {
 						var datas = res.data
@@ -198,7 +284,7 @@
 							datas = JSON.parse(datas)
 						}
 			
-						that.banner = datas
+						that.xqData = datas
 						console.log(datas)
 			
 			

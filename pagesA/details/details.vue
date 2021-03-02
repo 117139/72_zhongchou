@@ -69,15 +69,15 @@
 				</view>
 				<view class="jz_list">
 					<view class="jz_li" v-for="(item,index) in datas">
-						<image class="jz_li_tx" :src="getimg('/static/web/images/tx_m2.jpg')" mode="aspectFill"></image>
+						<image class="jz_li_tx" :src="getimg(item.head_portrait)" mode="aspectFill"></image>
 						<view class="jz_li_msg dis_flex aic ju_b">
 							<view class="jz_li_msg_l">
 								<view class="jz_li_msg_l_d1 dis_flex aic">
-									<view class="jz_li_msg_l_name">李金斗</view>支持了100.00元
+									<view class="jz_li_msg_l_name">{{item.nickname}}</view>支持了{{item.money}}元
 								</view>
-								<view class="jz_li_msg_l_d2">2021-02-06 14:37:10</view>
+								<view class="jz_li_msg_l_d2">{{item.create_time}}</view>
 							</view>
-							<text @tap="zan_fuc(item)" class="iconfont icon-zan" :class="item.active?'zan':''"></text>
+							<text @tap="zan_fuc(item)" class="iconfont icon-zan" :class="item.is_praise==1?'zan':''"></text>
 						</view>
 					</view>
 				</view>
@@ -141,28 +141,16 @@
 				StatusBar: this.StatusBar,
 				CustomBar: this.CustomBar,
 				htmlReset:-1,
-				data_last:false,
 				indicatorDots: true,
 				autoplay: true,
 				interval: 3000,
 				duration: 500,
-				xqData:[
-					'/static/web/images/xqimg_03.jpg',
-					'/static/web/images/xqimg_03.jpg',
-					'/static/web/images/xqimg_03.jpg',
-				],
-				datas:[
-					{},
-					{},
-					{},
-					{},
-					{},
-					{},
-					{},
-					{},
-					{},
-					{},
-				],
+				id:'',
+				xqData:{},
+				datas:[],
+				page: 1,
+				size: 15,
+				data_last:false,
 				poster: {
 					width: 750,
 					height: 1334
@@ -201,7 +189,10 @@
 			// }
 		},
 		onPullDownRefresh() {
-			uni.stopPullDownRefresh()
+			that.onRetry()
+		},
+		onReachBottom() {
+			that.getdatalist()
 		},
 		onLoad(option) {
 			that=this
@@ -216,6 +207,7 @@
 			onRetry(){
 				// that.htmlReset=0
 				that.getdata()
+				that.getdatalist()
 			},
 			async shareFc() {
 				let _this = this;
@@ -510,11 +502,56 @@
 				// #endif
 			},
 			zan_fuc(item){
-				if(!item.active){
-					Vue.set(item,'active',true)
-				}else{
-					Vue.set(item,'active',false)
+				
+				//selectSaraylDetailByUserCard
+				var jkurl = '/attention'
+				var data={
+					token: that.$store.state.loginDatas.userToken,
+					id:item.id,
+					type:1,
+					operate: item.is_praise==1?'cancel':'affirm'   //操作类型  affirm：确认操作（就是点赞，关注等）     cancel：取消（取消点赞，关注等）
 				}
+				service.P_get(jkurl, data).then(res => {
+					that.btn_kg = 0
+					that.htmlReset=0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+							
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+							
+						if(item.is_praise==1){
+							Vue.set(item,'is_praise',2)
+						}else{
+							Vue.set(item,'is_praise',1)
+						}
+							
+							
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '操作失败'
+					})
+				})
+				
 			},
 			pveimg(e){
 				service.pveimg(e)
@@ -534,7 +571,7 @@
 				})
 				service.P_get(jkurl, data).then(res => {
 					that.btn_kg = 0
-				that.htmlReset=0
+					that.htmlReset=0
 					console.log(res)
 					if (res.code == 1) {
 						var datas = res.data
@@ -570,6 +607,75 @@
 					})
 				})
 			},
+			getdatalist() {
+				
+				var data = {
+					id:that.id,
+					page: that.page,
+					size: that.size,
+					token: that.$store.state.loginDatas.userToken
+				}
+			
+				//selectSaraylDetailByUserCard
+				var jkurl = '/getHelpRecord'
+				uni.showLoading({
+					title: '正在获取数据'
+				})
+				// setTimeout(()=>{
+				// 	uni.hideLoading()
+				// },1000)
+				// return
+				var page_now = that.page
+				service.P_get(jkurl, data).then(res => {
+					that.btn_kg = 0
+					that.htmlReset=0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+			
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+			
+						if (page_now == 1) {
+						
+							that.datas = datas
+						} else {
+							if (datas.length == 0) {
+								that.data_last = true
+								return
+							}
+							that.data_last = false
+							that.datas = that.datas.concat(datas)
+						}
+						that.page++
+						console.log(datas)
+			
+			
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败'
+					})
+				})
+			},
+			
 			jump(e) {
 				var that = this
 			

@@ -247,6 +247,7 @@ var that;var _default =
       // 	uni.hideLoading()
       // },1000)
       // return
+      var page_now = that.page;
       _service.default.P_get(jkurl, data).then(function (res) {
         that.btn_kg = 0;
         that.htmlReset = 0;
@@ -259,7 +260,18 @@ var that;var _default =
             datas = JSON.parse(datas);
           }
 
-          that.banner = datas;
+          if (page_now == 1) {
+
+            that.datas = datas;
+          } else {
+            if (datas.length == 0) {
+              that.data_last = true;
+              return;
+            }
+            that.data_last = false;
+            that.datas = that.datas.concat(datas);
+          }
+          that.page++;
           console.log(datas);
 
 

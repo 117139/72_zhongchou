@@ -221,6 +221,7 @@
 				// 	uni.hideLoading()
 				// },1000)
 				// return
+				var page_now = that.page
 				service.P_get(jkurl, data).then(res => {
 					that.btn_kg = 0
 					that.htmlReset=0
@@ -233,7 +234,18 @@
 							datas = JSON.parse(datas)
 						}
 			
-						that.banner = datas
+						if (page_now == 1) {
+						
+							that.datas = datas
+						} else {
+							if (datas.length == 0) {
+								that.data_last = true
+								return
+							}
+							that.data_last = false
+							that.datas = that.datas.concat(datas)
+						}
+						that.page++
 						console.log(datas)
 			
 			

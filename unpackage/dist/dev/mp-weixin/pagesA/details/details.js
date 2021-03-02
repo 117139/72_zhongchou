@@ -131,7 +131,18 @@ var render = function() {
           }
         })
       : null
-  var m5 = _vm.getimg("/static/web/images/tx_m2.jpg")
+  var l2 =
+    _vm.htmlReset == 0
+      ? _vm.__map(_vm.datas, function(item, index) {
+          var $orig = _vm.__get_orig(item)
+
+          var m5 = _vm.getimg(item.head_portrait)
+          return {
+            $orig: $orig,
+            m5: m5
+          }
+        })
+      : null
   _vm.$mp.data = Object.assign(
     {},
     {
@@ -140,7 +151,7 @@ var render = function() {
         m1: m1,
         m2: m2,
         l1: l1,
-        m5: m5
+        l2: l2
       }
     }
   )
@@ -320,28 +331,16 @@ var that;var _default =
       StatusBar: this.StatusBar,
       CustomBar: this.CustomBar,
       htmlReset: -1,
-      data_last: false,
       indicatorDots: true,
       autoplay: true,
       interval: 3000,
       duration: 500,
-      xqData: [
-      '/static/web/images/xqimg_03.jpg',
-      '/static/web/images/xqimg_03.jpg',
-      '/static/web/images/xqimg_03.jpg'],
-
-      datas: [
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {}],
-
+      id: '',
+      xqData: {},
+      datas: [],
+      page: 1,
+      size: 15,
+      data_last: false,
       poster: {
         width: 750,
         height: 1334 },
@@ -380,7 +379,10 @@ var that;var _default =
     // }
   },
   onPullDownRefresh: function onPullDownRefresh() {
-    uni.stopPullDownRefresh();
+    that.onRetry();
+  },
+  onReachBottom: function onReachBottom() {
+    that.getdatalist();
   },
   onLoad: function onLoad(option) {
     that = this;
@@ -395,6 +397,7 @@ var that;var _default =
     onRetry: function onRetry() {
       // that.htmlReset=0
       that.getdata();
+      that.getdatalist();
     },
     shareFc: function shareFc() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _this, d;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 _this = _this2;_context.prev = 1;
@@ -689,11 +692,56 @@ var that;var _default =
 
     },
     zan_fuc: function zan_fuc(item) {
-      if (!item.active) {
-        _vue.default.set(item, 'active', true);
-      } else {
-        _vue.default.set(item, 'active', false);
-      }
+
+      //selectSaraylDetailByUserCard
+      var jkurl = '/attention';
+      var data = {
+        token: that.$store.state.loginDatas.userToken,
+        id: item.id,
+        type: 1,
+        operate: item.is_praise == 1 ? 'cancel' : 'affirm' //操作类型  affirm：确认操作（就是点赞，关注等）     cancel：取消（取消点赞，关注等）
+      };
+      _service.default.P_get(jkurl, data).then(function (res) {
+        that.btn_kg = 0;
+        that.htmlReset = 0;
+        console.log(res);
+        if (res.code == 1) {
+          var datas = res.data;
+          console.log(typeof datas);
+
+          if (typeof datas == 'string') {
+            datas = JSON.parse(datas);
+          }
+
+          if (item.is_praise == 1) {
+            _vue.default.set(item, 'is_praise', 2);
+          } else {
+            _vue.default.set(item, 'is_praise', 1);
+          }
+
+
+        } else {
+          if (res.msg) {
+            uni.showToast({
+              icon: 'none',
+              title: res.msg });
+
+          } else {
+            uni.showToast({
+              icon: 'none',
+              title: '操作失败' });
+
+          }
+        }
+      }).catch(function (e) {
+        that.btn_kg = 0;
+        console.log(e);
+        uni.showToast({
+          icon: 'none',
+          title: '操作失败' });
+
+      });
+
     },
     pveimg: function pveimg(e) {
       _service.default.pveimg(e);
@@ -749,6 +797,75 @@ var that;var _default =
 
       });
     },
+    getdatalist: function getdatalist() {
+
+      var data = {
+        id: that.id,
+        page: that.page,
+        size: that.size,
+        token: that.$store.state.loginDatas.userToken };
+
+
+      //selectSaraylDetailByUserCard
+      var jkurl = '/getHelpRecord';
+      uni.showLoading({
+        title: '正在获取数据' });
+
+      // setTimeout(()=>{
+      // 	uni.hideLoading()
+      // },1000)
+      // return
+      var page_now = that.page;
+      _service.default.P_get(jkurl, data).then(function (res) {
+        that.btn_kg = 0;
+        that.htmlReset = 0;
+        console.log(res);
+        if (res.code == 1) {
+          var datas = res.data;
+          console.log(typeof datas);
+
+          if (typeof datas == 'string') {
+            datas = JSON.parse(datas);
+          }
+
+          if (page_now == 1) {
+
+            that.datas = datas;
+          } else {
+            if (datas.length == 0) {
+              that.data_last = true;
+              return;
+            }
+            that.data_last = false;
+            that.datas = that.datas.concat(datas);
+          }
+          that.page++;
+          console.log(datas);
+
+
+        } else {
+          if (res.msg) {
+            uni.showToast({
+              icon: 'none',
+              title: res.msg });
+
+          } else {
+            uni.showToast({
+              icon: 'none',
+              title: '操作失败' });
+
+          }
+        }
+      }).catch(function (e) {
+        that.btn_kg = 0;
+        console.log(e);
+        uni.showToast({
+          icon: 'none',
+          title: '获取数据失败' });
+
+      });
+    },
+
     jump: function jump(e) {
       var that = this;
 

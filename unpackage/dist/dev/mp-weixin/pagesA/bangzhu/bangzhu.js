@@ -97,7 +97,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var m0 = _vm.htmlReset == 0 ? _vm.getimg("/static/images/tx_m2.jpg") : null
+  var m0 = _vm.htmlReset == 0 ? _vm.getimg(_vm.xqData.use_head_portrait) : null
   var l0 =
     _vm.htmlReset == 0
       ? _vm.__map(_vm.cz_list, function(item, index) {
@@ -226,6 +226,8 @@ var that;var _default =
       CustomBar: this.CustomBar,
       htmlReset: -1,
       data_last: false,
+      id: '',
+      xqData: '',
       cz_list: [
       {
         name: '10',
@@ -293,17 +295,98 @@ var that;var _default =
   onPullDownRefresh: function onPullDownRefresh() {
     uni.stopPullDownRefresh();
   },
-  onLoad: function onLoad() {
+  onLoad: function onLoad(option) {
     that = this;
+    that.id = option.id;
     that.onRetry();
   },
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['login', 'logindata', 'logout', 'setplatform'])), {}, {
     onRetry: function onRetry() {
       that.htmlReset = 0;
-      // that.getdata()
+      that.getdata();
     },
     sub: function sub() {
+      var money = 0;
+      if (that.cz_cur == -1) {
+        if (!that.other_mon) {
+          uni.showToast({
+            icon: 'none',
+            title: '请输入充值金额' });
+
+          return;
+        } else if (that.other_mon >= 1) {
+          money = that.other_mon;
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: '金额不能小于1元' });
+
+          return;
+        }
+
+      } else {
+        uni.showToast({
+          icon: 'none',
+          title: that.cz_list[that.cz_cur].name + '元' });
+
+        money = that.cz_list[that.cz_cur].name * 1;
+      }
+      //selectSaraylDetailByUserCard
+      var jkurl = '/pay/donate';
+      var data = {
+        token: that.$store.state.loginDatas.userToken,
+        id: that.id,
+
+        payType: 1, //1：小程序支付   2：APP支付  3：h5支付
+
+
+
+
+
+
+
+        money: money };
+
+      _service.default.P_post(jkurl, data).then(function (res) {
+        that.btn_kg = 0;
+        that.htmlReset = 0;
+        console.log(res);
+        if (res.code == 1) {
+          var datas = res.data;
+          console.log(typeof datas);
+
+          if (typeof datas == 'string') {
+            datas = JSON.parse(datas);
+          }
+
+
+
+        } else {
+          if (res.msg) {
+            uni.showToast({
+              icon: 'none',
+              title: res.msg });
+
+          } else {
+            uni.showToast({
+              icon: 'none',
+              title: '操作失败' });
+
+          }
+        }
+      }).catch(function (e) {
+        that.btn_kg = 0;
+        console.log(e);
+        uni.showToast({
+          icon: 'none',
+          title: '操作失败' });
+
+      });
+
+    },
+
+    sub1: function sub1() {
       // if (that.phone == '' || !(/^1\d{10}$/.test(that.phone))) {
       // 	wx.showToast({
       // 		icon: 'none',
@@ -355,19 +438,22 @@ var that;var _default =
 
       }, 1000);
     },
-    getbanner: function getbanner() {
+    getdata: function getdata() {
 
       ///api/info/list
       var that = this;
-      var data = {};
+      var data = {
+        id: that.id };
+
 
       //selectSaraylDetailByUserCard
-      var jkurl = '/entrance';
+      var jkurl = '/crowdfundDetails';
       uni.showLoading({
         title: '正在获取数据' });
 
       _service.default.P_get(jkurl, data).then(function (res) {
         that.btn_kg = 0;
+        that.htmlReset = 0;
         console.log(res);
         if (res.code == 1) {
           var datas = res.data;
@@ -377,7 +463,7 @@ var that;var _default =
             datas = JSON.parse(datas);
           }
 
-          that.banner = datas;
+          that.xqData = datas;
           console.log(datas);
 
 
