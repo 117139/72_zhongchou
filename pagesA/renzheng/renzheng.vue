@@ -110,21 +110,66 @@
 					return
 				}
 				var datas={
-					name:that.name,
-					c_id:that.c_id,
-					sfimg1:that.sfimg1,
-					sfimg2:that.sfimg2
+					token:that.$store.state.loginDatas.userToken,
+					real_name:that.name,
+					id_number:that.c_id,
+					id_number_front:that.sfimg1,
+					id_number_contrary:that.sfimg2
 				}
+				if(that.btn_kg==1){
+					return
+				}
+				that.btn_kg=1
 				console.log(datas)
-				uni.showToast({
-					icon:'none',
-					title:'提交成功'
+				uni.showLoading({
+					title: '正在提交'
 				})
-				setTimeout(()=>{
-					uni.navigateBack({
-						delta:1
+				var jkurl='/user/realNameApprove'
+				service.P_post(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+							
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+							
+						uni.showToast({
+							icon:'none',
+							title:'提交成功'
+						})
+						service.wxlogin('token')
+						setTimeout(()=>{
+							uni.navigateBack({
+								delta:1
+							})
+						},1000)
+							
+							
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败'
 					})
-				},1000)
+				})
+				
 			},
 			scpic(e) {
 			  var that = this
@@ -158,42 +203,40 @@
 				    // tempFilePath可以作为img标签的src属性显示图片
 				    console.log(res)
 				    const tempFilePaths = res.tempFilePaths
-						if (sf_type == 1) {
-						  that.sfimg1= tempFilePaths[0]
-						 
-						} else {
-						  that.sfimg2= tempFilePaths[0]
-						 
-						}
-						return
-						wx.uploadFile({
-						  url: service.IPurl+'/upload/streamImg', //仅为示例，非真实的接口地址
-						  filePath: tempFilePaths[0],
-						  name: 'file',
-						  formData: {
-						    'type': 1,
-						  },
-						  success(res) {
-						    // console.log(res.data)
-						    var ndata = JSON.parse(res.data)
-						    // console.log(ndata)
-						    // console.log(ndata.error == 0)
-						    if (ndata.code == 1) {
-						      console.log(ndata.msg)
-						      if (sf_type == 1) {
-						        that.sfimg1= ndata.msg
-						       
-						      } else {
-						        that.sfimg2= ndata.msg
-						       
-						      }
-						    } else {
-						      wx.showToast({
-						        icon: "none",
-						        title: "上传失败"
-						      })
-						    }
-						  }
+						
+						service.wx_upload(tempFilePaths[0]).then(res => {
+									
+							that.btn_kg = 0
+							console.log(res)
+							if (res.code == 1) {
+								var datas = res.msg
+								if (sf_type == 1) {
+								  that.sfimg1=datas
+								 
+								} else {
+								  that.sfimg2=datas
+								 
+								}
+							} else {
+								if (res.msg) {
+									uni.showToast({
+										icon: 'none',
+										title: res.msg
+									})
+								} else {
+									uni.showToast({
+										icon: "none",
+										title: "上传失败"
+									})
+								}
+							}
+						}).catch(e => {
+							that.btn_kg = 0
+							console.log(e)
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
 						})
 				  }
 				})

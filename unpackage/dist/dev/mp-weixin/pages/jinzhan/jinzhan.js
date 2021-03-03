@@ -97,8 +97,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var m0 =
-    _vm.htmlReset == 0 ? _vm.getimg("/static/web/images/jinzhan.jpg") : null
+  var m0 = _vm.htmlReset == 0 ? _vm.getimg(_vm.evolve_pic) : null
   _vm.$mp.data = Object.assign(
     {},
     {
@@ -167,7 +166,8 @@ var that;var _default =
       StatusBar: this.StatusBar,
       CustomBar: this.CustomBar,
       htmlReset: -1,
-      data_last: false };
+      data_last: false,
+      evolve_pic: '' };
 
   },
   computed: _objectSpread(_objectSpread({},
@@ -201,6 +201,8 @@ var that;var _default =
   },
   onLoad: function onLoad() {
     that = this;
+    // uni.setStorageSync('evolve_pic',datas.evolve_pic)
+    that.evolve_pic = uni.getStorageSync('evolve_pic');
     that.onRetry();
   },
   methods: _objectSpread(_objectSpread({},

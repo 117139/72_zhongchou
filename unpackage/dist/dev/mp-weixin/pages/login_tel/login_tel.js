@@ -223,6 +223,7 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
       // return
       if (e.detail.iv) {
         //用户按了允许授权按钮后需要处理的逻辑方法体
+        var pid = uni.setStorageSync('pid');
         wx.login({
           success: function success(res) {
             if (res.code) {//微信登录成功 已拿到code  
@@ -235,7 +236,8 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
                 // token:token,
                 nickname: that.nickname,
                 avatarurl: that.avatarurl,
-                type: 1 };
+                type: 1,
+                pid: pid ? pid : '' };
 
               //selectSaraylDetailByUserCard
               var jkurl = '/login';

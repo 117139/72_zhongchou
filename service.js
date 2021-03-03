@@ -430,6 +430,8 @@ const login_tel = function(num) {
 			phone: tel,
 			pwd: password
 		}
+	}else{
+		return
 	}
 	
 	var jkurl = '/login'
@@ -901,6 +903,65 @@ const get_fwb = function(str) {
 		.replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img$1 class="xcx_fwb_img"')
 	return str
 }
+
+
+
+//pay
+const wxpay=function (datas,type){
+	if(!datas) return
+	uni.showLoading({
+		mask:true,
+		title:'正在拉起支付'
+	})
+	datas=JSON.parse(datas)
+	return new Promise((resolve,reject)=>{
+		uni.hideLoading()
+		uni.requestPayment({
+		    provider: 'wxpay',
+		    timeStamp: datas.timeStamp||String(Date.now()),
+		    nonceStr:  datas.nonceStr,
+		    package:  datas.package,
+		    signType: datas.signType,
+		    paySign:  datas.paySign,
+		    success: function (res) {
+		        console.log('success:' + JSON.stringify(res));
+						if(!resolve){
+							if(type=='fwb'){
+								uni.showToast({
+									icon: 'none',
+									title: '购买成功'
+								})
+								setTimeout(() => {
+									uni.redirectTo({
+										url: "/pages/my_fwb/my_fwb"
+									})
+								}, 1000)
+							}else{
+								resolve(res)
+							}
+						}else{
+							resolve(res)
+						}
+						
+		    },
+		    fail: function (err) {
+					if(!reject){
+						uni.showToast({
+							icon: 'none',
+							title: '微信支付失败'
+						})
+					}else{
+						
+						reject(err);
+					}
+		        console.log('fail:' + JSON.stringify(err));
+		    }
+		});
+	})
+	
+}
+
+
 export default {
 	getUsers,
 	addUser,
@@ -924,5 +985,6 @@ export default {
 	getimgarr,
 	pveimg,
 	get_fwb,
-	wx_upload
+	wx_upload,
+	wxpay
 }

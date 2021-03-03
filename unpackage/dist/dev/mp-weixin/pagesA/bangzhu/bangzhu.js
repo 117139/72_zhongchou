@@ -212,6 +212,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _service = _interopRequireDefault(__webpack_require__(/*! ../../service.js */ 8));
 var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
@@ -315,21 +322,21 @@ var that;var _default =
             title: '请输入充值金额' });
 
           return;
-        } else if (that.other_mon >= 1) {
+        } else if (that.other_mon >= 0.01) {
           money = that.other_mon;
         } else {
           uni.showToast({
             icon: 'none',
-            title: '金额不能小于1元' });
+            title: '金额不能小于0.01元' });
 
           return;
         }
 
       } else {
-        uni.showToast({
-          icon: 'none',
-          title: that.cz_list[that.cz_cur].name + '元' });
-
+        // uni.showToast({
+        // 	icon:'none',
+        // 	title:that.cz_list[that.cz_cur].name+'元'
+        // })
         money = that.cz_list[that.cz_cur].name * 1;
       }
       //selectSaraylDetailByUserCard
@@ -360,7 +367,29 @@ var that;var _default =
             datas = JSON.parse(datas);
           }
 
+          _service.default.wxpay(res.data, 'fwb').then(function (res) {
+            uni.showToast({
+              icon: 'none',
+              title: '支付成功' });
 
+            _service.default.wxlogin('token');
+            setTimeout(function () {
+              uni.navigateBack({
+                delta: 1 });
+
+            }, 1000);
+          }).catch(function (e) {
+            that.btn_kg = 0;
+            uni.showToast({
+              icon: 'none',
+              title: '微信支付失败' });
+
+            setTimeout(function () {
+              uni.redirectTo({
+                url: '../../pages/order_list/order_list' });
+
+            }, 1000);
+          });
 
         } else {
           if (res.msg) {

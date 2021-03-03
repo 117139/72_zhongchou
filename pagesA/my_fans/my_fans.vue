@@ -12,33 +12,33 @@
 				</view>
 				<view class="top_box_msg">
 					<view>当前佣金(元）</view>
-					<view class="top_box_msg_pri">3652.00</view>
+					<view class="top_box_msg_pri">{{xqData.money}}</view>
 				</view>
 			</view>
 			<view class="list_box">
 				<view class="list_tit">
-					<view class="list_tab" :class="tab_cur==1?'cur':''" @tap="tab_fuc(1)">一级粉丝(6)</view>
-					<view class="list_tab" :class="tab_cur==2?'cur':''" @tap="tab_fuc(2)">二级粉丝(0)</view>
+					<view class="list_tab" :class="tab_cur==1?'cur':''" @tap="tab_fuc(1)">一级粉丝({{xqData.yjCount}})</view>
+					<view class="list_tab" :class="tab_cur==2?'cur':''" @tap="tab_fuc(2)">二级粉丝({{xqData.ejCount}})</view>
 				</view>
-				<block v-for="(item,index) in 10">
+				<block v-for="(item,index) in datas">
 					<view class="hy_li">
-						<image class="hy_li_tx" :src="getimg('/static/web/images/tx_m2.jpg')" mode="aspectFill"></image>
+						<image class="hy_li_tx" :src="getimg(item.head_portrait)" mode="aspectFill"></image>
 						<view class="hy_li_msg">
 							<view class="hy_li_msg1">
-								<view class="hy_name">会员{{tab_cur}}</view>
-								<view>捐助：￥98元</view>
+								<view class="hy_name">{{item.nickname}}</view>
+								<view>捐助：￥{{item.consume}}元</view>
 							</view>
 							<view class="hy_li_msg2">
-								<view class="hy_time">2020-06-08</view>
-								<view>推广人数：9人</view>
+								<view class="hy_time">{{item.create_time}}</view>
+								<view>推广人数：{{item.user_sum}}人</view>
 							</view>
 						</view>
 					</view>
 				</block>
 				
-				<!-- <view v-if="goods_list.length==0" class="zanwu">暂无数据</view> -->
-				<!-- <view v-if="data_last" class="data_last">我可是有底线的哟~~~</view> -->
-				<view  class="data_last">我可是有底线的哟~~~</view>
+				<view v-if="datas.length==0" class="zanwu">暂无数据</view>
+				<view v-if="data_last" class="data_last">我可是有底线的哟~~~</view>
+				<!-- <view  class="data_last">我可是有底线的哟~~~</view> -->
 			</view>
 		</block>
 		
@@ -57,8 +57,12 @@
 			return {
 				btnkg:0,
 				htmlReset:-1,
+				page: 1,
+				size: 15,
 				data_last:false,
-				tab_cur:1
+				tab_cur:1,
+				xqData:'',
+				datas:[]
 			}
 		},
 		computed:{
@@ -82,11 +86,89 @@
 				this.type=option.type
 			}
 			that.datas=[]
-			that.htmlReset=0
-			return
+			// that.htmlReset=0
+			// return
 			this.onRetry()
 		},
 		methods: {
+			onRetry(){
+				
+				that.datas=[]
+				that.data_last=false
+				that.page=1
+				that.getdata()
+			},
+			getdata() {
+				
+				///api/info/list
+				// var that = this
+				var data = {
+					token: that.$store.state.loginDatas.userToken,
+					page:that.page,
+					size:that.size,
+					type:that.tab_cur
+				}
+				if(that.btn_kg==1){
+					return
+				}
+				that.btn_kg=1
+				//selectSaraylDetailByUserCard
+				var jkurl = '/user/promotionStatis'
+				uni.showLoading({
+					title: '正在获取数据'
+				})
+				var page_now=that.page
+				service.P_get(jkurl, data).then(res => {
+					that.btn_kg = 0
+					that.htmlReset=0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+			
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+						if(page_now==1){
+				
+							that.xqData = datas
+							that.datas = datas.list
+						} else {
+							that.xqData = datas
+							if (datas.list.length == 0) {
+								that.data_last = true
+								return
+							}
+							that.data_last = false
+							that.datas = that.datas.concat(datas.list)
+						}
+						that.page++
+						console.log(datas)
+			
+			
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败'
+					})
+				})
+			},
+			
 			jump(e) {
 				var that = this
 			
@@ -106,6 +188,7 @@
 			},
 			tab_fuc(num){
 				that.tab_cur=num
+				that.onRetry()
 			}
 		}
 	}
@@ -129,6 +212,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		z-index: 800;
 	}
 	.top_box_btn text{
 		color: #FC6855;

@@ -22,6 +22,7 @@
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
 	        justify-content: center;
+	z-index: 800;
 }
 .top_box_btn text.data-v-a90e635a{
 	color: #FC6855;

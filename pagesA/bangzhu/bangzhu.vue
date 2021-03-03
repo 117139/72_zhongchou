@@ -22,7 +22,14 @@
 					</view>
 					<view class="cz_li" :class="cz_cur==-1?'cur':''" @tap="cz_cur=-1">
 						<image v-if="cz_cur==-1" :src="getimg('/static/images/bz_xz_03.png')" mode="aspectFill"></image>
+						<!-- digit -->
+						<!-- #ifdef MP-WEIXIN -->
+						<input class="other_mon" type="digit" v-model="other_mon" placeholder="其他金额">
+						<!-- #endif -->
+						<!-- #ifndef MP-WEIXIN -->
 						<input class="other_mon" type="number" v-model="other_mon" placeholder="其他金额">
+						<!-- #endif -->
+						
 					</view>
 				</view>
 				<view class="bz_tip">我已阅读并同意<text @tap="jump" data-url="/pagesA/about/about?type=ysxy">《隐私协议》</text>和<text @tap="jump" data-url="/pagesA/about/about?type=yhxy">《用户协议》</text></view>
@@ -136,21 +143,21 @@
 							title:'请输入充值金额'
 						})
 						return
-					}else if(that.other_mon>=1){
+					}else if(that.other_mon>=0.01){
 						money=that.other_mon
 					}else{
 						uni.showToast({
 							icon:'none',
-							title:'金额不能小于1元'
+							title:'金额不能小于0.01元'
 						})
 						return
 					}
 					
 				}else{
-					uni.showToast({
-						icon:'none',
-						title:that.cz_list[that.cz_cur].name+'元'
-					})
+					// uni.showToast({
+					// 	icon:'none',
+					// 	title:that.cz_list[that.cz_cur].name+'元'
+					// })
 					money=that.cz_list[that.cz_cur].name*1
 				}
 				//selectSaraylDetailByUserCard
@@ -181,7 +188,29 @@
 							datas = JSON.parse(datas)
 						}
 						
-							
+						service.wxpay(res.data,'fwb').then(res => {
+							uni.showToast({
+								icon:'none',
+								title:'支付成功'
+							})
+							service.wxlogin('token')
+							setTimeout(()=>{
+								uni.navigateBack({
+									delta:1
+								})
+							},1000)
+						}).catch(e => {
+							that.btn_kg=0
+							uni.showToast({
+								icon: 'none',
+								title: '微信支付失败'
+							})
+							setTimeout(()=>{
+								uni.redirectTo({
+									url:'../../pages/order_list/order_list'
+								})
+							},1000)
+						})	
 							
 					} else {
 						if (res.msg) {

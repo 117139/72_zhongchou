@@ -5,7 +5,7 @@
 				<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
 		</view>
 		<view v-if="htmlReset==0">
-			<image class="jiazhan" :src="getimg('/static/web/images/jinzhan.jpg')" mode="widthFix"></image>
+			<image class="jiazhan" :src="getimg(evolve_pic)" mode="widthFix"></image>
 			<view class="tx_btn" @tap="jump" data-url="/pagesA/my_tx/my_tx">提现</view>
 		</view>
 	</view>
@@ -26,6 +26,7 @@
 				CustomBar: this.CustomBar,
 				htmlReset:-1,
 				data_last:false,
+				evolve_pic:''
 			}
 		},
 		computed: {
@@ -59,6 +60,8 @@
 		},
 		onLoad() {
 			that=this
+			// uni.setStorageSync('evolve_pic',datas.evolve_pic)
+			that.evolve_pic=uni.getStorageSync('evolve_pic')
 			that.onRetry()
 		},
 		methods: {

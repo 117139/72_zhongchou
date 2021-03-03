@@ -801,7 +801,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_NAME":"72_zhongchou","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"72_zhongchou","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -4893,6 +4893,7 @@ function drawShareImage(obj) {//绘制海报方法
       setTimeout(function () {
         _app2.default.log('准备执行draw方法');
         _app2.default.log('Context:' + Context);
+        _app2.default.log(Context);
         var fn = function fn() {
           _app2.default.showLoading('正在输出图片');
           var setObj = setCanvasToTempFilePath || {};
@@ -12667,7 +12668,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_NAME":"72_zhongchou","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"72_zhongchou","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -12688,14 +12689,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_NAME":"72_zhongchou","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"72_zhongchou","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_NAME":"72_zhongchou","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"72_zhongchou","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -12781,7 +12782,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_NAME":"72_zhongchou","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"72_zhongchou","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -13670,6 +13671,8 @@ var login_tel = function login_tel(num) {
       phone: tel,
       pwd: password };
 
+  } else {
+    return;
   }
 
   var jkurl = '/login';
@@ -14140,7 +14143,66 @@ var get_fwb = function get_fwb(str) {
   replace(/<img([\s\w"-=\/\.:;]+)((?:(class="[^"]+")))/ig, '<img $1').
   replace(/<img([\s\w"-=\/\.:;]+)/ig, '<img$1 class="xcx_fwb_img"');
   return str;
+};
+
+
+
+//pay
+var wxpay = function wxpay(datas, type) {
+  if (!datas) return;
+  uni.showLoading({
+    mask: true,
+    title: '正在拉起支付' });
+
+  datas = JSON.parse(datas);
+  return new Promise(function (resolve, reject) {
+    uni.hideLoading();
+    uni.requestPayment({
+      provider: 'wxpay',
+      timeStamp: datas.timeStamp || String(Date.now()),
+      nonceStr: datas.nonceStr,
+      package: datas.package,
+      signType: datas.signType,
+      paySign: datas.paySign,
+      success: function success(res) {
+        console.log('success:' + JSON.stringify(res));
+        if (!resolve) {
+          if (type == 'fwb') {
+            uni.showToast({
+              icon: 'none',
+              title: '购买成功' });
+
+            setTimeout(function () {
+              uni.redirectTo({
+                url: "/pages/my_fwb/my_fwb" });
+
+            }, 1000);
+          } else {
+            resolve(res);
+          }
+        } else {
+          resolve(res);
+        }
+
+      },
+      fail: function fail(err) {
+        if (!reject) {
+          uni.showToast({
+            icon: 'none',
+            title: '微信支付失败' });
+
+        } else {
+
+          reject(err);
+        }
+        console.log('fail:' + JSON.stringify(err));
+      } });
+
+  });
+
 };var _default =
+
+
 {
   getUsers: getUsers,
   addUser: addUser,
@@ -14164,7 +14226,8 @@ var get_fwb = function get_fwb(str) {
   getimgarr: getimgarr,
   pveimg: pveimg,
   get_fwb: get_fwb,
-  wx_upload: wx_upload };exports.default = _default;
+  wx_upload: wx_upload,
+  wxpay: wxpay };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

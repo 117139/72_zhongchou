@@ -228,17 +228,7 @@ var that;var _default =
         delta: 1 });
 
     },
-    xy_on: function xy_on() {
-      this.yhxy = false;
-      uni.setStorageSync('yhxy', 'true');
-    },
-    xy_off: function xy_off() {
-      if (plus.os.name.toLowerCase() === 'android') {
-        plus.runtime.quit(); // Android
-      } else {
-        plus.ios.import("UIApplication").sharedApplication().performSelector("exit"); // IOS
-      }
-    },
+
     getCode: function getCode() {
       var that = this;
 
@@ -254,18 +244,19 @@ var that;var _default =
       } else {
         that.btnkg = 1;
       }
-      uni.showToast({
-        icon: 'none',
-        title: '发送成功' });
-
-      that.codetime();
-      that.btnkg = 0;
-      return;
-      var jkurl = '/api/login/register';
+      // uni.showToast({
+      // 	icon: 'none',
+      // 	title: '发送成功'
+      // })
+      // that.codetime()
+      // that.btnkg = 0
+      // return
+      var jkurl = '/sendCode';
       var data = {
-        phone: that.account };
+        phone: that.tel,
+        type: 4 };
 
-      _service.default.post(jkurl, data,
+      _service.default.get(jkurl, data,
       function (res) {
         that.btnkg = 0;
         if (res.data.code == 1) {
@@ -275,7 +266,6 @@ var that;var _default =
             title: '发送成功' });
 
           console.log(res);
-          that.verification_key = res.data.data.key;
           that.codetime();
 
         } else {
@@ -342,36 +332,18 @@ var that;var _default =
         return;
       }
 
-      var data = {
+      var datas = {
         phone: that.tel,
+        token: that.$store.state.loginDatas.userToken,
         code: that.code };
 
-      console.log(data);
-      uni.showToast({
-        icon: 'none',
-        title: '登录成功' });
-
-
-      that.logindata(data);
-      that.login('问心');
-      setTimeout(function () {
-        uni.navigateBack({
-          delta: 1 });
-
-      }, 1000);
-    },
-    getbanner: function getbanner() {
-
-      ///api/info/list
-      var that = this;
-      var data = {};
-
-      //selectSaraylDetailByUserCard
-      var jkurl = '/entrance';
+      // console.log(data)
       uni.showLoading({
-        title: '正在获取数据' });
+        mask: true,
+        title: '正在提交' });
 
-      _service.default.P_get(jkurl, data).then(function (res) {
+      var jkurl = '/user/amendBindingPhone';
+      _service.default.P_post(jkurl, datas).then(function (res) {
         that.btn_kg = 0;
         console.log(res);
         if (res.code == 1) {
@@ -381,10 +353,17 @@ var that;var _default =
           if (typeof datas == 'string') {
             datas = JSON.parse(datas);
           }
+          uni.showToast({
+            icon: 'none',
+            title: '修改成功' });
 
-          that.banner = datas;
-          console.log(datas);
+          uni.setStorageSync('tel', that.tel);
 
+          setTimeout(function () {
+            uni.navigateBack({
+              delta: 1 });
+
+          }, 1000);
 
         } else {
           if (res.msg) {
@@ -404,10 +383,23 @@ var that;var _default =
         console.log(e);
         uni.showToast({
           icon: 'none',
-          title: '获取数据失败' });
+          title: '操作失败' });
 
       });
+      uni.showToast({
+        icon: 'none',
+        title: '登录成功' });
+
+
+      that.logindata(data);
+      that.login('问心');
+      setTimeout(function () {
+        uni.navigateBack({
+          delta: 1 });
+
+      }, 1000);
     },
+
     jump: function jump(e) {
       var that = this;
 

@@ -364,8 +364,12 @@ var that;var _default =
   onShareAppMessage: function onShareAppMessage() {
 
   },
-  onLoad: function onLoad() {
+  onLoad: function onLoad(option) {
     that = this;
+    if (option.pid) {
+
+      uni.setStorageSync('pid', pid);
+    }
     that.onRetry();
   },
   methods: _objectSpread(_objectSpread({},
@@ -460,6 +464,7 @@ var that;var _default =
           }
 
           that.index_datas = datas;
+          uni.setStorageSync('evolve_pic', datas.evolve_pic);
           console.log(datas);
 
 
@@ -492,7 +497,7 @@ var that;var _default =
       var data = {
         page: that.page,
         size: that.size,
-        type: that.fw_cur };
+        type: -1 };
 
 
       //selectSaraylDetailByUserCard

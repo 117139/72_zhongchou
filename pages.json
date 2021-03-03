@@ -139,16 +139,14 @@
 				"enablePullDownRefresh": false
 			}
 
-		}    ,{
-                    "path" : "my_zc_edit/my_zc_edit",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "编辑",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
+		}, {
+			"path": "my_zc_edit/my_zc_edit",
+			"style": {
+				"navigationBarTitleText": "编辑",
+				"enablePullDownRefresh": false
+			}
+
+		}]
 	}],
 	"preloadRule": {
 		"pages/index/index": {
@@ -202,7 +200,7 @@
 					"text": "我们"
 				}
 			]
-			// #ifndef MP-WEIXIN
+			// #ifdef APP-PLUS
 			,
 		"midButton": {
 			"width": "80px",

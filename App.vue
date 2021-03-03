@@ -66,7 +66,7 @@ export default {
 			
 		//点击中间按钮
 		centerBtn() {
-			// #ifndef MP-WEIXIN
+			// #ifdef APP-PLUS
 			uni.onTabBarMidButtonTap(function() {
 				uni.navigateTo({
 					url: "/pages/fabu/fabu"
@@ -96,7 +96,8 @@ export default {
 
 <style>
 	/*每个页面公共css */
-	@import "static/css/iconfont.css";
+	/* @import "static/css/iconfont.css"; */
+	@import "common/iconfont.css";
 	@import "colorui/main.css";
 	@import "colorui/icon.css";
 	.hidden{

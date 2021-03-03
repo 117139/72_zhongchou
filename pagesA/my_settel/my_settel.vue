@@ -96,17 +96,7 @@
 					delta: 1
 				})
 			},
-			xy_on() {
-				this.yhxy = false
-				uni.setStorageSync('yhxy', 'true')
-			},
-			xy_off() {
-				if (plus.os.name.toLowerCase() === 'android') {
-					plus.runtime.quit() // Android
-				} else {
-					plus.ios.import("UIApplication").sharedApplication().performSelector("exit"); // IOS
-				}
-			},
+			
 			getCode() {
 				let that = this
 
@@ -122,18 +112,19 @@
 				} else {
 					that.btnkg = 1
 				}
-				uni.showToast({
-					icon: 'none',
-					title: '发送成功'
-				})
-				that.codetime()
-				that.btnkg = 0
-				return
-				var jkurl = '/api/login/register'
+				// uni.showToast({
+				// 	icon: 'none',
+				// 	title: '发送成功'
+				// })
+				// that.codetime()
+				// that.btnkg = 0
+				// return
+				var jkurl = '/sendCode'
 				var data = {
-					phone: that.account
+					phone: that.tel,
+					type:4
 				}
-				service.post(jkurl, data,
+				service.get(jkurl, data,
 					function(res) {
 						that.btnkg = 0
 						if (res.data.code == 1) {
@@ -143,7 +134,6 @@
 								title: '发送成功'
 							})
 							console.log(res)
-							that.verification_key = res.data.data.key
 							that.codetime()
 
 						} else {
@@ -210,50 +200,39 @@
 					return;
 				}
 
-				const data = {
+				const datas = {
 					phone: that.tel,
+					token: that.$store.state.loginDatas.userToken,
 					code: that.code
 				}
-				console.log(data)
-				uni.showToast({
-					icon: 'none',
-					title: '登录成功'
-				});
-
-				that.logindata(data)
-				that.login('问心')
-				setTimeout(()=>{
-					uni.navigateBack({
-						delta:1
-					})
-				},1000)
-			},
-			getbanner() {
-
-				///api/info/list
-				var that = this
-				var data = {}
-
-				//selectSaraylDetailByUserCard
-				var jkurl = '/entrance'
+				// console.log(data)
 				uni.showLoading({
-					title: '正在获取数据'
+					mask:true,
+					title:'正在提交'
 				})
-				service.P_get(jkurl, data).then(res => {
+				var jkurl='/user/amendBindingPhone'
+				service.P_post(jkurl, datas).then(res => {
 					that.btn_kg = 0
 					console.log(res)
 					if (res.code == 1) {
 						var datas = res.data
 						console.log(typeof datas)
-
+				
 						if (typeof datas == 'string') {
 							datas = JSON.parse(datas)
 						}
-
-						that.banner = datas
-						console.log(datas)
-
-
+						uni.showToast({
+							icon: 'none',
+							title: '修改成功'
+						});
+						uni.setStorageSync('tel', that.tel)
+						
+						setTimeout(()=>{
+							uni.navigateBack({
+								delta:1
+							})
+						},1000)
+				
 					} else {
 						if (res.msg) {
 							uni.showToast({
@@ -272,10 +251,23 @@
 					console.log(e)
 					uni.showToast({
 						icon: 'none',
-						title: '获取数据失败'
+						title: '操作失败'
 					})
 				})
+				uni.showToast({
+					icon: 'none',
+					title: '登录成功'
+				});
+
+				that.logindata(data)
+				that.login('问心')
+				setTimeout(()=>{
+					uni.navigateBack({
+						delta:1
+					})
+				},1000)
 			},
+			
 			jump(e) {
 				var that = this
 

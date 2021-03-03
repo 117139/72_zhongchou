@@ -352,6 +352,7 @@ function drawShareImage(obj) { //绘制海报方法
 			setTimeout(() => {
 				_app.log('准备执行draw方法')
 				_app.log('Context:' + Context);
+				_app.log(Context);
 				const fn = function() {
 					_app.showLoading('正在输出图片');
 					let setObj = setCanvasToTempFilePath || {};

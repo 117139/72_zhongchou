@@ -96,7 +96,7 @@ var components
 try {
   components = {
     tx_share: function() {
-      return __webpack_require__.e(/*! import() | components/tx_share/tx_share */ "components/tx_share/tx_share").then(__webpack_require__.bind(null, /*! @/components/tx_share/tx_share.vue */ 187))
+      return __webpack_require__.e(/*! import() | components/tx_share/tx_share */ "components/tx_share/tx_share").then(__webpack_require__.bind(null, /*! @/components/tx_share/tx_share.vue */ 195))
     }
   }
 } catch (e) {
@@ -167,6 +167,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _service = _interopRequireDefault(__webpack_require__(/*! ../../service.js */ 8));
 var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
@@ -179,8 +197,12 @@ var that;var _default =
       btnkg: 0,
       htmlReset: -1,
       data_last: false,
+      yhk_name: '',
+      yhk_id: '',
+      user_name: '',
       tx_num: '',
-      tx_max: 100 };
+      tx_max: 0,
+      share_off: true };
 
   },
   computed: _objectSpread({},
@@ -199,6 +221,7 @@ var that;var _default =
     }
     that.datas = [];
     that.htmlReset = 0;
+    that.tx_max = that.$store.state.loginDatas.money * 1;
     return;
     this.onRetry();
   },
@@ -224,23 +247,47 @@ var that;var _default =
   onReachBottom: function onReachBottom() {
     // this.getdatalist()
   },
-  onShareAppMessage: function onShareAppMessage() {
+  onShareAppMessage: function onShareAppMessage(res) {
     if (res.from === 'button') {
-      console.log(res.target.dataset.type);
+      console.log('/pages/index/index?pid=' + that.$store.state.loginDatas.id);
+      uni.setStorageSync('jianmian', 2);
+      that.share_off = false;
       // this.setData({
       // 	sharetype:'share'
       // })
     }
     return {
       title: '爱心筹',
-      path: '/pagesA/index/index',
+      path: '/pages/index/index?pid=' + that.$store.state.loginDatas.id,
       success: function success(res) {
-        console.log('成功', res);
+        console.log('成功1', res);
+        console.log('/pages/index/index?pid=' + that.$store.state.loginDatas.id);
       } };
 
   },
   methods: {
     sub: function sub() {
+      if (!that.yhk_name) {
+        uni.showToast({
+          icon: 'none',
+          title: '请输入提现银行名称' });
+
+        return;
+      }
+      if (!that.yhk_id) {
+        uni.showToast({
+          icon: 'none',
+          title: '请输入提现银行卡' });
+
+        return;
+      }
+      if (!that.user_name) {
+        uni.showToast({
+          icon: 'none',
+          title: '请输入持有人姓名' });
+
+        return;
+      }
       if (!that.tx_num || that.tx_num < 0) {
         uni.showToast({
           icon: 'none',
@@ -255,15 +302,64 @@ var that;var _default =
 
         return;
       }
-      uni.showToast({
-        icon: 'none',
-        title: '操作成功' });
+      var jianmian = uni.getStorageSync('jianmian');
+      var datas = {
+        token: that.$store.state.loginDatas.userToken,
+        bank_name: that.yhk_name,
+        account_bank: that.yhk_id,
+        account_name: that.user_name,
+        isShare: jianmian == 2 ? 2 : 1,
+        money: that.tx_num };
 
-      setTimeout(function () {
-        uni.navigateBack({
-          delta: 1 });
+      var jkurl = '/user/withDrawBank';
+      if (that.btn_kg == 1) {
+        return;
+      }
+      that.btn_kg = 1;
+      _service.default.P_post(jkurl, datas).then(function (res) {
+        that.btn_kg = 0;
+        that.htmlReset = 0;
+        console.log(res);
+        if (res.code == 1) {
+          var datas = res.data;
+          console.log(typeof datas);
 
-      }, 1000);
+          if (typeof datas == 'string') {
+            datas = JSON.parse(datas);
+          }
+
+          uni.showToast({
+            icon: 'none',
+            title: '提交成功，请耐心等待' });
+
+          _service.default.wxlogin('token');
+          setTimeout(function () {
+            uni.navigateBack({
+              delta: 1 });
+
+          }, 1000);
+        } else {
+          if (res.msg) {
+            uni.showToast({
+              icon: 'none',
+              title: res.msg });
+
+          } else {
+            uni.showToast({
+              icon: 'none',
+              title: '操作失败' });
+
+          }
+        }
+      }).catch(function (e) {
+        that.btn_kg = 0;
+        console.log(e);
+        uni.showToast({
+          icon: 'none',
+          title: '获取数据失败' });
+
+      });
+
     },
     onRetry: function onRetry() {
       uni.stopPullDownRefresh();

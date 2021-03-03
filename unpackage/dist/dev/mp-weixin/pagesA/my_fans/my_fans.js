@@ -99,13 +99,24 @@ var render = function() {
   var _c = _vm._self._c || _h
   var m0 =
     _vm.htmlReset == 0 ? _vm.getimg("/static/web/images/fans_bg_02.jpg") : null
-  var m1 = _vm.getimg("/static/web/images/tx_m2.jpg")
+  var l0 =
+    _vm.htmlReset == 0
+      ? _vm.__map(_vm.datas, function(item, index) {
+          var $orig = _vm.__get_orig(item)
+
+          var m1 = _vm.getimg(item.head_portrait)
+          return {
+            $orig: $orig,
+            m1: m1
+          }
+        })
+      : null
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
         m0: m0,
-        m1: m1
+        l0: l0
       }
     }
   )
@@ -201,8 +212,12 @@ var that;var _default =
     return {
       btnkg: 0,
       htmlReset: -1,
+      page: 1,
+      size: 15,
       data_last: false,
-      tab_cur: 1 };
+      tab_cur: 1,
+      xqData: '',
+      datas: [] };
 
   },
   computed: _objectSpread({},
@@ -226,11 +241,89 @@ var that;var _default =
       this.type = option.type;
     }
     that.datas = [];
-    that.htmlReset = 0;
-    return;
+    // that.htmlReset=0
+    // return
     this.onRetry();
   },
   methods: {
+    onRetry: function onRetry() {
+
+      that.datas = [];
+      that.data_last = false;
+      that.page = 1;
+      that.getdata();
+    },
+    getdata: function getdata() {
+
+      ///api/info/list
+      // var that = this
+      var data = {
+        token: that.$store.state.loginDatas.userToken,
+        page: that.page,
+        size: that.size,
+        type: that.tab_cur };
+
+      if (that.btn_kg == 1) {
+        return;
+      }
+      that.btn_kg = 1;
+      //selectSaraylDetailByUserCard
+      var jkurl = '/user/promotionStatis';
+      uni.showLoading({
+        title: '正在获取数据' });
+
+      var page_now = that.page;
+      _service.default.P_get(jkurl, data).then(function (res) {
+        that.btn_kg = 0;
+        that.htmlReset = 0;
+        console.log(res);
+        if (res.code == 1) {
+          var datas = res.data;
+          console.log(typeof datas);
+
+          if (typeof datas == 'string') {
+            datas = JSON.parse(datas);
+          }
+          if (page_now == 1) {
+
+            that.xqData = datas;
+            that.datas = datas.list;
+          } else {
+            that.xqData = datas;
+            if (datas.list.length == 0) {
+              that.data_last = true;
+              return;
+            }
+            that.data_last = false;
+            that.datas = that.datas.concat(datas.list);
+          }
+          that.page++;
+          console.log(datas);
+
+
+        } else {
+          if (res.msg) {
+            uni.showToast({
+              icon: 'none',
+              title: res.msg });
+
+          } else {
+            uni.showToast({
+              icon: 'none',
+              title: '操作失败' });
+
+          }
+        }
+      }).catch(function (e) {
+        that.btn_kg = 0;
+        console.log(e);
+        uni.showToast({
+          icon: 'none',
+          title: '获取数据失败' });
+
+      });
+    },
+
     jump: function jump(e) {
       var that = this;
 
@@ -250,6 +343,7 @@ var that;var _default =
     },
     tab_fuc: function tab_fuc(num) {
       that.tab_cur = num;
+      that.onRetry();
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

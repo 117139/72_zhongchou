@@ -40,6 +40,7 @@
 				CustomBar: this.CustomBar,
 				htmlReset:-1,
 				data_last:false,
+				id:'',
 				list:[
 					'虚假信息',
 					'不真实',
@@ -80,8 +81,9 @@
 		onPullDownRefresh() {
 			uni.stopPullDownRefresh()
 		},
-		onLoad() {
+		onLoad(option) {
 			that=this
+			that.id=option.id
 			that.onRetry()
 		},
 		methods: {
@@ -92,18 +94,58 @@
 			},
 			sub(){
 				var datas={
-					type:that.list[that.xz_fuc],
+					token:that.$store.state.loginDatas.userToken,
+					id:that.id,
+					title:that.list[that.xz_fuc],
 					content:that.content
 				}
-				uni.showToast({
-					icon:'none',
-					title:'提交成功'
-				})
-				setTimeout(()=>{
-					uni.navigateBack({
-						delta:1
+				var jkurl='/report'
+				if(that.btn_kg==1){
+					return
+				}
+				that.btn_kg=1
+				service.P_post(jkurl, datas).then(res => {
+					that.btn_kg = 0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+							
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+							
+						uni.showToast({
+							icon:'none',
+							title:'提交成功'
+						})
+						setTimeout(()=>{
+							uni.navigateBack({
+								delta:1
+							})
+						},1000)
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '操作失败'
 					})
-				},1000)
+				})
+				
 			},
 			getbanner() {
 			

@@ -118,7 +118,10 @@ var render = function() {
       ? _vm.getimg("/static/web/images/xqimg_06.jpg")
       : null
   var l1 =
-    _vm.htmlReset == 0 && _vm.xqData.content_img.length > 0
+    _vm.htmlReset == 0 &&
+    _vm.xqData &&
+    _vm.xqData.content_img &&
+    _vm.xqData.content_img.length > 0
       ? _vm.__map(_vm.xqData.content_img, function(item, index) {
           var $orig = _vm.__get_orig(item)
 
@@ -310,6 +313,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _service = _interopRequireDefault(__webpack_require__(/*! ../../service.js */ 8));
 var _vuex = __webpack_require__(/*! vuex */ 10);
@@ -346,8 +357,9 @@ var that;var _default =
         height: 1334 },
 
       posterImage: '',
-      canvasId: 'default_PosterCanvasId' };
-
+      canvasId: 'default_PosterCanvasId',
+      ewmimg: '' //海报码
+    };
   },
   onShareAppMessage: function onShareAppMessage() {
 
@@ -386,11 +398,27 @@ var that;var _default =
   },
   onLoad: function onLoad(option) {
     that = this;
-    that.id = option.id;
+    if (option.id) {
+      that.id = option.id;
+    }
+    if (option.scene) {
+      var scene = decodeURIComponent(option.scene);
+      console.log(scene);
+      var arr = scene.split('=');
+      console.log(scene);
+      var obj = {};
+      obj[arr[0]] = arr[1];
+      this.id = obj.id;
+      var pid = obj.pid;
+      uni.setStorageSync('pid', pid);
+    }
     that.onRetry();
-    jweixin.ready(function () {
-      // TODO  
-    });
+    // jweixin.ready(function(){
+    // TODO  
+    // });
+  },
+  onShow: function onShow() {
+    // that.getewm()
   },
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['login', 'logindata', 'logout', 'setplatform'])), {}, {
@@ -400,10 +428,17 @@ var that;var _default =
       that.getdatalist();
     },
     shareFc: function shareFc() {var _this2 = this;return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var _this, d;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                _this = _this2;_context.prev = 1;
+                _this = _this2;
+                if (!that.hasLogin) {
+
+                  uni.navigateTo({
+                    url: '/pages/login/login' });
+
+
+                }_context.prev = 2;
 
                 _this2.count++;
-                _app2.default.log('准备生成:' + new Date());_context.next = 6;return (
+                _app2.default.log('准备生成:' + new Date());_context.next = 7;return (
                   (0, _QSSharePoster.getSharePoster)({
                     _this: _this, //若在组件中使用 必传
                     canvasType: '2d',
@@ -439,7 +474,10 @@ var that;var _default =
                       {
                         type: 'image',
                         id: 'productImage',
-                        url: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1881777284,1781500702&fm=26&gp=0.jpg',
+                        // url:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3692825435,2429977222&fm=26&gp=0.jpg',
+                        // url: 'http://yibeitong.com.aa.800123456.top/resource/platform/system/20210112/8821e90feae0424358a7894cf2695131.jpg',
+                        // url: 'https://cdn.51daiyan.cn//resource/api//user_code//20210128/18735d2d9a83b8b97c20f217e2528aaa.jpg',
+                        url: _service.default.imgurl + that.xqData.pic[0],
                         // url: 'http://www.wanbonet.com/suxin/images/72_zhongchou/static/images/haibao_img_03.jpg',
                         dx: 0,
                         dy: 0,
@@ -477,7 +515,7 @@ var that;var _default =
                       {
                         type: 'text',
                         id: 'productName',
-                        text: '爱心接力！父亲意外摔伤！ 恳请大家援手相助！',
+                        text: that.xqData.title,
                         color: '#333333',
 
                         serialNum: 1,
@@ -505,7 +543,8 @@ var that;var _default =
                       {
                         type: 'image',
                         id: 'productImage12',
-                        url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3692825435,2429977222&fm=26&gp=0.jpg',
+                        url: _service.default.imgurl + 'static/web/images/haibao_img_07.jpg',
+                        // url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3692825435,2429977222&fm=26&gp=0.jpg',
                         // url: 'http://www.wanbonet.com/suxin/images/72_zhongchou/static/images/haibao_img_07.jpg',
                         dx: 30,
                         dy: 869,
@@ -550,7 +589,7 @@ var that;var _default =
 
                       {
                         type: 'text',
-                        text: '150000',
+                        text: that.xqData.total_raise_funds,
                         color: '#565757',
                         serialNum: 4,
                         allInfoCallback: function allInfoCallback(_ref5)
@@ -575,7 +614,8 @@ var that;var _default =
                       {
                         type: 'image',
                         id: 'productImage13',
-                        url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3692825435,2429977222&fm=26&gp=0.jpg',
+                        url: _service.default.imgurl + that.ewmimg,
+                        // url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3692825435,2429977222&fm=26&gp=0.jpg',
                         // url: 'http://www.wanbonet.com/suxin/images/72_zhongchou/static/images/haibao_img_07.jpg',
                         dx: 88,
                         dy: 1080,
@@ -633,15 +673,15 @@ var that;var _default =
                         } }];
 
 
-                    } }));case 6:d = _context.sent;
+                    } }));case 7:d = _context.sent;
 
                 _app2.default.log('海报生成成功, 时间:' + new Date() + '， 临时路径: ' + d.poster.tempFilePath);
                 _this2.posterImage = d.poster.tempFilePath;
-                _this2.$refs.popup.show();_context.next = 17;break;case 12:_context.prev = 12;_context.t0 = _context["catch"](1);
+                _this2.$refs.popup.show();_context.next = 18;break;case 13:_context.prev = 13;_context.t0 = _context["catch"](2);
 
                 _app2.default.hideLoading();
                 _app2.default.showToast(JSON.stringify(_context.t0));
-                console.log(JSON.stringify(_context.t0));case 17:case "end":return _context.stop();}}}, _callee, null, [[1, 12]]);}))();
+                console.log(JSON.stringify(_context.t0));case 18:case "end":return _context.stop();}}}, _callee, null, [[2, 13]]);}))();
 
     },
     saveImage: function saveImage() {
@@ -649,7 +689,10 @@ var that;var _default =
       uni.saveImageToPhotosAlbum({
         filePath: this.poster.finalPath,
         success: function success(res) {
-          _app2.default.showToast('保存成功');
+          // _app.showToast('保存成功');
+          uni.showToast({
+            title: '保存成功' });
+
         } });
 
 
@@ -701,7 +744,7 @@ var that;var _default =
         type: 1,
         operate: item.is_praise == 1 ? 'cancel' : 'affirm' //操作类型  affirm：确认操作（就是点赞，关注等）     cancel：取消（取消点赞，关注等）
       };
-      _service.default.P_get(jkurl, data).then(function (res) {
+      _service.default.P_post(jkurl, data).then(function (res) {
         that.btn_kg = 0;
         that.htmlReset = 0;
         console.log(res);
@@ -772,6 +815,55 @@ var that;var _default =
           }
 
           that.xqData = datas;
+          console.log(datas);
+
+
+        } else {
+          if (res.msg) {
+            uni.showToast({
+              icon: 'none',
+              title: res.msg });
+
+          } else {
+            uni.showToast({
+              icon: 'none',
+              title: '操作失败' });
+
+          }
+        }
+      }).catch(function (e) {
+        that.btn_kg = 0;
+        console.log(e);
+        uni.showToast({
+          icon: 'none',
+          title: '获取数据失败' });
+
+      });
+    },
+    getewm: function getewm() {
+
+      ///api/info/list
+      var that = this;
+      var data = {
+        token: that.$store.state.loginDatas.userToken,
+        id: that.id };
+
+
+      //selectSaraylDetailByUserCard
+      var jkurl = '/generateProjectQrCode';
+
+      _service.default.P_post(jkurl, data).then(function (res) {
+        that.btn_kg = 0;
+        that.htmlReset = 0;
+        console.log(res);
+        if (res.code == 1) {
+          var datas = res.data;
+          console.log(typeof datas);
+
+
+
+          that.ewmimg = datas;
+          that.shareFc();
           console.log(datas);
 
 

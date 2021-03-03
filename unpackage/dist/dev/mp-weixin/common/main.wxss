@@ -96,6 +96,7 @@
 
 
 /*每个页面公共css */
+/* @import "static/css/iconfont.css"; */
 @font-face {font-family: "iconfont";
   src: url('//at.alicdn.com/t/font_2388094_2w9degwd2zq.eot?t=1614587058391'); /* IE9 */
   src: url('//at.alicdn.com/t/font_2388094_2w9degwd2zq.eot?t=1614587058391#iefix') format('embedded-opentype'), /* IE6-IE8 */

@@ -161,8 +161,12 @@
 		onShareAppMessage() {
 			
 		},
-		onLoad() {
+		onLoad(option) {
 			that=this
+			if(option.pid){
+				
+			uni.setStorageSync('pid',pid)
+			}
 			that.onRetry()
 		},
 		methods: {
@@ -257,6 +261,7 @@
 						}
 			
 						that.index_datas = datas
+						uni.setStorageSync('evolve_pic',datas.evolve_pic)
 						console.log(datas)
 			
 			
@@ -289,7 +294,7 @@
 				var data = {
 					page:that.page,
 					size:that.size,
-					type:that.fw_cur
+					type:-1
 				}
 			
 				//selectSaraylDetailByUserCard

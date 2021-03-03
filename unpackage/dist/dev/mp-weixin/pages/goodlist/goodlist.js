@@ -467,7 +467,10 @@ var that;var _default =
         size: that.size,
         type: that.fw_cur };
 
-
+      if (that.btn_kg == 1) {
+        return;
+      }
+      that.btn_kg = 1;
       //selectSaraylDetailByUserCard
       var jkurl = '/getCrowdfund';
       uni.showLoading({

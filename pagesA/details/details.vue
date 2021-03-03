@@ -20,9 +20,11 @@
 					<view v-if="xqData.genre" class="grqz">{{xqData.genre}}</view>
 				</view>
 				<view class="xq_tit">{{xqData.title}}</view>
-				<view class="xq_bqs" v-if="xqData.label.length>0">
-					<view v-if="item" class="xq_bq" v-for="(item,index) in xqData.label">{{item}}</view>
-				</view>
+				<block v-if="xqData.label">
+					<view class="xq_bqs" v-if="xqData.label.length>0">
+						<view v-if="item" class="xq_bq" v-for="(item,index) in xqData.label">{{item}}</view>
+					</view>
+				</block>
 				<view class="xq_datas">
 					<image class="xq_datas_bg" :src="getimg('/static/web/images/xqimg_06.jpg')" mode="aspectFill"></image>
 					<view class="xq_datas_box">
@@ -42,10 +44,10 @@
 				</view>
 			</view>
 			<view style="height: 10upx;width: 100%;background: #F1F1F1;"></view>
-			<view class="top_box">
+			<view v-if="xqData" class="top_box">
 				<view class="dis_flex aic mian_tit">
 					<view class="mian_tit_name">求助人的故事</view>
-					<view class="jb_btn" @tap="jump" data-url="/pagesA/jubao/jubao"><text class="iconfont icon-jubao"></text>举报</view>
+					<view class="jb_btn" @tap="jump" :data-url="'/pagesA/jubao/jubao?id='+id"><text class="iconfont icon-jubao"></text>举报</view>
 				</view>
 				<view class="mian_inr">
 					患者姓名：{{xqData.patient_name}}
@@ -54,11 +56,14 @@
 					<br>所患疾病名称：{{xqData.patient_illness}}
 					<br>{{xqData.content}}
 				</view>
-				<view class="main_imgs" v-if="xqData.content_img.length>0">
-					<image v-for="(item,index) in xqData.content_img" class="main_img" 
-					@tap="pveimg" data-array="" :data-src="getimg(item)" :src="getimg(item)" mode="aspectFill"></image>
-					
-				</view>
+				<block v-if="xqData.content_img">
+					<view class="main_imgs" v-if="xqData.content_img.length>0">
+						<image v-for="(item,index) in xqData.content_img" class="main_img" 
+						@tap="pveimg" data-array="" :data-src="getimg(item)" :src="getimg(item)" mode="aspectFill"></image>
+						
+					</view>
+				</block>
+				
 			</view>
 			<view style="height: 10upx;width: 100%;background: #F1F1F1;"></view>
 			
@@ -80,11 +85,13 @@
 							<text @tap="zan_fuc(item)" class="iconfont icon-zan" :class="item.is_praise==1?'zan':''"></text>
 						</view>
 					</view>
+					<view v-if="datas.length==0" class="zanwu">暂无数据</view>
+					<view v-if="data_last" class="data_last">我可是有底线的哟~</view>
 				</view>
 				<view style="width: 100%;height: 100upx;"></view>
 			</view>
 			<view class="b_cz_box dis_flex ju_b aic">
-				<!-- #ifndef MP-WEIXIN -->
+				<!-- #ifdef MP-WEIXIN -->
 				<view class="b_cz_btn dis_flex_c aic" style="position: relative;" @tap="share_fuc">
 					<button type="default" open-type="share" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;opacity: 0;"></button>
 					
@@ -92,11 +99,12 @@
 					<text>分享</text>
 				</view>
 				<view class="b_cz_sg"></view>
-				<view class="b_cz_btn dis_flex_c aic" @tap="shareFc()">
+				<!-- #endif -->
+				<!-- <view class="b_cz_btn dis_flex_c aic" @tap="shareFc()"> -->
+				<view class="b_cz_btn dis_flex_c aic" @tap="getewm()">
 					<text class="iconfont icon-shengchenghaibao"></text>
 					<text>生成海报</text>
 				</view>
-				<!-- #endif -->
 				<view class="b_cz_box_btn" @tap="jump" :data-url="'/pagesA/bangzhu/bangzhu?id='+id">我要帮帮他</view>
 			</view>
 			
@@ -113,7 +121,7 @@
 				</view>
 			</QSPopup>
 			<view class="hideCanvasView">
-				<canvas type="2d" class="hideCanvas" id="default_PosterCanvasId" canvas-id="default_PosterCanvasId" :style="{width: (poster.width||10) + 'px', height: (poster.height||10) + 'px'}"></canvas>
+				<canvas  class="hideCanvas" id="default_PosterCanvasId" canvas-id="default_PosterCanvasId" :style="{width: (poster.width||10) + 'px', height: (poster.height||10) + 'px'}"></canvas>
 			</view>
 		</view>
 	</view>
@@ -157,6 +165,7 @@
 				},
 				posterImage: '',
 				canvasId: 'default_PosterCanvasId',
+				ewmimg:'',   //海报码
 			}
 		},
 		onShareAppMessage() {
@@ -196,11 +205,27 @@
 		},
 		onLoad(option) {
 			that=this
-			that.id=option.id
+			if(option.id){
+				that.id=option.id
+			}
+			if(option.scene){
+				const scene = decodeURIComponent(option.scene)
+				console.log(scene)
+				var arr=scene.split('=')
+				console.log(scene)
+				var obj = {};
+				obj[arr[0]] = arr[1]
+				this.id = obj.id
+				var pid = obj.pid
+				uni.setStorageSync('pid',pid)
+			}
 			that.onRetry()
-			jweixin.ready(function(){
+			// jweixin.ready(function(){
 					// TODO  
-			});
+			// });
+		},
+		onShow() {
+			// that.getewm()
 		},
 		methods: {
 			...mapMutations(['login','logindata','logout','setplatform']),
@@ -211,6 +236,13 @@
 			},
 			async shareFc() {
 				let _this = this;
+				if(!that.hasLogin){
+					// #ifdef MP-WEIXIN
+					uni.navigateTo({
+						url:'/pages/login/login'
+					})
+					// #endif
+				}
 				try {
 					this.count++;
 					_app.log('准备生成:' + new Date())
@@ -246,10 +278,13 @@
 							getBgObj
 						}) {
 							return [
-								{
+							{
 									type: 'image',
 									id: 'productImage',
-									url: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1881777284,1781500702&fm=26&gp=0.jpg',
+									// url:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3692825435,2429977222&fm=26&gp=0.jpg',
+									// url: 'http://yibeitong.com.aa.800123456.top/resource/platform/system/20210112/8821e90feae0424358a7894cf2695131.jpg',
+									// url: 'https://cdn.51daiyan.cn//resource/api//user_code//20210128/18735d2d9a83b8b97c20f217e2528aaa.jpg',
+									url:service.imgurl+that.xqData.pic[0],
 									// url: 'http://www.wanbonet.com/suxin/images/72_zhongchou/static/images/haibao_img_03.jpg',
 									dx: 0,
 									dy: 0,
@@ -287,7 +322,7 @@
 								{
 									type: 'text',
 									id: 'productName',
-									text: '爱心接力！父亲意外摔伤！ 恳请大家援手相助！',
+									text:that.xqData.title,
 									color: '#333333',
 									
 									serialNum: 1,
@@ -315,7 +350,8 @@
 								{
 									type: 'image',
 									id: 'productImage12',
-									url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3692825435,2429977222&fm=26&gp=0.jpg',
+									url: service.imgurl+'static/web/images/haibao_img_07.jpg',
+									// url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3692825435,2429977222&fm=26&gp=0.jpg',
 									// url: 'http://www.wanbonet.com/suxin/images/72_zhongchou/static/images/haibao_img_07.jpg',
 									dx: 30,
 									dy: 869,
@@ -360,7 +396,7 @@
 								},
 								{
 									type: 'text',
-									text: '150000',
+									text: that.xqData.total_raise_funds,
 									color: '#565757',
 									serialNum: 4,
 									allInfoCallback({
@@ -385,7 +421,8 @@
 								{
 									type: 'image',
 									id: 'productImage13',
-									url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3692825435,2429977222&fm=26&gp=0.jpg',
+									url:service.imgurl+that.ewmimg,
+									// url: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3692825435,2429977222&fm=26&gp=0.jpg',
 									// url: 'http://www.wanbonet.com/suxin/images/72_zhongchou/static/images/haibao_img_07.jpg',
 									dx: 88,
 									dy: 1080,
@@ -459,7 +496,10 @@
 				uni.saveImageToPhotosAlbum({
 					filePath: this.poster.finalPath,
 					success(res) {
-						_app.showToast('保存成功');
+						// _app.showToast('保存成功');
+						uni.showToast({
+							title:'保存成功'
+						});
 					}
 				})
 				// #endif
@@ -511,7 +551,7 @@
 					type:1,
 					operate: item.is_praise==1?'cancel':'affirm'   //操作类型  affirm：确认操作（就是点赞，关注等）     cancel：取消（取消点赞，关注等）
 				}
-				service.P_get(jkurl, data).then(res => {
+				service.P_post(jkurl, data).then(res => {
 					that.btn_kg = 0
 					that.htmlReset=0
 					console.log(res)
@@ -582,6 +622,55 @@
 						}
 			
 						that.xqData = datas
+						console.log(datas)
+			
+			
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败'
+					})
+				})
+			},
+			getewm() {
+			
+				///api/info/list
+				var that = this
+				var data = {
+					token: that.$store.state.loginDatas.userToken,
+					id:that.id
+				}
+			
+				//selectSaraylDetailByUserCard
+				var jkurl = '/generateProjectQrCode'
+				
+				service.P_post(jkurl, data).then(res => {
+					that.btn_kg = 0
+					that.htmlReset=0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+			
+					
+			
+						that.ewmimg = datas
+						that.shareFc()
 						console.log(datas)
 			
 			
@@ -850,6 +939,7 @@
 		width: 217upx;
 		height: 217upx;
 		margin-right: 18upx;
+		margin-bottom: 18upx;
 	}
 	.main_img:nth-child(3n){
 		margin-right: 0;
@@ -930,6 +1020,7 @@
 		font-size: 22upx;
 		color: #999;
 		flex: 1;
+		max-width: 120upx;
 	}
 	.b_cz_sg{
 		width: 1px;

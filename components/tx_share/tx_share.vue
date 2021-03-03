@@ -4,7 +4,7 @@
 		<view class="share_btn">
 			<button type="default" open-type="share" ></button>
 		</view>
-		<view class="share_off" @tap="share_off=false"></view>
+		<view class="share_off" @tap="off_fuc"></view>
 	</view>
 </template>
 
@@ -19,22 +19,29 @@
 				
 			};
 		},
-		onShareAppMessage() {
+		onShareAppMessage(res) {
 			if (res.from === 'button') {
-				console.log(res.target.dataset.type)
+				console.log('/pages/index/index?pid='+that.$store.state.loginDatas.id)
+				uni.setStorageSync('jianmian',2)
+				that.share_off=false
 				// this.setData({
 				// 	sharetype:'share'
 				// })
 			}
 			return {
 			  title: '爱心筹',
-			  path: '/pagesA/index/index',
+			  path: '/pages/index/index?pid='+that.$store.state.loginDatas.id,
 			  success: function (res) {
 			    console.log('成功', res)
+					console.log('/pages/index/index?pid='+that.$store.state.loginDatas.id)
 			  }
 			}
 		},
 		methods: {
+			off_fuc(){
+				that.share_off=false
+				uni.setStorageSync('jianmian',1)
+			},
 			baojing_fuc(){
 				var that=this
 				this.baojing=true

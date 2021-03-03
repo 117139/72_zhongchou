@@ -183,6 +183,7 @@ var that;var _default =
       CustomBar: this.CustomBar,
       htmlReset: -1,
       data_last: false,
+      id: '',
       list: [
       '虚假信息',
       '不真实',
@@ -223,8 +224,9 @@ var that;var _default =
   onPullDownRefresh: function onPullDownRefresh() {
     uni.stopPullDownRefresh();
   },
-  onLoad: function onLoad() {
+  onLoad: function onLoad(option) {
     that = this;
+    that.id = option.id;
     that.onRetry();
   },
   methods: _objectSpread(_objectSpread({},
@@ -235,18 +237,58 @@ var that;var _default =
     },
     sub: function sub() {
       var datas = {
-        type: that.list[that.xz_fuc],
+        token: that.$store.state.loginDatas.userToken,
+        id: that.id,
+        title: that.list[that.xz_fuc],
         content: that.content };
 
-      uni.showToast({
-        icon: 'none',
-        title: '提交成功' });
+      var jkurl = '/report';
+      if (that.btn_kg == 1) {
+        return;
+      }
+      that.btn_kg = 1;
+      _service.default.P_post(jkurl, datas).then(function (res) {
+        that.btn_kg = 0;
+        console.log(res);
+        if (res.code == 1) {
+          var datas = res.data;
+          console.log(typeof datas);
 
-      setTimeout(function () {
-        uni.navigateBack({
-          delta: 1 });
+          if (typeof datas == 'string') {
+            datas = JSON.parse(datas);
+          }
 
-      }, 1000);
+          uni.showToast({
+            icon: 'none',
+            title: '提交成功' });
+
+          setTimeout(function () {
+            uni.navigateBack({
+              delta: 1 });
+
+          }, 1000);
+        } else {
+          if (res.msg) {
+            uni.showToast({
+              icon: 'none',
+              title: res.msg });
+
+          } else {
+            uni.showToast({
+              icon: 'none',
+              title: '操作失败' });
+
+          }
+        }
+      }).catch(function (e) {
+        that.btn_kg = 0;
+        console.log(e);
+        uni.showToast({
+          icon: 'none',
+          title: '操作失败' });
+
+      });
+
     },
     getbanner: function getbanner() {
 

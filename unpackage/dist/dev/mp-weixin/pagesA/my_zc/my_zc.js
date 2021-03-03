@@ -284,7 +284,10 @@ var that;var _default =
         size: that.size,
         token: that.$store.state.loginDatas.userToken };
 
-
+      if (that.btn_kg == 1) {
+        return;
+      }
+      that.btn_kg = 1;
       //selectSaraylDetailByUserCard
       var jkurl = '/user/crowdfundProject/list';
       uni.showLoading({
