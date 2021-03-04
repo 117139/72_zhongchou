@@ -338,15 +338,21 @@ const wxlogin = function(num) {
 												uni.hideLoading()
 												console.log(res.data)
 												if (res.data.code == -2) {
-													if (num == 1) {
-														uni.redirectTo({
-															url: '/pages/login_tel/login_tel?nickname=' + uinfo.nickName + '&avatarurl=' + uinfo.avatarUrl
-														})
-													} else {
-														uni.navigateTo({
-															url: '/pages/login_tel/login_tel?nickname=' + uinfo.nickName + '&avatarurl=' + uinfo.avatarUrl
-														})
-													}
+													uni.showToast({
+														icon:'none',
+														title:'请绑定手机号'
+													})
+													setTimeout(()=>{
+														if (num == 1) {
+															uni.redirectTo({
+																url: '/pages/login_tel/login_tel?nickname=' + uinfo.nickName + '&avatarurl=' + uinfo.avatarUrl
+															})
+														} else {
+															uni.navigateTo({
+																url: '/pages/login_tel/login_tel?nickname=' + uinfo.nickName + '&avatarurl=' + uinfo.avatarUrl
+															})
+														}
+													},1000)
 													return
 												}
 												if (res.data.code == 1) {

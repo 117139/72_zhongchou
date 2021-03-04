@@ -85,5 +85,6 @@
     "bao-jing": "/components/baojing/baojing",
     "tx_share": "/components/tx_share/tx_share",
     "q-s-popup": "/components/QS-popup/QS-popup"
-  }
+  },
+  "sitemapLocation": "sitemap19.json"
 }

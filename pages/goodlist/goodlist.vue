@@ -12,17 +12,20 @@
 				 :refresher-threshold="100" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 				 @refresherabort="onAbort" @scrolltolower="getdata">
 				 <view class="fl_list">
-					 <view class="pthz_li" v-for="(item,index) in datas">
-					 	<image class="pthz_li_img" :src="getimg(item.pic[0])" mode="aspectFill"></image>
-					 	<view class="pthz_box">
-					 		<view class="pthz_li_tit oh2">{{item.title}}</view>
-					 		<view class="pthz_znum">
-					 			<view class="pthz_num"  :style="'width:' + (item.yet_raise_funds*1/item.total_raise_funds*1) * 100 + '%'"></view>
-					 		</view>
-					 		<view class="pthz_pri">还需:<text>{{item.residue_raise_funds}}</text>元</view>
-					 		<view class="hz_btn hz_btn1" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">立即帮助</view>
-					 	</view>
+					 <view class="pthz_li_padd" v-for="(item,index) in datas">
+						 <view class="pthz_li">
+						 	<image class="pthz_li_img" :src="getimg(item.pic[0])" mode="aspectFill"></image>
+						 	<view class="pthz_box">
+						 		<view class="pthz_li_tit oh2">{{item.title}}</view>
+						 		<view class="pthz_znum">
+						 			<view class="pthz_num"  :style="'width:' + (item.yet_raise_funds*1/item.total_raise_funds*1) * 100 + '%'"></view>
+						 		</view>
+						 		<view class="pthz_pri">还需:<text>{{item.residue_raise_funds}}</text>元</view>
+						 		<view class="hz_btn hz_btn1" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">立即帮助</view>
+						 	</view>
+						 </view>
 					 </view>
+					
 					 <view v-if="datas.length==0" class="zanwu">暂无数据</view>
 					 <view v-if="data_last" class="data_last">我可是有底线的哟~</view>
 				 </view>
@@ -67,86 +70,7 @@
 				
 				
 				
-				datas:[
-					{
-						img:'/static/web/images/index_12.jpg',
-						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-						znum:'300000',
-						num:'150000'
-					},
-					{
-						img:'/static/web/images/index_14.jpg',
-						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-						znum:'400000',
-						num:'250000'
-					},
-					{
-						img:'/static/web/images/index_12.jpg',
-						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-						znum:'300000',
-						num:'50000'
-					},
-					{
-						img:'/static/web/images/index_14.jpg',
-						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-						znum:'400000',
-						num:'150000'
-					},
-					{
-						img:'/static/images/index_14.jpg',
-						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-						znum:'400000',
-						num:'250000'
-					},
-					{
-						img:'/static/images/index_12.jpg',
-						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-						znum:'300000',
-						num:'50000'
-					},
-					{
-						img:'/static/images/index_14.jpg',
-						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-						znum:'400000',
-						num:'150000'
-					},
-					{
-						img:'/static/images/index_14.jpg',
-						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-						znum:'400000',
-						num:'250000'
-					},
-					{
-						img:'/static/images/index_12.jpg',
-						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-						znum:'300000',
-						num:'50000'
-					},
-					{
-						img:'/static/images/index_14.jpg',
-						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-						znum:'400000',
-						num:'150000'
-					},
-					{
-						img:'/static/images/index_14.jpg',
-						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-						znum:'400000',
-						num:'250000'
-					},
-					{
-						img:'/static/images/index_12.jpg',
-						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-						znum:'300000',
-						num:'50000'
-					},
-					{
-						img:'/static/images/index_14.jpg',
-						title:'助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-						znum:'400000',
-						num:'150000'
-					},
-				],
+				datas:[],
 				
 				page: 1,
 				size: 15,
@@ -455,21 +379,25 @@
 	}
 	.fl_list{
 		width: 100%;
-		padding: 30upx;
+		padding: 15upx;
 		display: flex;
 		flex-wrap: wrap;
 	}
+	.pthz_li_padd{
+		width: 50%;
+		padding: 15upx;
+	}
 	.pthz_li{
-		width: 335upx;
+		width: 100%;
 		height: 480upx;
 		background: #FFFFFF;
 		box-shadow: 0px 0px 10upx 0px rgba(0, 0, 0, 0.15);
 		border-radius: 10upx;
-		margin-bottom: 15upx;
+		/* margin-bottom: 15upx; */
 	}
-	.pthz_li:nth-child(odd){
+	/* .pthz_li:nth-child(odd){
 		margin-right: 14upx;
-	}
+	} */
 	.pthz_li_img{
 		width: 100%;
 		height: 211upx;
@@ -511,7 +439,8 @@
 	}
 	
 	.hz_btn{
-		width: 278upx;
+		
+		width: 100%;
 		height: 49upx;
 		background: #F54248;
 		box-shadow: 0px 0px 10upx 0px rgba(0, 0, 0, 0.21);

@@ -15,8 +15,7 @@
 		data() {
 			return {
 				bj_time:10,
-				share_off:true
-				
+				share_off:true				
 			};
 		},
 		onShareAppMessage(res) {

@@ -10,7 +10,7 @@
 	height: 1334rpx;
 }
 .tx_btn.data-v-34b81048{
-	width: 622rpx;
+	/* width: 622upx; */
 	height: 85rpx;
 	border-radius: 45rpx;
 	background: -webkit-linear-gradient(right, #FC5534, #FFBE33);
@@ -29,5 +29,6 @@
 	position: absolute;
 	top: 1122rpx;
 	left: 63rpx;
+	right: 63rpx;
 }
 

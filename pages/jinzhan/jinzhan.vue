@@ -151,7 +151,7 @@
 		height: 1334upx;
 	}
 	.tx_btn{
-		width: 622upx;
+		/* width: 622upx; */
 		height: 85upx;
 		border-radius: 45upx;
 		background: linear-gradient(-90deg, #FC5534, #FFBE33);
@@ -163,5 +163,6 @@
 		position: absolute;
 		top: 1122upx;
 		left: 63upx;
+		right: 63upx;
 	}
 </style>

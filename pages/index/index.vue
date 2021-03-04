@@ -50,8 +50,11 @@
 				</scroll-view>
 				<!-- 平台互助 -->
 				<view class="index_hz">平台互助</view>
-				<view class="pthz_list">
-					<view class="pthz_li" v-for="(item,index) in datas">
+				
+			</view>
+			<view class="pthz_list">
+				<view class="pthz_li_padd" v-for="(item,index) in datas">
+					<view class="pthz_li">
 						<image class="pthz_li_img" :src="getimg(item.pic[0])" mode="aspectFill"></image>
 						<view class="pthz_box">
 							<view class="pthz_li_tit oh2">{{item.title}}</view>
@@ -62,9 +65,10 @@
 							<view class="hz_btn hz_btn1" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">立即帮助</view>
 						</view>
 					</view>
-					<view v-if="datas.length==0" class="zanwu">暂无数据</view>
-					<view v-if="data_last" class="data_last">我可是有底线的哟~</view>
 				</view>
+				
+				<view v-if="datas.length==0" class="zanwu">暂无数据</view>
+				<view v-if="data_last" class="data_last">我可是有底线的哟~</view>
 			</view>
 		</view>
 	</view>
@@ -164,8 +168,10 @@
 		onLoad(option) {
 			that=this
 			if(option.pid){
-				
-			uni.setStorageSync('pid',pid)
+				console.log('pid---------------------------->')
+				console.log(option.pid)
+				console.log('pid----------------------------^')
+				uni.setStorageSync('pid',option.pid)
 			}
 			that.onRetry()
 		},
@@ -585,7 +591,7 @@
 		font-weight: bold;
 	}
 	.hz_btn{
-		width: 278upx;
+		width: 100%;
 		height: 49upx;
 		background: #F54248;
 		box-shadow: 0px 0px 10upx 0px rgba(0, 0, 0, 0.21);
@@ -597,12 +603,24 @@
 		color: #fff;
 	}
 	.pthz_list{
-		width: 100%;
+		width:750upx;
 		display: flex;
 		flex-wrap: wrap;
-		padding: 10upx 0;
+		padding:0 15upx;
+	}
+	.pthz_li_padd{
+		width: 50%;
+		padding: 15upx;
 	}
 	.pthz_li{
+		width: 100%;
+		height: 480upx;
+		background: #FFFFFF;
+		box-shadow: 0px 0px 10upx 0px rgba(0, 0, 0, 0.15);
+		border-radius: 10upx;
+		/* margin-bottom: 15upx; */
+	}
+	/* .pthz_li{
 		width: 337upx;
 		height: 480upx;
 		background: #FFFFFF;
@@ -612,7 +630,7 @@
 	}
 	.pthz_li:nth-child(odd){
 		margin-right: 14upx;
-	}
+	} */
 	.pthz_li_img{
 		width: 100%;
 		height: 211upx;

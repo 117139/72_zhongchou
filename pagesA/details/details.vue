@@ -205,9 +205,7 @@
 		},
 		onLoad(option) {
 			that=this
-			if(option.id){
-				that.id=option.id
-			}
+			
 			if(option.scene){
 				const scene = decodeURIComponent(option.scene)
 				console.log(scene)
@@ -218,6 +216,9 @@
 				this.id = obj.id
 				var pid = obj.pid
 				uni.setStorageSync('pid',pid)
+			}
+			if(option.id){
+				that.id=option.id
 			}
 			that.onRetry()
 			// jweixin.ready(function(){
@@ -492,21 +493,28 @@
 				}
 			},
 			saveImage() {
+				console.log(that.posterImage)
 				// #ifndef H5
 				uni.saveImageToPhotosAlbum({
-					filePath: this.poster.finalPath,
+					filePath: this.posterImage,
 					success(res) {
 						// _app.showToast('保存成功');
 						uni.showToast({
 							title:'保存成功'
 						});
+						that.hideQr()
+					},
+					fail(err) {
+						console.log('err')
+						console.log(err)
 					}
 				})
 				// #endif
 				// #ifdef H5
 				_app.showToast('保存了');
-				// #endif
 				that.hideQr()
+				// #endif
+				
 			},
 			hideQr() {
 				this.$refs.popup.hide()
@@ -636,6 +644,16 @@
 								icon: 'none',
 								title: '操作失败'
 							})
+						}
+						if(!that.id){
+							setTimeout(()=>{
+								// uni.navigateBack({
+								// 	delta:1
+								// })
+								uni.switchTab({
+									url:'/pages/index/index'
+								})
+							},1000)
 						}
 					}
 				}).catch(e => {

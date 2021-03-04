@@ -96,7 +96,9 @@
 			if (res.from === 'button') {
 				console.log('/pages/index/index?pid='+that.$store.state.loginDatas.id)
 				uni.setStorageSync('jianmian',2)
-				that.share_off=false
+			setTimeout(()=>{
+					that.share_off=false
+			},1000)
 				// this.setData({
 				// 	sharetype:'share'
 				// })
@@ -177,8 +179,8 @@
 							icon: 'none',
 							title: '提交成功，请耐心等待'
 						})
-						service.wxlogin('token')
 						setTimeout(function() {
+							service.wxlogin('token')
 							uni.navigateBack({
 								delta: 1
 							})

@@ -223,7 +223,10 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
       // return
       if (e.detail.iv) {
         //用户按了允许授权按钮后需要处理的逻辑方法体
-        var pid = uni.setStorageSync('pid');
+        var pid = uni.getStorageSync('pid');
+        console.log('pid---------------------------->');
+        console.log(pid);
+        console.log('pid----------------------------^');
         wx.login({
           success: function success(res) {
             if (res.code) {//微信登录成功 已拿到code  

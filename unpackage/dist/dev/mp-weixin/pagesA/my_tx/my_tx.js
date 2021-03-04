@@ -251,7 +251,9 @@ var that;var _default =
     if (res.from === 'button') {
       console.log('/pages/index/index?pid=' + that.$store.state.loginDatas.id);
       uni.setStorageSync('jianmian', 2);
-      that.share_off = false;
+      setTimeout(function () {
+        that.share_off = false;
+      }, 1000);
       // this.setData({
       // 	sharetype:'share'
       // })
@@ -332,8 +334,8 @@ var that;var _default =
             icon: 'none',
             title: '提交成功，请耐心等待' });
 
-          _service.default.wxlogin('token');
           setTimeout(function () {
+            _service.default.wxlogin('token');
             uni.navigateBack({
               delta: 1 });
 

@@ -184,6 +184,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _service = _interopRequireDefault(__webpack_require__(/*! ../../service.js */ 8));
 var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
@@ -219,86 +222,7 @@ var that;var _default =
 
 
 
-      datas: [
-      {
-        img: '/static/web/images/index_12.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '300000',
-        num: '150000' },
-
-      {
-        img: '/static/web/images/index_14.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '400000',
-        num: '250000' },
-
-      {
-        img: '/static/web/images/index_12.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '300000',
-        num: '50000' },
-
-      {
-        img: '/static/web/images/index_14.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '400000',
-        num: '150000' },
-
-      {
-        img: '/static/images/index_14.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '400000',
-        num: '250000' },
-
-      {
-        img: '/static/images/index_12.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '300000',
-        num: '50000' },
-
-      {
-        img: '/static/images/index_14.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '400000',
-        num: '150000' },
-
-      {
-        img: '/static/images/index_14.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '400000',
-        num: '250000' },
-
-      {
-        img: '/static/images/index_12.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '300000',
-        num: '50000' },
-
-      {
-        img: '/static/images/index_14.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '400000',
-        num: '150000' },
-
-      {
-        img: '/static/images/index_14.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '400000',
-        num: '250000' },
-
-      {
-        img: '/static/images/index_12.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '300000',
-        num: '50000' },
-
-      {
-        img: '/static/images/index_14.jpg',
-        title: '助人为善，感恩有您，恳求大家帮帮我帮帮我帮帮我帮帮我',
-        znum: '400000',
-        num: '150000' }],
-
-
+      datas: [],
 
       page: 1,
       size: 15,

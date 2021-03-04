@@ -133,7 +133,6 @@ var djs_fuc;var _default =
       bj_time: 10,
       share_off: true };
 
-
   },
   onShareAppMessage: function onShareAppMessage(res) {
     if (res.from === 'button') {

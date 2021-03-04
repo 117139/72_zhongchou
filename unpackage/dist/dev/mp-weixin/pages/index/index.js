@@ -148,7 +148,7 @@ var render = function() {
         })
       : null
   var l3 =
-    _vm.htmlReset == 0 && _vm.index_datas
+    _vm.htmlReset == 0
       ? _vm.__map(_vm.datas, function(item, index) {
           var $orig = _vm.__get_orig(item)
 
@@ -202,6 +202,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
 
 
 
@@ -367,8 +371,10 @@ var that;var _default =
   onLoad: function onLoad(option) {
     that = this;
     if (option.pid) {
-
-      uni.setStorageSync('pid', pid);
+      console.log('pid---------------------------->');
+      console.log(option.pid);
+      console.log('pid----------------------------^');
+      uni.setStorageSync('pid', option.pid);
     }
     that.onRetry();
   },
