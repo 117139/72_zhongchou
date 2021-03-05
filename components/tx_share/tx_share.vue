@@ -18,6 +18,7 @@
 				share_off:true				
 			};
 		},
+		
 		onShareAppMessage(res) {
 			if (res.from === 'button') {
 				console.log('/pages/index/index?pid='+that.$store.state.loginDatas.id)
@@ -38,7 +39,7 @@
 		},
 		methods: {
 			off_fuc(){
-				that.share_off=false
+				this.share_off=false
 				uni.setStorageSync('jianmian',1)
 			},
 			baojing_fuc(){

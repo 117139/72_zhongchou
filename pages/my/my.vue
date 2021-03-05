@@ -47,22 +47,22 @@
 					<view class="fuwu_tit">我的服务</view>
 					<view class="fuwu_list">
 						
-						<view class="fuwu_li" @tap="jump" data-url="/pagesA/my_zc/my_zc?type=about" data-login="true" :data-haslogin="hasLogin">
+						<view class="fuwu_li" @tap="jump" data-url="/pagesA/my_zc/my_zc?type=about" :data-login="true" :data-haslogin="hasLogin">
 							<view class="my_icon"><text class="iconfont icon-zhongchou"></text></view>
 							<view class="flex_1">我的众筹</view>
 							<text class="iconfont icon-next-m"></text>
 						</view>
-						<view class="fuwu_li" @tap="jump" data-url="/pagesA/my_cyzc/my_cyzc?type=about" data-login="true" :data-haslogin="hasLogin">
+						<view class="fuwu_li" @tap="jump" data-url="/pagesA/my_cyzc/my_cyzc?type=about" :data-login="true" :data-haslogin="hasLogin">
 							<view class="my_icon"><text class="iconfont icon-wocanyude"></text></view>
 							<view class="flex_1">我参与的众筹</view>
 							<text class="iconfont icon-next-m"></text>
 						</view>
-						<view class="fuwu_li" @tap="jump" data-url="/pagesA/my_fans/my_fans?type=about" data-login="true" :data-haslogin="hasLogin">
+						<view class="fuwu_li" @tap="jump" data-url="/pagesA/my_fans/my_fans?type=about" :data-login="true" :data-haslogin="hasLogin">
 							<view class="my_icon"><text class="iconfont icon-fensi"></text></view>
 							<view class="flex_1">我的粉丝</view>
 							<text class="iconfont icon-next-m"></text>
 						</view>
-						<view class="fuwu_li" @tap="jump" data-url="/pagesA/my_settel/my_settel?type=about" data-login="true" :data-haslogin="hasLogin">
+						<view class="fuwu_li" @tap="jump" data-url="/pagesA/my_settel/my_settel?type=about" :data-login="true" :data-haslogin="hasLogin">
 							<view class="my_icon"><text class="iconfont icon-shouji"></text></view>
 							<view class="flex_1">我的手机</view>
 							<text class="iconfont icon-next-m"></text>

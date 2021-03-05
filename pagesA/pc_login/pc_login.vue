@@ -13,7 +13,7 @@
 				<text v-if="login_type==0" @tap="login_type=1" class=" header_r">去登录</text>
 			</view> -->
 			<view class="login_top">
-				欢迎您使用爱心筹
+				欢迎您使用众帮团
 			</view>
 			<view class="login_box">
 				<view class="login_li">

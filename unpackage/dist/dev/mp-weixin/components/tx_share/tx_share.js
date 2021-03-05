@@ -134,6 +134,7 @@ var djs_fuc;var _default =
       share_off: true };
 
   },
+
   onShareAppMessage: function onShareAppMessage(res) {
     if (res.from === 'button') {
       console.log('/pages/index/index?pid=' + that.$store.state.loginDatas.id);
@@ -154,7 +155,7 @@ var djs_fuc;var _default =
   },
   methods: {
     off_fuc: function off_fuc() {
-      that.share_off = false;
+      this.share_off = false;
       uni.setStorageSync('jianmian', 1);
     },
     baojing_fuc: function baojing_fuc() {

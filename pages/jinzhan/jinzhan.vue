@@ -6,7 +6,7 @@
 		</view>
 		<view v-if="htmlReset==0">
 			<image class="jiazhan" :src="getimg(evolve_pic)" mode="widthFix"></image>
-			<view class="tx_btn" @tap="jump" data-url="/pagesA/my_tx/my_tx">提现</view>
+			<view class="tx_btn" @tap="jump"  :data-login="true" :data-haslogin="hasLogin" data-url="/pagesA/my_tx/my_tx">提现</view>
 		</view>
 	</view>
 </template>

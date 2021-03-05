@@ -537,10 +537,11 @@ const wx_upload = function(tximg) {
 			title: '正在上传'
 		})
 		// #ifndef H5
+		console.log(tximg)
 		uni.uploadFile({
-			url: IPurl + 'user/upload_img',
+			url: IPurl + 'upload/streamImg',
 			filePath: tximg,
-			name: 'img',
+			name: 'file',
 			formData: {
 				token: uni.getStorageSync('token')
 			},

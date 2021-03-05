@@ -23,7 +23,7 @@
 				
 			</view>
 			
-			<view class="tx_tip">当前可提现金额：{{tx_max}}</view>
+			<view class="tx_tip">当前可提现金额：{{tx_max?tx_max:0}}</view>
 			<view class="tx_btn" @tap="sub">提现</view>
 		</view>
 	</view>

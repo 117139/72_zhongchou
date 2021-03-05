@@ -4521,7 +4521,17 @@ var _app = {
 
 function checkMPUrl(url) {
 
-  if (false) {}
+  // if(process.env.NODE_ENV !== 'development'){
+  // 	if(
+  // 		url.substring(0, 4) === 'http' && 
+  // 		url.substring(0, 5) !== 'https' && 
+  // 		url.substring(0, 12) !== 'http://store' && 
+  // 		url.substring(0, 10) !== 'http://tmp' && 
+  // 		url.substring(0, 10) !== 'http://usr'
+  // 	) {
+  // 		url = 'https' + url.substring(4, url.length);
+  // 	}
+  // }
 
   return url;
 }
@@ -4546,39 +4556,9 @@ var _imageTools = __webpack_require__(/*! ./image-tools.js */ 164);function _int
 
 var ShreUserPosterBackgroundKey = 'ShrePosterBackground_'; // 背景图片缓存名称前缀
 var idKey = 'QSSHAREPOSTER_IDKEY'; //drawArray自动生成的idkey
-var isMp = false;
-
-isMp = true;
-
-
 var nbgScale = 1;
 // export default 
-function getSharePoster(obj) {
-  return new Promise( /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(resolve, reject) {var result1, result2;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return (
-
-                returnPromise(obj));case 3:result1 = _context.sent;
-              resolve(result1);_context.next = 21;break;case 7:_context.prev = 7;_context.t0 = _context["catch"](0);_context.prev = 9;
-
-
-
-              if (obj.bgScale) {
-                obj.bgScale = Number(obj.bgScale) - 0.1;
-              } else {
-                nbgScale = nbgScale - 0.1;
-              }
-              console.log('------------清除缓存后, 开始第二次尝试------------');_context.next = 14;return (
-                returnPromise(obj));case 14:result2 = _context.sent;
-              resolve(result2);_context.next = 21;break;case 18:_context.prev = 18;_context.t1 = _context["catch"](9);
-
-              //TODO handle the exception
-              reject(_context.t1);case 21:case "end":return _context.stop();}}}, _callee, null, [[0, 7], [9, 18]]);}));return function (_x, _x2) {return _ref.apply(this, arguments);};}());
-
-
-
-
-}
-
-function returnPromise(obj) {var
+function getSharePoster(obj) {var
 
   type =
 
@@ -4598,8 +4578,10 @@ function returnPromise(obj) {var
 
 
 
-  obj.type,formData = obj.formData,background = obj.background,posterCanvasId = obj.posterCanvasId,backgroundImage = obj.backgroundImage,reserve = obj.reserve,textArray = obj.textArray,drawArray = obj.drawArray,qrCodeArray = obj.qrCodeArray,imagesArray = obj.imagesArray,setCanvasWH = obj.setCanvasWH,setCanvasToTempFilePath = obj.setCanvasToTempFilePath,setDraw = obj.setDraw,bgScale = obj.bgScale,Context = obj.Context,_this = obj._this,delayTimeScale = obj.delayTimeScale,drawDelayTime = obj.drawDelayTime;
-  return new Promise( /*#__PURE__*/function () {var _ref2 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(rs, rj) {var bgObj, params, i, hasAllInfoCallback, _i, drawArrayItem, newData, drawArray_copy, _i2, item, _newData, item_idKey, poster;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.prev = 0;
+
+
+  obj.type,formData = obj.formData,background = obj.background,posterCanvasId = obj.posterCanvasId,backgroundImage = obj.backgroundImage,reserve = obj.reserve,textArray = obj.textArray,drawArray = obj.drawArray,qrCodeArray = obj.qrCodeArray,imagesArray = obj.imagesArray,setCanvasWH = obj.setCanvasWH,setCanvasToTempFilePath = obj.setCanvasToTempFilePath,canvas2image = obj.canvas2image,setDraw = obj.setDraw,bgScale = obj.bgScale,Context = obj.Context,_this = obj._this,delayTimeScale = obj.delayTimeScale,drawDelayTime = obj.drawDelayTime;
+  return new Promise( /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(rs, rj) {var bgObj, params, i, hasAllInfoCallback, _i, drawArrayItem, newData, drawArray_copy, _i2, item, _newData, item_idKey, poster;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;
 
               _app2.default.showLoading('正在准备海报数据');
               if (!Context) {
@@ -4607,13 +4589,13 @@ function returnPromise(obj) {var
                 Context = uni.createCanvasContext(posterCanvasId, _this || null);
               }if (!(
 
-              background && background.width && background.height)) {_context2.next = 7;break;}
-              bgObj = background;_context2.next = 10;break;case 7:_context2.next = 9;return (
+              background && background.width && background.height)) {_context.next = 7;break;}
+              bgObj = background;_context.next = 10;break;case 7:_context.next = 9;return (
 
                 getShreUserPosterBackground({
                   backgroundImage: backgroundImage,
                   type: type,
-                  formData: formData }));case 9:bgObj = _context2.sent;case 10:
+                  formData: formData }));case 9:bgObj = _context.sent;case 10:
 
 
               bgScale = bgScale || nbgScale;
@@ -4636,12 +4618,12 @@ function returnPromise(obj) {var
                   bgObj = n;
                 } };if (!
 
-              imagesArray) {_context2.next = 23;break;}
+              imagesArray) {_context.next = 23;break;}
               if (typeof imagesArray == 'function')
               imagesArray = imagesArray(params);
               _app2.default.showLoading('正在生成需绘制图片的临时路径');
-              _app2.default.log('准备设置图片');_context2.next = 21;return (
-                setImage(imagesArray));case 21:imagesArray = _context2.sent;
+              _app2.default.log('准备设置图片');_context.next = 21;return (
+                setImage(imagesArray));case 21:imagesArray = _context.sent;
               _app2.default.hideLoading();case 23:
 
               if (textArray) {
@@ -4650,67 +4632,67 @@ function returnPromise(obj) {var
                 textArray = setText(Context, textArray);
 
               }if (!
-              qrCodeArray) {_context2.next = 38;break;}
+              qrCodeArray) {_context.next = 38;break;}
               if (typeof qrCodeArray == 'function')
               qrCodeArray = qrCodeArray(params);
               _app2.default.showLoading('正在生成需绘制图片的临时路径');
-              i = 0;case 28:if (!(i < qrCodeArray.length)) {_context2.next = 37;break;}
+              i = 0;case 28:if (!(i < qrCodeArray.length)) {_context.next = 37;break;}
               _app2.default.log(i);if (!
-              qrCodeArray[i].image) {_context2.next = 34;break;}_context2.next = 33;return (
-                _app2.default.downloadFile_PromiseFc(qrCodeArray[i].image));case 33:qrCodeArray[i].image = _context2.sent;case 34:i++;_context2.next = 28;break;case 37:
+              qrCodeArray[i].image) {_context.next = 34;break;}_context.next = 33;return (
+                _app2.default.downloadFile_PromiseFc(qrCodeArray[i].image));case 33:qrCodeArray[i].image = _context.sent;case 34:i++;_context.next = 28;break;case 37:
 
               _app2.default.hideLoading();case 38:if (!
 
-              drawArray) {_context2.next = 99;break;}
+              drawArray) {_context.next = 99;break;}
               if (typeof drawArray == 'function') {
                 drawArray = drawArray(params);
               }if (!
-              _app2.default.isPromise(drawArray)) {_context2.next = 44;break;}_context2.next = 43;return (
-                drawArray);case 43:drawArray = _context2.sent;case 44:if (!(
+              _app2.default.isPromise(drawArray)) {_context.next = 44;break;}_context.next = 43;return (
+                drawArray);case 43:drawArray = _context.sent;case 44:if (!(
 
 
-              _app2.default.isArray(drawArray) && drawArray.length > 0)) {_context2.next = 99;break;}
+              _app2.default.isArray(drawArray) && drawArray.length > 0)) {_context.next = 99;break;}
               hasAllInfoCallback = false;
-              _i = 0;case 47:if (!(_i < drawArray.length)) {_context2.next = 79;break;}
+              _i = 0;case 47:if (!(_i < drawArray.length)) {_context.next = 79;break;}
               drawArrayItem = drawArray[_i];
               if (_app2.default.isFn(drawArrayItem.allInfoCallback) && !hasAllInfoCallback) hasAllInfoCallback = true;
               drawArrayItem[idKey] = _i;
-              newData = void 0;_context2.t0 =
-              drawArrayItem.type;_context2.next = _context2.t0 ===
-              'image' ? 55 : _context2.t0 ===
+              newData = void 0;_context.t0 =
+              drawArrayItem.type;_context.next = _context.t0 ===
+              'image' ? 55 : _context.t0 ===
 
 
-              'text' ? 59 : _context2.t0 ===
+              'text' ? 59 : _context.t0 ===
 
 
-              'qrcode' ? 61 : _context2.t0 ===
+              'qrcode' ? 61 : _context.t0 ===
 
 
 
 
 
-              'custom' ? 67 : _context2.t0 ===
+              'custom' ? 67 : _context.t0 ===
 
-              'fillrect' ? 68 : _context2.t0 ===
+              'fillrect' ? 68 : _context.t0 ===
 
-              'strokeRect' ? 69 : _context2.t0 ===
+              'strokeRect' ? 69 : _context.t0 ===
 
-              'roundStrokeRect' ? 70 : _context2.t0 ===
+              'roundStrokeRect' ? 70 : _context.t0 ===
 
-              'roundFillRect' ? 71 : 72;break;case 55:_context2.next = 57;return setImage(drawArrayItem);case 57:newData = _context2.sent;return _context2.abrupt("break", 74);case 59:newData = setText(Context, drawArrayItem);return _context2.abrupt("break", 74);case 61:if (!drawArrayItem.image) {_context2.next = 66;break;}_context2.next = 64;return _app2.default.downloadFile_PromiseFc(drawArrayItem.image);case 64:_context2.t1 = _context2.sent;newData = { image: _context2.t1 };case 66:return _context2.abrupt("break", 74);case 67:return _context2.abrupt("break", 74);case 68:return _context2.abrupt("break", 74);case 69:return _context2.abrupt("break", 74);case 70:return _context2.abrupt("break", 74);case 71:return _context2.abrupt("break", 74);case 72:
+              'roundFillRect' ? 71 : 72;break;case 55:_context.next = 57;return setImage(drawArrayItem);case 57:newData = _context.sent;return _context.abrupt("break", 74);case 59:newData = setText(Context, drawArrayItem);return _context.abrupt("break", 74);case 61:if (!drawArrayItem.image) {_context.next = 66;break;}_context.next = 64;return _app2.default.downloadFile_PromiseFc(drawArrayItem.image);case 64:_context.t1 = _context.sent;newData = { image: _context.t1 };case 66:return _context.abrupt("break", 74);case 67:return _context.abrupt("break", 74);case 68:return _context.abrupt("break", 74);case 69:return _context.abrupt("break", 74);case 70:return _context.abrupt("break", 74);case 71:return _context.abrupt("break", 74);case 72:
 
 
-              _app2.default.log('未识别的类型');return _context2.abrupt("break", 74);case 74:
+              _app2.default.log('未识别的类型');return _context.abrupt("break", 74);case 74:
 
 
               if (newData && _app2.default.isObject(newData)) {
                 drawArray[_i] = _objectSpread(_objectSpread({}, drawArrayItem),
                 newData);
 
-              };case 76:_i++;_context2.next = 47;break;case 79:if (!
+              };case 76:_i++;_context.next = 47;break;case 79:if (!
 
 
-              hasAllInfoCallback) {_context2.next = 99;break;}
+              hasAllInfoCallback) {_context.next = 99;break;}
               _app2.default.log('----------------hasAllInfoCallback----------------');
               drawArray_copy = _toConsumableArray(drawArray);
               drawArray_copy.sort(function (a, b) {
@@ -4720,14 +4702,14 @@ function returnPromise(obj) {var
               });
               _app2.default.log('开始for循环');
 
-              _i2 = 0;case 85:if (!(_i2 < drawArray_copy.length)) {_context2.next = 98;break;}
+              _i2 = 0;case 85:if (!(_i2 < drawArray_copy.length)) {_context.next = 98;break;}
               item = _objectSpread({}, drawArray_copy[_i2]);if (!
 
-              _app2.default.isFn(item.allInfoCallback)) {_context2.next = 95;break;}
+              _app2.default.isFn(item.allInfoCallback)) {_context.next = 95;break;}
               _newData = item.allInfoCallback({
                 drawArray: drawArray });if (!
 
-              _app2.default.isPromise(_newData)) {_context2.next = 93;break;}_context2.next = 92;return _newData;case 92:_newData = _context2.sent;case 93:
+              _app2.default.isPromise(_newData)) {_context.next = 93;break;}_context.next = 92;return _newData;case 92:_newData = _context.sent;case 93:
               item_idKey = item[idKey];
               if (!_app2.default.isUndef(item_idKey)) {
                 drawArray[item[idKey]] = _objectSpread(_objectSpread({}, item),
@@ -4735,7 +4717,7 @@ function returnPromise(obj) {var
 
               } else {
                 console.log('程序错误 找不到idKey!!!	...这不应该啊');
-              }case 95:_i2++;_context2.next = 85;break;case 98:
+              }case 95:_i2++;_context.next = 85;break;case 98:
 
 
               _app2.default.log('for循环结束');case 99:
@@ -4743,13 +4725,13 @@ function returnPromise(obj) {var
 
 
               console.log('params:' + JSON.stringify(params));if (!(
-              setCanvasWH && typeof setCanvasWH == 'function')) {_context2.next = 103;break;}_context2.next = 103;return (
+              setCanvasWH && typeof setCanvasWH == 'function')) {_context.next = 103;break;}_context.next = 103;return (
                 new Promise(function (resolve, reject) {
                   setCanvasWH(params);
                   setTimeout(function () {
                     resolve();
                   }, 50);
-                }));case 103:_context2.next = 105;return (
+                }));case 103:_context.next = 105;return (
 
                 drawShareImage({
                   Context: Context,
@@ -4766,17 +4748,18 @@ function returnPromise(obj) {var
                   bgScale: bgScale,
                   _this: _this,
                   delayTimeScale: delayTimeScale,
-                  drawDelayTime: drawDelayTime }));case 105:poster = _context2.sent;
+                  drawDelayTime: drawDelayTime,
+                  canvas2image: canvas2image }));case 105:poster = _context.sent;
 
               _app2.default.hideLoading();
               rs({
                 bgObj: bgObj,
                 poster: poster,
-                type: type });_context2.next = 113;break;case 110:_context2.prev = 110;_context2.t2 = _context2["catch"](0);
+                type: type });_context.next = 113;break;case 110:_context.prev = 110;_context.t2 = _context["catch"](0);
 
 
               //TODO handle the exception
-              rj(_context2.t2);case 113:case "end":return _context2.stop();}}}, _callee2, null, [[0, 110]]);}));return function (_x3, _x4) {return _ref2.apply(this, arguments);};}());
+              rj(_context.t2);case 113:case "end":return _context.stop();}}}, _callee, null, [[0, 110]]);}));return function (_x, _x2) {return _ref.apply(this, arguments);};}());
 
 
 }
@@ -4798,7 +4781,8 @@ function drawShareImage(obj) {//绘制海报方法
 
 
 
-  obj.Context,type = obj.type,posterCanvasId = obj.posterCanvasId,reserve = obj.reserve,bgObj = obj.bgObj,drawArray = obj.drawArray,textArray = obj.textArray,qrCodeArray = obj.qrCodeArray,imagesArray = obj.imagesArray,setCanvasToTempFilePath = obj.setCanvasToTempFilePath,setDraw = obj.setDraw,bgScale = obj.bgScale,_this = obj._this,delayTimeScale = obj.delayTimeScale,drawDelayTime = obj.drawDelayTime;
+
+  obj.Context,type = obj.type,posterCanvasId = obj.posterCanvasId,reserve = obj.reserve,bgObj = obj.bgObj,drawArray = obj.drawArray,textArray = obj.textArray,qrCodeArray = obj.qrCodeArray,imagesArray = obj.imagesArray,setCanvasToTempFilePath = obj.setCanvasToTempFilePath,setDraw = obj.setDraw,bgScale = obj.bgScale,_this = obj._this,delayTimeScale = obj.delayTimeScale,drawDelayTime = obj.drawDelayTime,canvas2image = obj.canvas2image;
   var params = {
     Context: Context,
     bgObj: bgObj,
@@ -4893,33 +4877,37 @@ function drawShareImage(obj) {//绘制海报方法
       setTimeout(function () {
         _app2.default.log('准备执行draw方法');
         _app2.default.log('Context:' + Context);
-        _app2.default.log(Context);
         var fn = function fn() {
-          _app2.default.showLoading('正在输出图片');
           var setObj = setCanvasToTempFilePath || {};
           if (setObj && typeof setObj == 'function')
           setObj = setCanvasToTempFilePath(bgObj, type);
           var canvasToTempFilePathFn;
           var dpr = uni.getSystemInfoSync().pixelRatio;
-          var data = _objectSpread({
-            x: 0,
-            y: 0,
-            width: Number(bgObj.width),
-            height: Number(bgObj.height),
-            destWidth: Number(bgObj.width) * dpr,
-            destHeight: Number(bgObj.height) * dpr,
+          var data = _objectSpread(_objectSpread({
+            // 注释的设置使用uni自己的默认值更为稳定
+            // x: 0,
+            // y: 0,
+            // width: Number(bgObj.width),
+            // height: Number(bgObj.height),
+            // destWidth: Number(bgObj.width) * dpr,
+            // destHeight: Number(bgObj.height) * dpr,
             quality: .8,
             fileType: 'jpg' },
-          setObj);
+          setObj), {}, {
+            canvasId: posterCanvasId });
 
+          if (canvas2image === false) {
+            _app2.default.hideLoading();
+            return rs({ setCanvasToTempFilePath: data });
+          }
+          _app2.default.showLoading('正在输出图片');
           console.log('canvasToTempFilePath的data对象:' + JSON.stringify(data));
           canvasToTempFilePathFn = function canvasToTempFilePathFn() {
             var toTempFilePathObj = _objectSpread(_objectSpread({},
             data), {}, {
-              canvasId: posterCanvasId,
               success: function success(res) {
                 _app2.default.hideLoading();
-                rs(res);
+                rs(_objectSpread(_objectSpread({}, res), {}, { setCanvasToTempFilePath: data }));
               },
               fail: function fail(err) {
                 _app2.default.hideLoading();
@@ -5331,22 +5319,22 @@ function countStrLength(t) {
 // export 
 function setImage(images) {// 设置图片数据
   _app2.default.log('进入设置图片数据方法');
-  return new Promise( /*#__PURE__*/function () {var _ref3 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(resolve, rejcet) {var i;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:_context3.prev = 0;if (!(
+  return new Promise( /*#__PURE__*/function () {var _ref2 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2(resolve, rejcet) {var i;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:_context2.prev = 0;if (!(
 
-              images && _app2.default.isArray(images))) {_context3.next = 14;break;}
+              images && _app2.default.isArray(images))) {_context2.next = 14;break;}
               _app2.default.log('images是一个数组');
-              i = 0;case 4:if (!(i < images.length)) {_context3.next = 12;break;}
-              _app2.default.log('设置图片数据循环中:' + i);_context3.next = 8;return (
-                setImageFn(images[i]));case 8:images[i] = _context3.sent;case 9:i++;_context3.next = 4;break;case 12:_context3.next = 18;break;case 14:
+              i = 0;case 4:if (!(i < images.length)) {_context2.next = 12;break;}
+              _app2.default.log('设置图片数据循环中:' + i);_context2.next = 8;return (
+                setImageFn(images[i]));case 8:images[i] = _context2.sent;case 9:i++;_context2.next = 4;break;case 12:_context2.next = 18;break;case 14:
 
 
-              _app2.default.log('images是一个对象');_context3.next = 17;return (
-                setImageFn(images));case 17:images = _context3.sent;case 18:
+              _app2.default.log('images是一个对象');_context2.next = 17;return (
+                setImageFn(images));case 17:images = _context2.sent;case 18:
 
-              resolve(images);_context3.next = 24;break;case 21:_context3.prev = 21;_context3.t0 = _context3["catch"](0);
+              resolve(images);_context2.next = 24;break;case 21:_context2.prev = 21;_context2.t0 = _context2["catch"](0);
 
               //TODO handle the exception
-              rejcet(_context3.t0);case 24:case "end":return _context3.stop();}}}, _callee3, null, [[0, 21]]);}));return function (_x5, _x6) {return _ref3.apply(this, arguments);};}());
+              rejcet(_context2.t0);case 24:case "end":return _context2.stop();}}}, _callee2, null, [[0, 21]]);}));return function (_x3, _x4) {return _ref2.apply(this, arguments);};}());
 
 
 }
@@ -5360,15 +5348,16 @@ function base64ToPathFn(path) {
 }
 
 function setImageFn(image) {
-  return new Promise( /*#__PURE__*/function () {var _ref4 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4(resolve, reject) {var imgUrl, hasinfoCallBack, imageInfo;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:if (!
-              image.url) {_context4.next = 20;break;}_context4.next = 3;return (
-                base64ToPathFn(image.url));case 3:image.url = _context4.sent;
-              imgUrl = image.url;_context4.next = 7;return (
-                _app2.default.downloadFile_PromiseFc(imgUrl));case 7:imgUrl = _context4.sent;
+  return new Promise( /*#__PURE__*/function () {var _ref3 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee3(resolve, reject) {var imgUrl, oldImgUrl, hasinfoCallBack, imageInfo;return _regenerator.default.wrap(function _callee3$(_context3) {while (1) {switch (_context3.prev = _context3.next) {case 0:if (!
+              image.url) {_context3.next = 21;break;}_context3.next = 3;return (
+                base64ToPathFn(image.url));case 3:image.url = _context3.sent;
+              imgUrl = image.url;
+              oldImgUrl = imgUrl;_context3.next = 8;return (
+                _app2.default.downloadFile_PromiseFc(imgUrl));case 8:imgUrl = _context3.sent;
               image.url = imgUrl;
               hasinfoCallBack = image.infoCallBack && typeof image.infoCallBack === 'function';
-              imageInfo = {};_context4.next = 13;return (
-                _app2.default.getImageInfo_PromiseFc(imgUrl));case 13:imageInfo = _context4.sent;
+              imageInfo = {};_context3.next = 14;return (
+                _app2.default.getImageInfo_PromiseFc(oldImgUrl));case 14:imageInfo = _context3.sent;
               if (hasinfoCallBack) {
                 image = _objectSpread(_objectSpread({},
                 image),
@@ -5381,10 +5370,10 @@ function setImageFn(image) {
               image.dHeight = Number(image.dHeight || imageInfo.height);
               image = _objectSpread(_objectSpread({},
               image), {}, {
-                imageInfo: imageInfo });case 20:
+                imageInfo: imageInfo });case 21:
 
 
-              resolve(image);case 21:case "end":return _context4.stop();}}}, _callee4);}));return function (_x7, _x8) {return _ref4.apply(this, arguments);};}());
+              resolve(image);case 22:case "end":return _context3.stop();}}}, _callee3);}));return function (_x5, _x6) {return _ref3.apply(this, arguments);};}());
 
 }
 
@@ -5435,6 +5424,7 @@ function drawText(Context, textArray, bgObj) {// 先遍历换行再绘制
           } else {
             row.push(temp);
             temp = chr[a];
+            if (a == chr.length - 1) row.push(chr[a]);
           }
         }
         _app2.default.log('循环出的文本数组:' + JSON.stringify(row));
@@ -5868,17 +5858,17 @@ function getShreUserPosterBackground(objs) {//检查背景图是否存在于本�
   backgroundImage =
 
   objs.backgroundImage,type = objs.type;
-  return new Promise( /*#__PURE__*/function () {var _ref5 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5(resolve, reject) {var savedFilePath;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.prev = 0;
+  return new Promise( /*#__PURE__*/function () {var _ref4 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee4(resolve, reject) {var savedFilePath;return _regenerator.default.wrap(function _callee4$(_context4) {while (1) {switch (_context4.prev = _context4.next) {case 0:_context4.prev = 0;
 
-              _app2.default.showLoading('正在获取海报背景图');_context5.next = 4;return (
-                getShreUserPosterBackgroundFc(objs));case 4:savedFilePath = _context5.sent;
+              _app2.default.showLoading('正在获取海报背景图');_context4.next = 4;return (
+                getShreUserPosterBackgroundFc(objs));case 4:savedFilePath = _context4.sent;
               _app2.default.hideLoading();
-              resolve(savedFilePath);_context5.next = 15;break;case 9:_context5.prev = 9;_context5.t0 = _context5["catch"](0);
+              resolve(savedFilePath);_context4.next = 15;break;case 9:_context4.prev = 9;_context4.t0 = _context4["catch"](0);
 
               _app2.default.hideLoading();
-              _app2.default.showToast('获取分享用户背景图失败:' + JSON.stringify(_context5.t0));
-              _app2.default.log(JSON.stringify(_context5.t0));
-              reject(_context5.t0);case 15:case "end":return _context5.stop();}}}, _callee5, null, [[0, 9]]);}));return function (_x9, _x10) {return _ref5.apply(this, arguments);};}());
+              _app2.default.showToast('获取分享用户背景图失败:' + JSON.stringify(_context4.t0));
+              _app2.default.log(JSON.stringify(_context4.t0));
+              reject(_context4.t0);case 15:case "end":return _context4.stop();}}}, _callee4, null, [[0, 9]]);}));return function (_x7, _x8) {return _ref4.apply(this, arguments);};}());
 
 
 }
@@ -5909,17 +5899,17 @@ function getShreUserPosterBackgroundFc(objs, upimage) {//下载并保存背景�
 
   objs.backgroundImage,type = objs.type;
   _app2.default.log('获取分享背景图, 尝试清空本地数据');
-  return new Promise( /*#__PURE__*/function () {var _ref6 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee6(resolve, reject) {var image, savedFilePath, imageObj, returnObj;return _regenerator.default.wrap(function _callee6$(_context6) {while (1) {switch (_context6.prev = _context6.next) {case 0:_context6.prev = 0;
+  return new Promise( /*#__PURE__*/function () {var _ref5 = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee5(resolve, reject) {var image, savedFilePath, imageObj, returnObj;return _regenerator.default.wrap(function _callee5$(_context5) {while (1) {switch (_context5.prev = _context5.next) {case 0:_context5.prev = 0;
 
               _app2.default.showLoading('正在下载海报背景图');
               _app2.default.log('没有从后端获取的背景图片路径, 尝试从后端获取背景图片路径');if (!
-              backgroundImage) {_context6.next = 7;break;}_context6.t0 = backgroundImage;_context6.next = 10;break;case 7:_context6.next = 9;return _app2.default.getPosterUrl(objs);case 9:_context6.t0 = _context6.sent;case 10:image = _context6.t0;_context6.next = 13;return (
-                base64ToPathFn(image));case 13:image = _context6.sent;
-              _app2.default.log('尝试下载并保存背景图:' + image);_context6.next = 17;return (
-                _app2.default.downLoadAndSaveFile_PromiseFc(image));case 17:savedFilePath = _context6.sent;if (!
-              savedFilePath) {_context6.next = 32;break;}
-              _app2.default.log('下载并保存背景图成功:' + savedFilePath);_context6.next = 22;return (
-                _app2.default.getImageInfo_PromiseFc(savedFilePath));case 22:imageObj = _context6.sent;
+              backgroundImage) {_context5.next = 7;break;}_context5.t0 = backgroundImage;_context5.next = 10;break;case 7:_context5.next = 9;return _app2.default.getPosterUrl(objs);case 9:_context5.t0 = _context5.sent;case 10:image = _context5.t0;_context5.next = 13;return (
+                base64ToPathFn(image));case 13:image = _context5.sent;
+              _app2.default.log('尝试下载并保存背景图:' + image);_context5.next = 17;return (
+                _app2.default.downLoadAndSaveFile_PromiseFc(image));case 17:savedFilePath = _context5.sent;if (!
+              savedFilePath) {_context5.next = 32;break;}
+              _app2.default.log('下载并保存背景图成功:' + savedFilePath);_context5.next = 22;return (
+                _app2.default.getImageInfo_PromiseFc(image));case 22:imageObj = _context5.sent;
               _app2.default.log('获取图片信息成功');
               returnObj = {
                 path: savedFilePath,
@@ -5936,15 +5926,15 @@ function getShreUserPosterBackgroundFc(objs, upimage) {//下载并保存背景�
 
               _app2.default.hideLoading();
               _app2.default.log('返回背景图信息对象');
-              resolve(_objectSpread({}, returnObj));_context6.next = 34;break;case 32:
+              resolve(_objectSpread({}, returnObj));_context5.next = 34;break;case 32:
 
 
               _app2.default.hideLoading();
-              reject('not find savedFilePath');case 34:_context6.next = 39;break;case 36:_context6.prev = 36;_context6.t1 = _context6["catch"](0);
+              reject('not find savedFilePath');case 34:_context5.next = 39;break;case 36:_context5.prev = 36;_context5.t1 = _context5["catch"](0);
 
 
               //TODO handle the exception
-              reject(_context6.t1);case 39:case "end":return _context6.stop();}}}, _callee6, null, [[0, 36]]);}));return function (_x11, _x12) {return _ref6.apply(this, arguments);};}());
+              reject(_context5.t1);case 39:case "end":return _context5.stop();}}}, _callee5, null, [[0, 36]]);}));return function (_x9, _x10) {return _ref5.apply(this, arguments);};}());
 
 
 }
@@ -13778,10 +13768,11 @@ var wx_upload = function wx_upload(tximg) {
       title: '正在上传' });
 
 
+    console.log(tximg);
     uni.uploadFile({
-      url: IPurl + 'user/upload_img',
+      url: IPurl + 'upload/streamImg',
       filePath: tximg,
-      name: 'img',
+      name: 'file',
       formData: {
         token: uni.getStorageSync('token') },
 

@@ -35,7 +35,7 @@
 				<view v-if="index_datas.tjProjectData" class="index_hz">互助推荐</view>
 				<scroll-view v-if="index_datas.tjProjectData" scroll-x="true" class="hz_list_box" style="white-space: nowrap;">
 					<view class="hz_list">
-						<view class="hz_li" v-for="(item,index) in index_datas.tjProjectData">
+						<view class="hz_li" v-for="(item,index) in index_datas.tjProjectData" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">
 							<view class="hz_tr">今日推荐</view>
 							<image class="hz_li_img" :src="getimg(item.pic[0])" mode="aspectFill"></image>
 							<text class="hz_li_text text-cut">{{item.title}}</text>
@@ -44,7 +44,8 @@
 								<text class="flex_1 text-cut hz_li_name">{{item.nickname}}发起</text>
 							</view>
 							<view class="hz_xq">还需:<text>{{item.residue_raise_funds>0?item.residue_raise_funds*1:0}}</text>元</view>
-							<view class="hz_btn" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">立即帮助</view>
+							<!-- <view class="hz_btn" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">立即帮助</view> -->
+							<view class="hz_btn">立即帮助</view>
 						</view>
 					</view>
 				</scroll-view>
@@ -53,7 +54,7 @@
 				
 			</view>
 			<view class="pthz_list">
-				<view class="pthz_li_padd" v-for="(item,index) in datas">
+				<view class="pthz_li_padd" v-for="(item,index) in datas" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">
 					<view class="pthz_li">
 						<image class="pthz_li_img" :src="getimg(item.pic[0])" mode="aspectFill"></image>
 						<view class="pthz_box">
@@ -62,7 +63,8 @@
 								<view class="pthz_num"  :style="'width:' + (item.yet_raise_funds*1/item.total_raise_funds*1) * 100 + '%'"></view>
 							</view>
 							<view class="pthz_pri">还需:<text>{{item.residue_raise_funds}}</text>元</view>
-							<view class="hz_btn hz_btn1" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">立即帮助</view>
+							<!-- <view class="hz_btn hz_btn1" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">立即帮助</view> -->
+							<view class="hz_btn hz_btn1" >立即帮助</view>
 						</view>
 					</view>
 				</view>

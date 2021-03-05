@@ -86,7 +86,7 @@
 						</view>
 					</view>
 					<view v-if="datas.length==0" class="zanwu">暂无数据</view>
-					<view v-if="data_last" class="data_last">我可是有底线的哟~</view>
+					<view v-if="datas.length>0&&data_last" class="data_last">我可是有底线的哟~</view>
 				</view>
 				<view style="width: 100%;height: 100upx;"></view>
 			</view>
@@ -166,6 +166,7 @@
 				posterImage: '',
 				canvasId: 'default_PosterCanvasId',
 				ewmimg:'',   //海报码
+				type:''
 			}
 		},
 		onShareAppMessage() {
@@ -219,6 +220,9 @@
 			}
 			if(option.id){
 				that.id=option.id
+			}
+			if(option.type){
+				that.type=option.type
 			}
 			that.onRetry()
 			// jweixin.ready(function(){
@@ -614,6 +618,13 @@
 			
 				//selectSaraylDetailByUserCard
 				var jkurl = '/crowdfundDetails'
+				if(that.type==2){
+					data = {
+						token: that.$store.state.loginDatas.userToken,
+						id:that.id
+					}
+					jkurl="/user/crowdfundProject/look"
+				}
 				uni.showLoading({
 					title: '正在获取数据'
 				})
@@ -630,8 +641,13 @@
 						}
 			
 						that.xqData = datas
-						console.log(datas)
-			
+						if(that.type==2){
+							var label=that.xqData.label
+							label=label.split(/\n/)
+							console.log(datas)
+							Vue.set(that.xqData, 'label',label)
+						}
+						
 			
 					} else {
 						if (res.msg) {

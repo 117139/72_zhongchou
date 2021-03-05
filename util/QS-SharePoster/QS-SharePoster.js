@@ -5,39 +5,9 @@ import {
 } from './image-tools.js';
 const ShreUserPosterBackgroundKey = 'ShrePosterBackground_'; // 背景图片缓存名称前缀
 const idKey = 'QSSHAREPOSTER_IDKEY'; //drawArray自动生成的idkey
-var isMp = false;
-// #ifdef MP
-isMp = true;
-// #endif
-
 var nbgScale = 1;
 // export default 
 function getSharePoster(obj) {
-	return new Promise(async (resolve, reject) => {
-		try {
-			const result1 = await returnPromise(obj);
-			resolve(result1);
-		} catch (e) {
-			//TODO handle the exception
-			try {
-				if (obj.bgScale) {
-					obj.bgScale = Number(obj.bgScale) - 0.1
-				} else {
-					nbgScale = nbgScale - 0.1
-				}
-				console.log('------------清除缓存后, 开始第二次尝试------------');
-				const result2 = await returnPromise(obj);
-				resolve(result2);
-			} catch (e) {
-				//TODO handle the exception
-				reject(e);
-			}
-		}
-	})
-
-}
-
-function returnPromise(obj) {
 	let {
 		type,
 		formData,
@@ -51,12 +21,14 @@ function returnPromise(obj) {
 		imagesArray,
 		setCanvasWH,
 		setCanvasToTempFilePath,
+		canvas2image,
 		setDraw,
 		bgScale,
 		Context,
 		_this,
 		delayTimeScale,
-		drawDelayTime
+		drawDelayTime,
+		
 	} = obj;
 	return new Promise(async (rs, rj) => {
 		try {
@@ -225,7 +197,8 @@ function returnPromise(obj) {
 				bgScale,
 				_this,
 				delayTimeScale,
-				drawDelayTime
+				drawDelayTime,
+				canvas2image
 			});
 			_app.hideLoading();
 			rs({
@@ -256,7 +229,8 @@ function drawShareImage(obj) { //绘制海报方法
 		bgScale,
 		_this,
 		delayTimeScale,
-		drawDelayTime
+		drawDelayTime,
+		canvas2image
 	} = obj;
 	const params = {
 		Context,
@@ -352,33 +326,37 @@ function drawShareImage(obj) { //绘制海报方法
 			setTimeout(() => {
 				_app.log('准备执行draw方法')
 				_app.log('Context:' + Context);
-				_app.log(Context);
 				const fn = function() {
-					_app.showLoading('正在输出图片');
 					let setObj = setCanvasToTempFilePath || {};
 					if (setObj && typeof(setObj) == 'function')
 						setObj = setCanvasToTempFilePath(bgObj, type);
 					let canvasToTempFilePathFn;
 					const dpr = uni.getSystemInfoSync().pixelRatio;
 					const data = {
-						x: 0,
-						y: 0,
-						width: Number(bgObj.width),
-						height: Number(bgObj.height),
-						destWidth: Number(bgObj.width) * dpr,
-						destHeight: Number(bgObj.height) * dpr,
+						// 注释的设置使用uni自己的默认值更为稳定
+						// x: 0,
+						// y: 0,
+						// width: Number(bgObj.width),
+						// height: Number(bgObj.height),
+						// destWidth: Number(bgObj.width) * dpr,
+						// destHeight: Number(bgObj.height) * dpr,
 						quality: .8,
 						fileType: 'jpg',
-						...setObj
+						...setObj,
+						canvasId: posterCanvasId,
 					};
+					if(canvas2image === false) {
+						_app.hideLoading();
+						return rs({ setCanvasToTempFilePath: data });
+					}
+					_app.showLoading('正在输出图片');
 					console.log('canvasToTempFilePath的data对象:' + JSON.stringify(data));
 					canvasToTempFilePathFn = function() {
 						const toTempFilePathObj = { //输出为图片
 							...data,
-							canvasId: posterCanvasId,
 							success(res) {
 								_app.hideLoading();
-								rs(res);
+								rs({...res, setCanvasToTempFilePath: data});
 							},
 							fail(err) {
 								_app.hideLoading();
@@ -823,11 +801,12 @@ function setImageFn(image) {
 		if (image.url) {
 			image.url = (await base64ToPathFn(image.url));
 			let imgUrl = image.url;
+			const oldImgUrl = imgUrl;
 			imgUrl = await _app.downloadFile_PromiseFc(imgUrl);
 			image.url = imgUrl;
 			const hasinfoCallBack = image.infoCallBack && typeof(image.infoCallBack) === 'function';
 			let imageInfo = {};
-			imageInfo = await _app.getImageInfo_PromiseFc(imgUrl);
+			imageInfo = await _app.getImageInfo_PromiseFc(oldImgUrl);
 			if (hasinfoCallBack) {
 				image = {
 					...image,
@@ -894,6 +873,7 @@ function drawText(Context, textArray, bgObj) { // 先遍历换行再绘制
 					} else {
 						row.push(temp);
 						temp = chr[a];
+						if(a == chr.length -1) row.push(chr[a]);
 					}
 				}
 				_app.log('循环出的文本数组:' + JSON.stringify(row));
@@ -1378,7 +1358,7 @@ function getShreUserPosterBackgroundFc(objs, upimage) { //下载并保存背景�
 			const savedFilePath = await _app.downLoadAndSaveFile_PromiseFc(image);
 			if (savedFilePath) {
 				_app.log('下载并保存背景图成功:' + savedFilePath);
-				const imageObj = await _app.getImageInfo_PromiseFc(savedFilePath);
+				const imageObj = await _app.getImageInfo_PromiseFc(image);
 				_app.log('获取图片信息成功');
 				const returnObj = {
 					path: savedFilePath,

@@ -358,8 +358,9 @@ var that;var _default =
 
       posterImage: '',
       canvasId: 'default_PosterCanvasId',
-      ewmimg: '' //海报码
-    };
+      ewmimg: '', //海报码
+      type: '' };
+
   },
   onShareAppMessage: function onShareAppMessage() {
 
@@ -412,6 +413,9 @@ var that;var _default =
     }
     if (option.id) {
       that.id = option.id;
+    }
+    if (option.type) {
+      that.type = option.type;
     }
     that.onRetry();
     // jweixin.ready(function(){
@@ -807,6 +811,13 @@ var that;var _default =
 
       //selectSaraylDetailByUserCard
       var jkurl = '/crowdfundDetails';
+      if (that.type == 2) {
+        data = {
+          token: that.$store.state.loginDatas.userToken,
+          id: that.id };
+
+        jkurl = "/user/crowdfundProject/look";
+      }
       uni.showLoading({
         title: '正在获取数据' });
 
@@ -823,7 +834,12 @@ var that;var _default =
           }
 
           that.xqData = datas;
-          console.log(datas);
+          if (that.type == 2) {
+            var label = that.xqData.label;
+            label = label.split(/\n/);
+            console.log(datas);
+            _vue.default.set(that.xqData, 'label', label);
+          }
 
 
         } else {

@@ -35,7 +35,17 @@
             },
             "ios" : {},
             /* ios打包配置 */
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "payment" : {},
+                "ad" : {}
+            },
+            "splashscreen" : {
+                "androidStyle" : "common"
+            }
+        },
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : true,
+            "waiting" : true
         }
     },
     /* SDK配置 */

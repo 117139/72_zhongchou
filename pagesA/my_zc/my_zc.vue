@@ -10,7 +10,7 @@
 				 :refresher-threshold="100" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 				 @refresherabort="onAbort" @scrolltolower="getdata"> -->
 			<view class="fl_list">
-				<view class="pthz_li_padd" v-for="(item,index) in datas">
+				<view class="pthz_li_padd" v-for="(item,index) in datas"  @tap="jump" :data-url="'/pagesA/details/details?id='+item.id+'&type=2'">
 					<view class="pthz_li">
 						<image class="pthz_li_img" :src="getimg(item.pic[0])" mode="aspectFill"></image>
 						<view class="pthz_box">
@@ -19,7 +19,7 @@
 								<view class="pthz_num" :style="'width:' + (item.yet_raise_funds*1/item.total_raise_funds*1) * 100 + '%'"></view>
 							</view>
 							<view class="pthz_pri">还需:<text>{{item.residue_raise_funds}}</text>元</view>
-							<view class="hz_btn hz_btn1" @tap="jump" :data-url="'/pagesA/my_zc_edit/my_zc_edit?id='+item.id">编辑</view>
+							<view class="hz_btn hz_btn1" @tap.stop="jump" :data-url="'/pagesA/my_zc_edit/my_zc_edit?id='+item.id">编辑</view>
 						</view>
 					</view>
 				</view>

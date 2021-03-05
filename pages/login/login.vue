@@ -1,7 +1,7 @@
 <template>
 	<view class="login_bg">
 		<view class="login_box dis_flex_c ju_c aic">
-			<image class="logo" :src="getimg('/static/web/images/logo.png')" mode=""></image>
+			<image class="logo" src="/static/images/logo.png" mode=""></image>
 		</view>
 		<view class="dis_flex aic ju_c login_tip">登录表示您同意<text @tap="jump" data-url="/pagesA/about/about?type=ysxy">《法律声明和隐私政策》</text></view>
 		<view class="dis_flex aic ju_c login_btn">
