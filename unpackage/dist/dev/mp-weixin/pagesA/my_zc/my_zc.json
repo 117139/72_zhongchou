@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "我的众筹",
   "enablePullDownRefresh": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "z_text": "/components/z_text/z_text"
+  }
 }

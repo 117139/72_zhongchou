@@ -2,6 +2,7 @@
   "navigationBarTitleText": "个人资料",
   "enablePullDownRefresh": false,
   "usingComponents": {
+    "z_text": "/components/z_text/z_text",
     "avatar": "/components/yq-avatar/yq-avatar"
   }
 }

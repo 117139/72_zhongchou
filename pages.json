@@ -4,7 +4,6 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "众帮团",
 				"enablePullDownRefresh": true
 			}
 
@@ -12,35 +11,30 @@
 		{
 			"path": "pages/goodlist/goodlist",
 			"style": {
-				"navigationBarTitleText": "众帮团",
 				"enablePullDownRefresh": false
 			}
 
 		}, {
 			"path": "pages/jinzhan/jinzhan",
 			"style": {
-				"navigationBarTitleText": "众帮团",
 				"enablePullDownRefresh": false
 			}
 
 		}, {
 			"path": "pages/my/my",
 			"style": {
-				"navigationBarTitleText": "众帮团",
 				"enablePullDownRefresh": false
 			}
 
 		}, {
 			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "众帮团",
 				"enablePullDownRefresh": false
 			}
 
 		}, {
 			"path": "pages/login_tel/login_tel",
 			"style": {
-				"navigationBarTitleText": "众帮团",
 				"enablePullDownRefresh": false
 			}
 
@@ -128,7 +122,6 @@
 		}, {
 			"path": "details/details",
 			"style": {
-				"navigationBarTitleText": "众帮团",
 				"enablePullDownRefresh": false
 			}
 
@@ -157,7 +150,7 @@
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "众帮团",
+		"navigationBarTitleText": "橙云众帮",
 		"navigationBarBackgroundColor": "#fff",
 		"backgroundColor": "#fff"
 	},

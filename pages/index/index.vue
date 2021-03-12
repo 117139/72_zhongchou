@@ -1,5 +1,6 @@
 <template>
 	<view class="minh100">
+		<z_text></z_text>
 		<view v-if="htmlReset==1" class="zanwu" @tap='onRetry'>请求失败，请点击重试</view>
 		<view v-if="htmlReset==-1"  class="loading_def">
 				<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
@@ -176,6 +177,7 @@
 				uni.setStorageSync('pid',option.pid)
 			}
 			that.onRetry()
+			
 		},
 		methods: {
 			...mapMutations(['login','logindata','logout','setplatform']),

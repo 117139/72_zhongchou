@@ -1,5 +1,5 @@
 <template>
-	<view class="minh100">
+	<view class="minh100"><z_text></z_text>
 		<view class="my_box ">
 			
 			<view class="login_box">

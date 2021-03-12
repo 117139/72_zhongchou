@@ -20,8 +20,10 @@ _vue.default.component('bao-jing', baoJing);var tx_share = function tx_share() {
 
 _vue.default.component('tx_share', tx_share);var QSPopup = function QSPopup() {__webpack_require__.e(/*! require.ensure | components/QS-popup/QS-popup */ "components/QS-popup/QS-popup").then((function () {return resolve(__webpack_require__(/*! @/components/QS-popup/QS-popup.vue */ 202));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
-_vue.default.component('QSPopup', QSPopup);
+_vue.default.component('QSPopup', QSPopup);var z_text = function z_text() {__webpack_require__.e(/*! require.ensure | components/z_text/z_text */ "components/z_text/z_text").then((function () {return resolve(__webpack_require__(/*! ./components/z_text/z_text.vue */ 241));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
+
+_vue.default.component('z_text', z_text);
 _vue.default.config.productionTip = false;
 
 _vue.default.prototype.event = _event.default;
@@ -113,6 +115,8 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
 
 {
   onLaunch: function onLaunch() {
+    uni.hideTabBar();
+    this.getdata();
     var that = this;
     console.log('App Launch');
 
@@ -169,7 +173,48 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
 
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['login', 'logindata', 'logout', 'setplatform'])), {}, {
+    getdata: function getdata() {
+      var that = this;
+      that.text_show = false;
+      var data = [];
+      var jkurl = '/test';
 
+      _service.default.P_get(jkurl, data).then(function (res) {
+        that.btn_kg = 0;
+        console.log(res);
+        if (res.code == 1) {
+
+          console.log('res.test==1-------------------------------------->');
+          console.log(res.test == 1);
+          if (res.test == 1) {
+            uni.hideTabBar();
+          } else {
+            uni.showTabBar();
+          }
+
+
+        } else {
+          if (res.msg) {
+            uni.showToast({
+              icon: 'none',
+              title: res.msg });
+
+          } else {
+            uni.showToast({
+              icon: 'none',
+              title: '操作失败' });
+
+          }
+        }
+      }).catch(function (e) {
+        that.btn_kg = 0;
+        console.log(e);
+        uni.showToast({
+          icon: 'none',
+          title: '获取数据失败' });
+
+      });
+    },
     //点击中间按钮
     centerBtn: function centerBtn() {
 

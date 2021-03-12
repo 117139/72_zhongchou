@@ -93,6 +93,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    z_text: function() {
+      return __webpack_require__.e(/*! import() | components/z_text/z_text */ "components/z_text/z_text").then(__webpack_require__.bind(null, /*! @/components/z_text/z_text.vue */ 241))
+    }
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -363,33 +386,14 @@ var that;var _default =
           var datas = res.data;
           console.log(typeof datas);
 
-          if (typeof datas == 'string') {
-            datas = JSON.parse(datas);
-          }
+          // if (typeof datas == 'string') {
+          // 	datas = JSON.parse(datas)
+          // }
 
-          _service.default.wxpay(res.data, 'fwb').then(function (res) {
-            uni.showToast({
-              icon: 'none',
-              title: '支付成功' });
+          that.wx_pay(datas);
 
-            _service.default.wxlogin('token');
-            setTimeout(function () {
-              uni.navigateBack({
-                delta: 1 });
 
-            }, 1000);
-          }).catch(function (e) {
-            that.btn_kg = 0;
-            uni.showToast({
-              icon: 'none',
-              title: '微信支付失败' });
 
-            setTimeout(function () {
-              uni.redirectTo({
-                url: '../../pages/order_list/order_list' });
-
-            }, 1000);
-          });
 
         } else {
           if (res.msg) {
@@ -414,7 +418,65 @@ var that;var _default =
       });
 
     },
+    wx_pay: function wx_pay(res_data) {
+      _service.default.wxpay(res_data, 'fwb').then(function (res) {
+        uni.showToast({
+          icon: 'none',
+          title: '支付成功' });
 
+        _service.default.wxlogin('token');
+        setTimeout(function () {
+          uni.navigateBack({
+            delta: 1 });
+
+        }, 1000);
+      }).catch(function (e) {
+        that.btn_kg = 0;
+        uni.showToast({
+          icon: 'none',
+          title: '微信支付失败' });
+
+        setTimeout(function () {
+          uni.redirectTo({
+            url: '../../pages/order_list/order_list' });
+
+        }, 1000);
+      });
+    },
+    app_pay: function app_pay(res_data) {
+      uni.showToast({
+        icon: 'none',
+        title: 'app_pay' });
+
+      uni.requestPayment({
+        provider: 'wxpay',
+        orderInfo: res_data, //微信、支付宝订单数据
+        success: function success(res) {
+          _service.default.wxlogin('token');
+          setTimeout(function () {
+            uni.navigateBack({
+              delta: 1 });
+
+          }, 1000);
+          console.log('success:' + JSON.stringify(res));
+        },
+        fail: function fail(err) {
+          uni.showModal({
+            title: '提示',
+            content: '支付失败，原因为：' + err.errMsg,
+            showCancel: false,
+            success: function success(res) {
+              if (res.confirm) {
+                console.log('用户点击确定');
+              } else if (res.cancel) {
+                console.log('用户点击取消');
+              }
+            } });
+
+          console.log('fail:' + JSON.stringify(err));
+        } });
+
+    },
     sub1: function sub1() {
       // if (that.phone == '' || !(/^1\d{10}$/.test(that.phone))) {
       // 	wx.showToast({

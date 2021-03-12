@@ -13,6 +13,8 @@ Vue.component('tx_share',tx_share)
 import QSPopup from '@/components/QS-popup/QS-popup.vue'
 Vue.component('QSPopup', QSPopup)
 
+import z_text from './components/z_text/z_text.vue'
+Vue.component('z_text',z_text)
 Vue.config.productionTip = false
 
 Vue.prototype.event = event;

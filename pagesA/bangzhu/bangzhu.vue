@@ -1,5 +1,5 @@
 <template>
-	<view class="minh100">
+	<view class="minh100"><z_text></z_text>
 		<view v-if="htmlReset==1" class="zanwu" @tap='onRetry'>请求失败，请点击重试</view>
 		<view v-if="htmlReset==-1"  class="loading_def">
 				<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
@@ -184,34 +184,15 @@
 						var datas = res.data
 						console.log(typeof datas)
 							
-						if (typeof datas == 'string') {
-							datas = JSON.parse(datas)
-						}
-						
-						service.wxpay(res.data,'fwb').then(res => {
-							uni.showToast({
-								icon:'none',
-								title:'支付成功'
-							})
-							service.wxlogin('token')
-							setTimeout(()=>{
-								uni.navigateBack({
-									delta:1
-								})
-							},1000)
-						}).catch(e => {
-							that.btn_kg=0
-							uni.showToast({
-								icon: 'none',
-								title: '微信支付失败'
-							})
-							setTimeout(()=>{
-								uni.redirectTo({
-									url:'../../pages/order_list/order_list'
-								})
-							},1000)
-						})	
-							
+						// if (typeof datas == 'string') {
+						// 	datas = JSON.parse(datas)
+						// }
+						// #ifdef MP-WEIXIN
+						that.wx_pay(datas)
+						// #endif
+						// #ifdef APP-PLUS
+						that.app_pay(datas)
+						// #endif
 					} else {
 						if (res.msg) {
 							uni.showToast({
@@ -235,7 +216,65 @@
 				})
 				
 			},
-			
+			wx_pay(res_data){
+				service.wxpay(res_data,'fwb').then(res => {
+					uni.showToast({
+						icon:'none',
+						title:'支付成功'
+					})
+					service.wxlogin('token')
+					setTimeout(()=>{
+						uni.navigateBack({
+							delta:1
+						})
+					},1000)
+				}).catch(e => {
+					that.btn_kg=0
+					uni.showToast({
+						icon: 'none',
+						title: '微信支付失败'
+					})
+					setTimeout(()=>{
+						uni.redirectTo({
+							url:'../../pages/order_list/order_list'
+						})
+					},1000)
+				})	
+			},
+			app_pay(res_data){
+				uni.showToast({
+					icon:'none',
+					title:'app_pay'
+				})
+				uni.requestPayment({
+				    provider: 'wxpay',
+				    orderInfo: res_data, //微信、支付宝订单数据
+				    success: function (res) {
+							service.wxlogin('token')
+							setTimeout(()=>{
+								uni.navigateBack({
+									delta:1
+								})
+							},1000)
+				        console.log('success:' + JSON.stringify(res));
+				    },
+				    fail: function (err) {
+							uni.showModal({
+								title: '提示',
+								content:'支付失败，原因为：'+err.errMsg,
+								showCancel:false,
+								success: function (res) {
+										if (res.confirm) {
+												console.log('用户点击确定');
+										} else if (res.cancel) {
+												console.log('用户点击取消');
+										}
+								}
+							})
+				        console.log('fail:' + JSON.stringify(err));
+				    }
+				});
+			},
 			sub1(){
 				// if (that.phone == '' || !(/^1\d{10}$/.test(that.phone))) {
 				// 	wx.showToast({

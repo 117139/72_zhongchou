@@ -1,5 +1,5 @@
 <template>
-	<view class="minh100">
+	<view class="minh100"><z_text></z_text>
 		<!-- #ifdef MP-WEIXIN -->
 		<tx_share v-if="share_off"></tx_share>
 		<!-- #endif -->

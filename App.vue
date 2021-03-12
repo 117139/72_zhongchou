@@ -7,6 +7,8 @@ import {
 } from 'vuex'
 export default {
 	onLaunch: function() {
+		uni.hideTabBar()
+		this.getdata()
 		var that =this
 		console.log('App Launch')
 		// #ifdef MP-WEIXIN
@@ -63,7 +65,48 @@ export default {
 	},
 	methods: {
 			...mapMutations(['login','logindata','logout','setplatform']),
-			
+		getdata() {
+			var that = this
+			that.text_show=false
+			var data = []
+			var jkurl = '/test'
+		
+			service.P_get(jkurl, data).then(res => {
+				that.btn_kg = 0
+				console.log(res)
+				if (res.code == 1) {
+					
+					console.log('res.test==1-------------------------------------->')
+					console.log(res.test == 1)
+					if (res.test == 1) {
+						uni.hideTabBar()
+					} else {
+						uni.showTabBar()
+					}
+		
+		
+				} else {
+					if (res.msg) {
+						uni.showToast({
+							icon: 'none',
+							title: res.msg
+						})
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: '操作失败'
+						})
+					}
+				}
+			}).catch(e => {
+				that.btn_kg = 0
+				console.log(e)
+				uni.showToast({
+					icon: 'none',
+					title: '获取数据失败'
+				})
+			})
+		},
 		//点击中间按钮
 		centerBtn() {
 			// #ifdef APP-PLUS

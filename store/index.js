@@ -12,13 +12,7 @@ const store = new Vuex.Store({
 		hasLogin: false,
 		platform:'',
 		userName: "游客",
-		loginDatas:{
-				avatarurl:'http://51daiyan.test.upcdn.net/resource/api/img/20200716/3eb26483a34058663c1adf01cf90901d.png',
-				nickname:'刘明',
-				phone:'16852563542',
-				gs:'智慧家物联网科技有限公司'
-			
-		},
+		loginDatas:{},
 		company:'',
 		uid:'',
 		phone:'',

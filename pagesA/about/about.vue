@@ -1,6 +1,6 @@
 <template>
 	<view class="content_wrap">
-	
+		<z_text></z_text>
 		<view v-if="datas" class="xieyi_main" v-html="get_fwb(datas)"></view>
 		<!-- <view class="xieyi_main">
 			<view v-if="type=='ysxy'" style="font-size: 28upx;color: #444;">

@@ -30,7 +30,7 @@
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "众帮团",
+    "navigationBarTitleText": "橙云众帮",
     "navigationBarBackgroundColor": "#fff",
     "backgroundColor": "#fff"
   },
@@ -84,6 +84,7 @@
     "cu-custom": "/colorui/components/cu-custom",
     "bao-jing": "/components/baojing/baojing",
     "tx_share": "/components/tx_share/tx_share",
-    "q-s-popup": "/components/QS-popup/QS-popup"
+    "q-s-popup": "/components/QS-popup/QS-popup",
+    "z_text": "/components/z_text/z_text"
   }
 }

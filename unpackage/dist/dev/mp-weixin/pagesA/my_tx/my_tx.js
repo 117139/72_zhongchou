@@ -95,6 +95,9 @@ __webpack_require__.r(__webpack_exports__);
 var components
 try {
   components = {
+    z_text: function() {
+      return __webpack_require__.e(/*! import() | components/z_text/z_text */ "components/z_text/z_text").then(__webpack_require__.bind(null, /*! @/components/z_text/z_text.vue */ 241))
+    },
     tx_share: function() {
       return __webpack_require__.e(/*! import() | components/tx_share/tx_share */ "components/tx_share/tx_share").then(__webpack_require__.bind(null, /*! @/components/tx_share/tx_share.vue */ 195))
     }

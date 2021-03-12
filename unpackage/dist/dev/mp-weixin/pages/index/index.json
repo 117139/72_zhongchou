@@ -1,5 +1,6 @@
 {
-  "navigationBarTitleText": "众帮团",
   "enablePullDownRefresh": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "z_text": "/components/z_text/z_text"
+  }
 }
