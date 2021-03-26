@@ -11,7 +11,7 @@
 		{
 			"path": "pages/goodlist/goodlist",
 			"style": {
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 
 		}, {

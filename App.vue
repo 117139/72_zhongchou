@@ -7,7 +7,7 @@ import {
 } from 'vuex'
 export default {
 	onLaunch: function() {
-		uni.hideTabBar()
+		// uni.hideTabBar()
 		this.getdata()
 		var that =this
 		console.log('App Launch')
@@ -15,7 +15,15 @@ export default {
 		service.wxlogin()
 		// #endif
 		// #ifndef MP-WEIXIN
-		service.login_tel()
+		// service.login_tel()
+		if(!uni.getStorageSync('token')){
+			return
+		}else{
+			var loginmsg= uni.getStorageSync('loginmsg')
+			that.login(loginmsg.nickname)
+			that.logindata(loginmsg)
+		}
+		service.wxlogin('token')
 		// #endif
 		uni.getSystemInfo({
 			success: function(e) {

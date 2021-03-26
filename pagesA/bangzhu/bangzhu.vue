@@ -1,5 +1,6 @@
 <template>
-	<view class="minh100"><z_text></z_text>
+	<view class="minh100">
+		<z_text></z_text>
 		<view v-if="htmlReset==1" class="zanwu" @tap='onRetry'>请求失败，请点击重试</view>
 		<view v-if="htmlReset==-1"  class="loading_def">
 				<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
@@ -42,11 +43,16 @@
 <script>
 	import Vue from 'vue'
 	import service from '../../service.js';
+	// #ifdef H5
+	var jweixin = require('jweixin-module');
+	// #endif
 	import {
 		mapState,
 		mapMutations
 	} from 'vuex'
 	var that
+	var appid='wxc277d1f4108c8d35'
+	
 	export default {
 		data() {
 			return {
@@ -92,6 +98,8 @@
 				],
 				cz_cur:0,
 				other_mon:'',
+				pay_type:0,
+				orderNum:''
 			}
 		},
 		computed: {
@@ -125,14 +133,173 @@
 		},
 		onLoad(option) {
 			that=this
+			// #ifdef H5   
+			console.log(service.imgurl+'h5/#/pagesA/bangzhu/bangzhu?id='+option.id)
+			var base_url = encodeURIComponent(service.imgurl+'h5/#/pagesA/bangzhu/bangzhu?id='+option.id) // 前端域名
+			
+			var wx_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+appid+'&redirect_uri='+base_url+'&response_type=code&scope=snsapi_base&state=123#wechat_redirect'
+			
+			that.ua = navigator.userAgent.toLowerCase();
+			that.isWeixin = that.ua.indexOf('micromessenger') != -1;
+			var  link = window.location.href; 
+				var code = that.getQueryString("code");
+				console.log('code>>>>>>>>>>>>>>')
+				console.log(option)
+				console.log(code)
+				console.log('that.loginDatas.gzh_openid')
+				console.log(that.loginDatas.gzh_openid)
+			if (that.isWeixin) {
+				if(!that.loginDatas.gzh_openid||that.loginDatas.gzh_openid==undefined){
+					console.log('that.loginDatas.gzh_openid>>>>>>>>>>>>>>>')
+					// 获取URL 上code
+					var code1 = option.code
+					console.log(that.hasLogin)
+					// return
+					if(that.hasLogin){
+						// 判断是否存在code
+						if(code == null || code == '') {
+							// 重新获取code
+							// console.log(code)
+							uni.getNetworkType({
+									success: function (res) {
+											console.log(res.networkType);
+											if(res.networkType!='none'){
+												uni.setStorageSync('bz_id',option.id)
+												window.location.href = wx_url
+											}else{
+												uni.showToast({
+													icon:'none',
+													title:'无网络'
+												})
+											}
+									}
+							});
+							
+						} else {
+							// 发送code 
+							that.postCode(code)
+						}
+					}
+				}
+			
+			}else{
+				// window.location.href = wx_url
+			}
+			// #endif
+			
+			
 			that.id=option.id
+			if(option.pay_type==1){
+				that.pay_type=option.pay_type
+				that.orderNum=option.orderNum
+				// that.getpay_status()
+			}
 			that.onRetry()
 		},
 		methods: {
 			...mapMutations(['login','logindata','logout','setplatform']),
+			getQueryString(name) {
+			  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			  var r = document.location.search.substr(1).match(reg);
+			  if (r != null) return unescape(r[2]); return null;
+			 },
+			postCode(code){
+				uni.showLoading({
+					mask:true,
+					title:'正在绑定公众号'
+				})
+				// #ifdef H5
+				var rrurl = window.location.href;
+				that.id=uni.getStorageSync('bz_id')
+				var valiable = service.imgurl+'h5/#/pagesA/bangzhu/bangzhu?id='+that.id;
+				window.history.replaceState({},0,valiable);
+				console.log('rrurl>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+				console.log(rrurl)
+				// #endif
+				// return
+				// service.wxlogin('code',code)
+				var jkurl='/user/bindingGzh'
+				var data={
+					token:uni.getStorageSync('token'),
+					code:code
+				}
+				service.P_post(jkurl, data).then(res => {
+					that.btn_kg = 0
+					that.htmlReset=0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+						uni.showToast({
+							icon:'none',
+							title:'绑定成功'
+						})
+					
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '操作失败'
+					})
+				})
+			},
 			onRetry(){
 				that.htmlReset=0
 				that.getdata()
+			},
+			getpay_status(){
+				var jkurl='/pay/lookPayResult'
+				var data={
+					token:uni.getStorageSync('token'),
+					orderNum:that.orderNum
+				}
+				service.P_get(jkurl, data).then(res => {
+					that.btn_kg = 0
+					that.htmlReset=0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+						uni.showToast({
+							icon:'none',
+							title:'支付成功'
+						})
+					
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '操作失败'
+					})
+				})
 			},
 			sub(){
 				var money=0
@@ -160,6 +327,10 @@
 					// })
 					money=that.cz_list[that.cz_cur].name*1
 				}
+				uni.showLoading({
+					title:'正在拉起支付',
+					mask:true
+				})
 				//selectSaraylDetailByUserCard
 				var jkurl = '/pay/donate'
 				var data={
@@ -193,6 +364,10 @@
 						// #ifdef APP-PLUS
 						that.app_pay(datas)
 						// #endif
+						// #ifdef H5
+						// datas=JSON.parse(datas)
+						that.H5_pay(datas)
+						// #endif
 					} else {
 						if (res.msg) {
 							uni.showToast({
@@ -222,8 +397,8 @@
 						icon:'none',
 						title:'支付成功'
 					})
-					service.wxlogin('token')
 					setTimeout(()=>{
+					service.wxlogin('token')
 						uni.navigateBack({
 							delta:1
 						})
@@ -234,24 +409,28 @@
 						icon: 'none',
 						title: '微信支付失败'
 					})
-					setTimeout(()=>{
-						uni.redirectTo({
-							url:'../../pages/order_list/order_list'
-						})
-					},1000)
+					// setTimeout(()=>{
+					// 	uni.redirectTo({
+					// 		url:'../../pages/order_list/order_list'
+					// 	})
+					// },1000)
 				})	
 			},
 			app_pay(res_data){
-				uni.showToast({
-					icon:'none',
-					title:'app_pay'
-				})
+				// uni.showToast({
+				// 	icon:'none',
+				// 	title:'app_pay'
+				// })
 				uni.requestPayment({
 				    provider: 'wxpay',
 				    orderInfo: res_data, //微信、支付宝订单数据
 				    success: function (res) {
-							service.wxlogin('token')
+							uni.showToast({
+								icon:'none',
+								title:'支付成功'
+							})
 							setTimeout(()=>{
+								service.wxlogin('token')
 								uni.navigateBack({
 									delta:1
 								})
@@ -259,6 +438,19 @@
 				        console.log('success:' + JSON.stringify(res));
 				    },
 				    fail: function (err) {
+							uni.showModal({
+								title: '提示',
+								content:'支付失败',
+								showCancel:false,
+								success: function (res) {
+										if (res.confirm) {
+												console.log('用户点击确定');
+										} else if (res.cancel) {
+												console.log('用户点击取消');
+										}
+								}
+							})
+							/*
 							uni.showModal({
 								title: '提示',
 								content:'支付失败，原因为：'+err.errMsg,
@@ -270,10 +462,117 @@
 												console.log('用户点击取消');
 										}
 								}
-							})
+							})*/
 				        console.log('fail:' + JSON.stringify(err));
 				    }
 				});
+			},
+			H5_pay(res_data){
+				// #ifdef H5
+				jweixin.config({
+					debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+					appId:res_data.appId, // 必填，公众号的唯一标识
+					timestamp:res_data.timestamp, // 必填，生成签名的时间戳
+					nonceStr:res_data.nonceStr, // 必填，生成签名的随机串
+					signature:res_data.paySign, // 必填，签名，见附录1
+					jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+				});
+				jweixin.ready(function() {
+					jweixin.checkJsApi({
+						jsApiList: ['chooseWXPay'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+						success: function(res) {
+							console.log('checkjsapi Success')
+							console.log(res);
+						},
+						fail: function(res) {
+							console.log('res')
+							console.log(res);
+						}
+					});
+					jweixin.chooseWXPay({
+						timestamp: res_data.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+						nonceStr: res_data.nonceStr, // 支付签名随机串，不长于 32 位
+						package: res_data.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+						signType: res_data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+						paySign: res_data.paySign, // 支付签名
+						// paySign: '', // 支付签名
+						success: function(res) {
+							// 支付成功后的回调函数
+				
+							console.log('paysuccess')
+							console.log(res)
+							// var route = 'payResult' + '?type=1'
+							// uni.navigateTo({
+							// 	url: route
+							// });
+							uni.showToast({
+								icon:'none',
+								title:'支付成功'
+							})
+							
+							setTimeout(()=>{
+								service.wxlogin('token')
+								uni.navigateBack({
+									delta:1
+								})
+							},1000)
+						},
+						cancel: function(r) {
+							// var route = 'payResult' + '?type=2'
+							// uni.navigateTo({
+							// 	url: route
+							// });
+							// uni.showToast({
+							// 	icon: 'none',
+							// 	title: '支付失败了'+r,
+							// 	duration: 4000
+							// });
+							uni.showToast({
+								icon: 'none',
+								title: '支付失败了',
+								duration: 4000
+							});
+						},
+						fail: function(res) {
+				
+							console.log('payfail')
+							console.log(res)
+							uni.showToast({
+								icon: 'none',
+								title: '支付失败了',
+								duration: 4000
+							});
+							// uni.showToast({
+							// 	icon: 'none',
+							// 	title: '支付失败了'+res,
+							// 	duration: 4000
+							// });
+				
+				
+						}
+					});
+				});
+				
+				jweixin.error(function(res) {
+					console.log('error')
+					console.log(res)
+					uni.showToast({
+						icon: 'none',
+						title: '支付失败了',
+						duration: 4000
+					});
+				});
+				return
+				var self = this;
+				
+				var rurl=service.imgurl+'h5/#/pagesA/bangzhu/bangzhu?id='+that.id+'&pay_type=1&orderNum='+res_data.orderNum
+				const base_url = encodeURIComponent(rurl) // 前端域名
+				console.log(res_data.mweb_url+base_url)
+				// return
+				window.location.href=res_data.mweb_url+base_url
+				// top.window.location=res_data.mweb_url+base_url
+				// #endif
+				
 			},
 			sub1(){
 				// if (that.phone == '' || !(/^1\d{10}$/.test(that.phone))) {
@@ -354,7 +653,15 @@
 			
 						that.xqData = datas
 						console.log(datas)
-			
+						if(that.pay_type==1){
+							if(that.orderNum==1){
+								uni.showToast({
+									icon:'none',
+									title:'支付成功'
+								})
+							}
+							
+						}
 			
 					} else {
 						if (res.msg) {

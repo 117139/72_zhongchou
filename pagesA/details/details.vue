@@ -100,11 +100,13 @@
 				</view>
 				<view class="b_cz_sg"></view>
 				<!-- #endif -->
+				<!-- #ifndef H5 -->
 				<!-- <view class="b_cz_btn dis_flex_c aic" @tap="shareFc()"> -->
 				<view class="b_cz_btn dis_flex_c aic" @tap="getewm()">
 					<text class="iconfont icon-shengchenghaibao"></text>
 					<text>生成海报</text>
 				</view>
+				<!-- #endif -->
 				<view class="b_cz_box_btn" @tap="jump" :data-url="'/pagesA/bangzhu/bangzhu?id='+id">我要帮帮他</view>
 			</view>
 			
@@ -140,9 +142,7 @@
 		getSharePoster
 	} from '../../util/QS-SharePoster/QS-SharePoster.js';
 	var that
-	// #ifdef H5
-	var jweixin = require('jweixin-module')  
-	// #endif
+
 	export default {
 		data() {
 			return {
@@ -225,12 +225,11 @@
 				that.type=option.type
 			}
 			that.onRetry()
-			// jweixin.ready(function(){
-					// TODO  
-			// });
+			
 		},
 		onShow() {
 			// that.getewm()
+			uni.removeStorageSync('bz_id')
 		},
 		methods: {
 			...mapMutations(['login','logindata','logout','setplatform']),
@@ -540,17 +539,7 @@
 				// #ifdef H5
 					
 					
-					jweixin.config({
-					debug:true,
-					appId: result.appId,
-					timestamp: result.timestamp,
-					nonceStr: result.nonceStr,
-					signature: result.signature,
-					jsApiList: [
-					"updateAppMessageShareData", //分享给朋友
-					"updateTimelineShareData" //分享到朋友圈
-					]
-					});
+					
 				// #endif
 			},
 			zan_fuc(item){

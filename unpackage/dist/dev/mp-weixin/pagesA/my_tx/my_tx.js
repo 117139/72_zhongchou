@@ -96,10 +96,10 @@ var components
 try {
   components = {
     z_text: function() {
-      return __webpack_require__.e(/*! import() | components/z_text/z_text */ "components/z_text/z_text").then(__webpack_require__.bind(null, /*! @/components/z_text/z_text.vue */ 241))
+      return Promise.all(/*! import() | components/z_text/z_text */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/z_text/z_text")]).then(__webpack_require__.bind(null, /*! @/components/z_text/z_text.vue */ 210))
     },
     tx_share: function() {
-      return __webpack_require__.e(/*! import() | components/tx_share/tx_share */ "components/tx_share/tx_share").then(__webpack_require__.bind(null, /*! @/components/tx_share/tx_share.vue */ 195))
+      return __webpack_require__.e(/*! import() | components/tx_share/tx_share */ "components/tx_share/tx_share").then(__webpack_require__.bind(null, /*! @/components/tx_share/tx_share.vue */ 196))
     }
   }
 } catch (e) {

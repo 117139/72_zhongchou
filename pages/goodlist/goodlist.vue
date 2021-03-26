@@ -9,9 +9,9 @@
 			<scroll-view  scroll-x="true" class="scroll_x list_tit">
 				<view class="list_tit_li" :class="fw_cur==item.id?' cur':''" @tap="fwcur_fuc(item.id)" v-for="(item,index) in tabs">{{item.title}}</view>
 			</scroll-view>
-			<scroll-view class="scroll_list1"   scroll-y="true" refresher-enabled='true' :refresher-triggered="triggered"
+			<!-- <scroll-view class="scroll_list1"   scroll-y="true" refresher-enabled='true' :refresher-triggered="triggered"
 				 :refresher-threshold="100" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
-				 @refresherabort="onAbort" @scrolltolower="getdata">
+				 @refresherabort="onAbort" @scrolltolower="getdata"> -->
 				 <view class="fl_list">
 					 <view class="pthz_li_padd" v-for="(item,index) in datas" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">
 						 <view class="pthz_li">
@@ -31,7 +31,7 @@
 					 <view v-if="datas.length==0" class="zanwu">暂无数据</view>
 					 <view v-if="data_last" class="data_last">我可是有底线的哟~</view>
 				 </view>
-			</scroll-view>
+			<!-- </scroll-view> -->
 		</view>
 	</view>
 </template>
@@ -99,7 +99,7 @@
 			},
 		},
 		onPageScroll(e) {
-			console.log(e)
+			// console.log(e)
 			this.PageScroll = e.scrollTop
 			// if(e.scrollTop>10){
 			// 	uni.showToast({
@@ -108,12 +108,16 @@
 			// }
 		},
 		onPullDownRefresh() {
-			uni.stopPullDownRefresh()
+			that.getcate()
+		},
+		onReachBottom() {
+			that.getdata()
 		},
 		onLoad() {
 			that=this
 			if(uni.getStorageSync('type_id')){
 				that.fw_cur=uni.getStorageSync('type_id')
+				that.getcate()
 			}
 			if(!uni.getStorageSync('cate_list')){
 				
@@ -133,7 +137,7 @@
 			// that.onRetry()
 		},
 		onShow() {
-			if(that.show_num>1){
+			if(that.show_num>0){
 				var type_id=uni.getStorageSync('type_id')
 				console.log(that.fw_cur!=type_id)
 				console.log(that.fw_cur,type_id)
@@ -197,10 +201,11 @@
 				 		if (typeof datas == 'string') {
 				 			datas = JSON.parse(datas)
 				 		}
-				 			
 				 		that.tabs = datas
-						that.fw_cur=datas[0].id
-						that.getdata()
+						if(that.fw_cur==0){
+							that.fw_cur=datas[0].id
+						}
+						that.onRetry()
 						if(datas.length>0){
 							var cate_list=JSON.stringify(datas)
 							uni.setStorageSync('cate_list',cate_list)
@@ -327,10 +332,11 @@
 <style scoped>
 	.minh100{
 		/*  #ifdef H5  */
-		min-height: calc(100vh - 44px - env(safe-area-inset-top));
+		min-height: calc(100vh - 50px - 44px - env(safe-area-inset-top));
 		display: flex;
 		flex-direction: column;
 		/*  #endif  */
+		padding-top: 100upx;
 	}
 	.list_tit{
 		width: 100%;
@@ -338,9 +344,10 @@
 		height: 100upx;
 		border-top: 1px solid #F1F1F1;
 		border-bottom: 1px solid #F1F1F1;
-		/* position: fixed;
-		top: 0;
-		z-index: 9999; */
+		position: fixed;
+		background: #fff;
+		top: calc(44px + env(safe-area-inset-top));
+		z-index: 100;
 	}
 	.list_tit_li{
 		display: inline-flex;

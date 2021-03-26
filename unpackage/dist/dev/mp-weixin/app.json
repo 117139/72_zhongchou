@@ -86,5 +86,6 @@
     "tx_share": "/components/tx_share/tx_share",
     "q-s-popup": "/components/QS-popup/QS-popup",
     "z_text": "/components/z_text/z_text"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

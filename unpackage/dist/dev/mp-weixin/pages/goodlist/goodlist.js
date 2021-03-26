@@ -96,7 +96,7 @@ var components
 try {
   components = {
     z_text: function() {
-      return __webpack_require__.e(/*! import() | components/z_text/z_text */ "components/z_text/z_text").then(__webpack_require__.bind(null, /*! @/components/z_text/z_text.vue */ 241))
+      return Promise.all(/*! import() | components/z_text/z_text */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/z_text/z_text")]).then(__webpack_require__.bind(null, /*! @/components/z_text/z_text.vue */ 210))
     }
   }
 } catch (e) {
@@ -308,7 +308,7 @@ var that;var _default =
     // that.onRetry()
   },
   onShow: function onShow() {
-    if (that.show_num > 1) {
+    if (that.show_num > 0) {
       var type_id = uni.getStorageSync('type_id');
       console.log(that.fw_cur != type_id);
       console.log(that.fw_cur, type_id);

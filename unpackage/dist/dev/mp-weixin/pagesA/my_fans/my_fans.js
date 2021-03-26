@@ -96,7 +96,7 @@ var components
 try {
   components = {
     z_text: function() {
-      return __webpack_require__.e(/*! import() | components/z_text/z_text */ "components/z_text/z_text").then(__webpack_require__.bind(null, /*! @/components/z_text/z_text.vue */ 241))
+      return Promise.all(/*! import() | components/z_text/z_text */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/z_text/z_text")]).then(__webpack_require__.bind(null, /*! @/components/z_text/z_text.vue */ 210))
     }
   }
 } catch (e) {
