@@ -17,14 +17,14 @@
 				<view class="fq_user dis_flex aic">
 					<image class="fq_user_tx" :src="getimg(xqData.use_head_portrait)" mode="aspectFill"></image>
 					<view class="fq_user_name">{{xqData.user_nickname}}<text>发起筹款</text></view>
-					<view v-if="xqData.genre" class="grqz">{{xqData.genre}}</view>
+					<!-- <view v-if="xqData.genre" class="grqz">{{xqData.genre}}</view> -->
 				</view>
 				<view class="xq_tit">{{xqData.title}}</view>
-				<block v-if="xqData.label">
+				<!-- <block v-if="xqData.label">
 					<view class="xq_bqs" v-if="xqData.label.length>0">
 						<view v-if="item" class="xq_bq" v-for="(item,index) in xqData.label">{{item}}</view>
 					</view>
-				</block>
+				</block> -->
 				<view class="xq_datas">
 					<image class="xq_datas_bg" :src="getimg('/static/web/images/xqimg_06.jpg')" mode="aspectFill"></image>
 					<view class="xq_datas_box">
@@ -50,10 +50,10 @@
 					<view class="jb_btn" @tap="jump" :data-url="'/pagesA/jubao/jubao?id='+id"><text class="iconfont icon-jubao"></text>举报</view>
 				</view>
 				<view class="mian_inr">
-					患者姓名：{{xqData.patient_name}}
+				<!-- 	患者姓名：{{xqData.patient_name}}
 					<br>患者年龄：{{xqData.patient_age}}
 					<br>家庭住址：{{xqData.patient_address}}
-					<br>所患疾病名称：{{xqData.patient_illness}}
+					<br>所患疾病名称：{{xqData.patient_illness}} -->
 					<br>{{xqData.content}}
 				</view>
 				<block v-if="xqData.content_img">

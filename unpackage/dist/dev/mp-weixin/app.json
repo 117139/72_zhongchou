@@ -56,7 +56,7 @@
         "pagePath": "pages/fabu/fabu",
         "iconPath": "static/images/center_03.png",
         "selectedIconPath": "static/images/center_03.png",
-        "text": "发起"
+        "text": "求助"
       },
       {
         "pagePath": "pages/jinzhan/jinzhan",
@@ -68,7 +68,7 @@
         "pagePath": "pages/my/my",
         "iconPath": "static/images/tabbar/tab4.png",
         "selectedIconPath": "static/images/tabbar/tab42.png",
-        "text": "我们"
+        "text": "我的"
       }
     ]
   },

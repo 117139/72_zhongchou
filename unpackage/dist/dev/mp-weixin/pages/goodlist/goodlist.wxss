@@ -1,5 +1,17 @@
 
 .minh100.data-v-609aa634{
+
+
+
+
+
+
+
+
+
+
+	
+	padding-top: 100rpx;
 }
 .list_tit.data-v-609aa634{
 	width: 100%;
@@ -7,9 +19,13 @@
 	height: 100rpx;
 	border-top: 1px solid #F1F1F1;
 	border-bottom: 1px solid #F1F1F1;
-	/* position: fixed;
+	position: fixed;
+	background: #fff;
 	top: 0;
-	z-index: 9999; */
+
+
+
+	z-index: 100;
 }
 .list_tit_li.data-v-609aa634{
 	display: -webkit-inline-box;

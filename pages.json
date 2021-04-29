@@ -41,7 +41,7 @@
 		}, {
 			"path": "pages/fabu/fabu",
 			"style": {
-				"navigationBarTitleText": "发起众筹",
+				"navigationBarTitleText": "求助",
 				"enablePullDownRefresh": false
 			}
 
@@ -66,21 +66,21 @@
 		}, {
 			"path": "my_zc/my_zc",
 			"style": {
-				"navigationBarTitleText": "我的众筹",
+				"navigationBarTitleText": "我的项目",
 				"enablePullDownRefresh": true
 			}
 
 		}, {
 			"path": "my_cyzc/my_cyzc",
 			"style": {
-				"navigationBarTitleText": "我参与的众筹",
+				"navigationBarTitleText": "我参与的众帮",
 				"enablePullDownRefresh": true
 			}
 
 		}, {
 			"path": "my_fans/my_fans",
 			"style": {
-				"navigationBarTitleText": "我的粉丝",
+				"navigationBarTitleText": "我的团友",
 				"enablePullDownRefresh": false
 			}
 
@@ -177,7 +177,7 @@
 					"pagePath": "pages/fabu/fabu",
 					"iconPath": "static/images/center_03.png",
 					"selectedIconPath": "static/images/center_03.png",
-					"text": "发起"
+					"text": "求助"
 				},
 				// #endif
 				{
@@ -190,7 +190,7 @@
 					"pagePath": "pages/my/my",
 					"iconPath": "static/images/tabbar/tab4.png",
 					"selectedIconPath": "static/images/tabbar/tab42.png",
-					"text": "我们"
+					"text": "我的"
 				}
 			]
 			// #ifdef APP-PLUS
@@ -198,7 +198,7 @@
 		"midButton": {
 			"width": "80px",
 			"height": "70px",
-			"text": "发起",
+			"text": "求助",
 			"iconPath": "static/images/center_03.png",
 			"iconWidth": "50px"
 		}

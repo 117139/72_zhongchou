@@ -96,7 +96,7 @@ var components
 try {
   components = {
     z_text: function() {
-      return Promise.all(/*! import() | components/z_text/z_text */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/z_text/z_text")]).then(__webpack_require__.bind(null, /*! @/components/z_text/z_text.vue */ 210))
+      return __webpack_require__.e(/*! import() | components/z_text/z_text */ "components/z_text/z_text").then(__webpack_require__.bind(null, /*! @/components/z_text/z_text.vue */ 209))
     }
   }
 } catch (e) {
@@ -177,6 +177,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _service = _interopRequireDefault(__webpack_require__(/*! ../../service.js */ 8));
 var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
@@ -231,6 +232,65 @@ var that;var _default =
   },
   methods: _objectSpread(_objectSpread({},
   (0, _vuex.mapMutations)(['login', 'logindata', 'logout', 'setplatform'])), {}, {
+    open_tk: function open_tk() {
+      var jkurl = '/randomZc';
+      uni.showLoading({
+        title: '正在获取数据' });
+
+      var data = {};
+      _service.default.P_get(jkurl, data).then(function (res) {
+        that.btn_kg = 0;
+        console.log(res);
+        if (res.code == 1) {
+          var datas = res.data;
+          console.log(typeof datas);
+
+          if (typeof datas == 'string') {
+            datas = JSON.parse(datas);
+          }
+
+          uni.showModal({
+            title: '捐款提排名',
+            content: datas.title,
+            // showCancel:false,
+            confirmText: '进入',
+            // confirmText:'关闭',
+
+            success: function success(res) {
+              if (res.confirm) {
+                console.log('用户点击确定');
+                uni.navigateTo({
+                  url: '/pagesA/details/details?id=' + datas.id });
+
+              } else if (res.cancel) {
+                console.log('用户点击取消');
+              }
+            } });
+
+
+        } else {
+          if (res.msg) {
+            uni.showToast({
+              icon: 'none',
+              title: res.msg });
+
+          } else {
+            uni.showToast({
+              icon: 'none',
+              title: '操作失败' });
+
+          }
+        }
+      }).catch(function (e) {
+        that.btn_kg = 0;
+        console.log(e);
+        uni.showToast({
+          icon: 'none',
+          title: '获取数据失败' });
+
+      });
+
+    },
     onRetry: function onRetry() {
       that.htmlReset = 0;
       // that.getdata()

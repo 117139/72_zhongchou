@@ -1,5 +1,5 @@
 <template>
-	<view class="content_wrap">
+	<view class="content_wrap minh100">
 		<z_text></z_text>
 		<view v-if="datas" class="xieyi_main" v-html="get_fwb(datas)"></view>
 		<!-- <view class="xieyi_main">
@@ -174,7 +174,7 @@
 	}
 	.content_wrap{
 		width: 100%;
-		min-height: 100%;
+		min-height: 100vh;
 		background: #fff;
 	}
 	 .xieyi_main{

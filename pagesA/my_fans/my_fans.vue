@@ -13,7 +13,9 @@
 				<view class="top_box_msg">
 					<view>当前佣金(元）</view>
 					<view class="top_box_msg_pri">{{xqData.money}}</view>
+					<view class="top_box_msg_tip">邀请好友越多，发起求助越多，收益越高！</view>
 				</view>
+			
 			</view>
 			<view class="list_box">
 				<view class="list_tit">
@@ -247,6 +249,13 @@
 	}
 	.top_box_msg_pri{
 		font-size: 60upx;
+	}
+	.top_box_msg_tip{
+		width: 100%;
+		font-size: 24upx;
+		margin-top: 30upx;
+		text-align: center;
+		
 	}
 	.tg_icon{
 		width: 150upx;

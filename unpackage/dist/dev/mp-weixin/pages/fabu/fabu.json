@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "发起众筹",
+  "navigationBarTitleText": "求助",
   "enablePullDownRefresh": false,
   "usingComponents": {
     "z_text": "/components/z_text/z_text"

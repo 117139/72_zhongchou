@@ -67,6 +67,12 @@
 .top_box_msg_pri.data-v-a90e635a{
 	font-size: 60rpx;
 }
+.top_box_msg_tip.data-v-a90e635a{
+	width: 100%;
+	font-size: 24rpx;
+	margin-top: 30rpx;
+	text-align: center;
+}
 .tg_icon.data-v-a90e635a{
 	width: 150rpx;
 	height: 150rpx;

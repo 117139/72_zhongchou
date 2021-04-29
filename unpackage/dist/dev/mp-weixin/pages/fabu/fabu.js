@@ -96,7 +96,7 @@ var components
 try {
   components = {
     z_text: function() {
-      return Promise.all(/*! import() | components/z_text/z_text */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/z_text/z_text")]).then(__webpack_require__.bind(null, /*! @/components/z_text/z_text.vue */ 210))
+      return __webpack_require__.e(/*! import() | components/z_text/z_text */ "components/z_text/z_text").then(__webpack_require__.bind(null, /*! @/components/z_text/z_text.vue */ 209))
     }
   }
 } catch (e) {
@@ -307,7 +307,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _service = _interopRequireDefault(__webpack_require__(/*! ../../service.js */ 8));
 var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
@@ -324,8 +323,8 @@ var that;var _default =
       data_last: false,
       datas: {
         title: '', //title
-        genre: '', //众筹类型（自己填写）
-        total_raise_funds: '', //众筹金额
+        genre: '', //众帮类型（自己填写）
+        total_raise_funds: '', //众帮金额
         initiator_name: '', //发起人
         initiator_phone: '', //发起人联系方式
         patient_name: '', //患者姓名
@@ -580,8 +579,8 @@ var that;var _default =
             // that.show_tk=true
             that.datas = {
               title: '', //title
-              genre: '', //众筹类型（自己填写）
-              total_raise_funds: '', //众筹金额
+              genre: '', //众帮类型（自己填写）
+              total_raise_funds: '', //众帮金额
               initiator_name: '', //发起人
               initiator_phone: '', //发起人联系方式
               patient_name: '', //患者姓名

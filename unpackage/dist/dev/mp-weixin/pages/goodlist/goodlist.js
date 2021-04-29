@@ -96,7 +96,7 @@ var components
 try {
   components = {
     z_text: function() {
-      return Promise.all(/*! import() | components/z_text/z_text */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/z_text/z_text")]).then(__webpack_require__.bind(null, /*! @/components/z_text/z_text.vue */ 210))
+      return __webpack_require__.e(/*! import() | components/z_text/z_text */ "components/z_text/z_text").then(__webpack_require__.bind(null, /*! @/components/z_text/z_text.vue */ 209))
     }
   }
 } catch (e) {
@@ -225,24 +225,7 @@ var that;var _default =
       StatusBar: this.StatusBar,
       CustomBar: this.CustomBar,
       htmlReset: -1,
-      tabs: [
-      {
-        name: '项目众筹',
-        id: 1 },
-
-      {
-        name: '爱心众筹',
-        id: 2 },
-
-      {
-        name: '疾病众筹',
-        id: 3 },
-
-      {
-        name: '公司众筹',
-        id: 4 }],
-
-
+      tabs: [],
       fw_cur: 0,
 
 
@@ -274,7 +257,7 @@ var that;var _default =
     } }),
 
   onPageScroll: function onPageScroll(e) {
-    console.log(e);
+    // console.log(e)
     this.PageScroll = e.scrollTop;
     // if(e.scrollTop>10){
     // 	uni.showToast({
@@ -283,12 +266,16 @@ var that;var _default =
     // }
   },
   onPullDownRefresh: function onPullDownRefresh() {
-    uni.stopPullDownRefresh();
+    that.getcate();
+  },
+  onReachBottom: function onReachBottom() {
+    that.getdata();
   },
   onLoad: function onLoad() {
     that = this;
     if (uni.getStorageSync('type_id')) {
       that.fw_cur = uni.getStorageSync('type_id');
+      that.getcate();
     }
     if (!uni.getStorageSync('cate_list')) {
 
@@ -299,7 +286,7 @@ var that;var _default =
         var cate_list = JSON.parse(uni.getStorageSync('cate_list'));
         that.tabs = cate_list;
         that.fw_cur = cate_list[0].id;
-        that.getdata();
+        that.getcate();
       } else {
         that.getcate();
       }
@@ -372,10 +359,11 @@ var that;var _default =
           if (typeof datas == 'string') {
             datas = JSON.parse(datas);
           }
-
           that.tabs = datas;
-          that.fw_cur = datas[0].id;
-          that.getdata();
+          if (that.fw_cur == 0) {
+            that.fw_cur = datas[0].id;
+          }
+          that.onRetry();
           if (datas.length > 0) {
             var cate_list = JSON.stringify(datas);
             uni.setStorageSync('cate_list', cate_list);

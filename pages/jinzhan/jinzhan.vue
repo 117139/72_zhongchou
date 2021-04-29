@@ -7,7 +7,8 @@
 		</view>
 		<view v-if="htmlReset==0">
 			<image class="jiazhan" :src="getimg(evolve_pic)" mode="widthFix"></image>
-			<view class="tx_btn" @tap="jump"  :data-login="true" :data-haslogin="hasLogin" data-url="/pagesA/my_tx/my_tx">提现</view>
+			<!-- <view class="tx_btn" @tap="jump"  :data-login="true" :data-haslogin="hasLogin" data-url="/pagesA/my_tx/my_tx">提现</view> -->
+			<view class="tx_btn" @tap="open_tk" >提升排名</view>
 		</view>
 	</view>
 </template>
@@ -67,6 +68,65 @@
 		},
 		methods: {
 			...mapMutations(['login','logindata','logout','setplatform']),
+			open_tk(){
+				var jkurl = '/randomZc'
+				uni.showLoading({
+					title: '正在获取数据'
+				})
+				var data={}
+				service.P_get(jkurl, data).then(res => {
+					that.btn_kg = 0
+					console.log(res)
+					if (res.code == 1) {
+						var datas = res.data
+						console.log(typeof datas)
+							
+						if (typeof datas == 'string') {
+							datas = JSON.parse(datas)
+						}
+							
+						uni.showModal({
+						    title: '捐款提排名',
+						    content: datas.title,
+								// showCancel:false,
+								confirmText:'进入',
+								// confirmText:'关闭',
+								
+						    success: function (res) {
+						        if (res.confirm) {
+						            console.log('用户点击确定');
+												uni.navigateTo({
+													url:'/pagesA/details/details?id='+datas.id
+												})
+						        } else if (res.cancel) {
+						            console.log('用户点击取消');
+						        }
+						    }
+						});
+							
+					} else {
+						if (res.msg) {
+							uni.showToast({
+								icon: 'none',
+								title: res.msg
+							})
+						} else {
+							uni.showToast({
+								icon: 'none',
+								title: '操作失败'
+							})
+						}
+					}
+				}).catch(e => {
+					that.btn_kg = 0
+					console.log(e)
+					uni.showToast({
+						icon: 'none',
+						title: '获取数据失败'
+					})
+				})
+				
+			},
 			onRetry(){
 				that.htmlReset=0
 				// that.getdata()

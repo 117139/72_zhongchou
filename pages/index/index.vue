@@ -33,11 +33,12 @@
 			</view>
 			<view  v-if="index_datas" class="index_main">
 				<!-- 互助推荐 -->
-				<view v-if="index_datas.tjProjectData" class="index_hz">互助推荐</view>
+				<!-- <view v-if="index_datas.tjProjectData" class="index_hz">互助推荐</view> -->
+				<view v-if="index_datas.tjProjectData" class="index_hz">众帮推荐</view>
 				<scroll-view v-if="index_datas.tjProjectData" scroll-x="true" class="hz_list_box" style="white-space: nowrap;">
 					<view class="hz_list">
 						<view class="hz_li" v-for="(item,index) in index_datas.tjProjectData" @tap="jump" :data-url="'/pagesA/details/details?id='+item.id">
-							<view class="hz_tr">今日推荐</view>
+							<view class="hz_tr">众帮推荐</view>
 							<image class="hz_li_img" :src="getimg(item.pic[0])" mode="aspectFill"></image>
 							<text class="hz_li_text text-cut">{{item.title}}</text>
 							<view class="hz_user dis_flex aic">
@@ -51,7 +52,7 @@
 					</view>
 				</scroll-view>
 				<!-- 平台互助 -->
-				<view class="index_hz">平台互助</view>
+				<view class="index_hz">平台众帮</view>
 				
 			</view>
 			<view class="pthz_list">
@@ -103,28 +104,7 @@
 					'/static/web/images/index_02.jpg',
 				],
 				index_datas:{},
-				index_url:[
-					{
-						url:'',
-						img:'/static/web/images/index_icon_05.png',
-						title:'项目众筹'
-					},
-					{
-						url:'',
-						img:'/static/web/images/index_icon_07.png',
-						title:'爱心众筹'
-					},
-					{
-						url:'',
-						img:'/static/web/images/index_icon_09.png',
-						title:'疾病众筹'
-					},
-					{
-						url:'',
-						img:'/static/web/images/index_icon_12.png',
-						title:'公司众筹'
-					},
-				],
+				index_url:[],
 				datas:[],
 				page: 1,
 				size: 15,

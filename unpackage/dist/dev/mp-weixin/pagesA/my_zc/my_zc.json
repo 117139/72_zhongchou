@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "我的众筹",
+  "navigationBarTitleText": "我的项目",
   "enablePullDownRefresh": true,
   "usingComponents": {
     "z_text": "/components/z_text/z_text"

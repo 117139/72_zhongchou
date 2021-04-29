@@ -9,6 +9,14 @@
 			<image class="box_bg" src="../../static/images/fq_banner_02.jpg" mode="widthFix"></image>
 			<view class="box_main">
 				<view class="box_main_form">
+					<picker mode="selector" :range="zc_list" range-key="title" @change="getPicker" data-type="1">
+						<view class="box_main_form_li">
+							<view class="form_li_tit">所属类目</view>
+							<view class="dis_flex aic form_li_main">
+								<view class="flex_1">{{zc_list[zc_index].title}}</view>
+							</view>
+						</view>
+					</picker>
 					<view class="box_main_form_li">
 						<view class="form_li_tit">标题</view>
 						<view class="dis_flex aic form_li_main">
@@ -33,13 +41,13 @@
 							<input class="flex_1" type="number" v-model="datas.initiator_phone" placeholder="请填写您的常用手机号"/>
 						</view>
 					</view>
-					<view class="box_main_form_li">
+					<!-- <view class="box_main_form_li">
 						<view class="form_li_tit">患者姓名</view>
 						<view class="dis_flex aic form_li_main">
 							<input class="flex_1" type="text" v-model="datas.patient_name" placeholder="请填写患者姓名"/>
 						</view>
-					</view>
-					<view class="box_main_form_li">
+					</view> -->
+					<!-- <view class="box_main_form_li">
 						<view class="form_li_tit">患者年龄</view>
 						<view class="dis_flex aic form_li_main">
 							<input class="flex_1" type="number" v-model="datas.patient_age" placeholder="请填写患者年龄"/>
@@ -57,29 +65,21 @@
 							<input class="flex_1" type="text" v-model="datas.patient_illness" placeholder="请填写患者疾病名称"/>
 						</view>
 					</view>
-					<picker mode="selector" :range="zc_list" range-key="title" @change="getPicker" data-type="1">
-						<view class="box_main_form_li">
-							<view class="form_li_tit">所属类别</view>
-							<view class="dis_flex aic form_li_main">
-								<view class="flex_1">{{zc_list[zc_index].title}}</view>
-							</view>
-						</view>
-					</picker>
 					<view class="box_main_form_li">
-						<view class="form_li_tit">众筹类型</view>
+						<view class="form_li_tit">众帮类型</view>
 						<view class="dis_flex aic form_li_main">
-							<input class="flex_1" type="text" v-model="datas.genre" placeholder="请填写众筹类型(1~4个字)" maxlength="4"/>
+							<input class="flex_1" type="text" v-model="datas.genre" placeholder="请填写众帮类型(1~4个字)" maxlength="4"/>
 						</view>
-					</view>
+					</view> -->
 					<!-- <view class="box_main_form_li" style="border-bottom: 0;"> -->
-					<view class="box_main_form_li">
+					<!-- <view class="box_main_form_li">
 						<view class="form_li_tit">标签</view>
 						<view class="dis_flex aic form_li_main">
 							<textarea class="content_text" placeholder="请输入标签(每个标签已回车区分,每行一个)" v-model="datas.label"/>
 						</view>
-					</view>
+					</view> -->
 					<view class="box_main_form_li">
-						<view class="form_li_tit">详情内容</view>
+						<view class="form_li_tit">详情内容(事由)</view>
 						<view class="dis_flex aic form_li_main">
 							<textarea class="content_text" placeholder="请输入" v-model="datas.content"/>
 						</view>
@@ -102,7 +102,6 @@
 							<image class="img_del" src="/static/images/img_del.png" mode="aspectFill" @tap="imgdel" :data-idx="index"
 							 data-type="2"></image>
 							<image mode="aspectFill" :src="getimg(item)" @tap="pveimg" :data-src="getimg(item)"></image>
-							<!-- <image mode="aspectFill" :src="item" @tap="pveimg" :data-src="item"></image> -->
 						</view>
 						<view class="pz_img" v-if="sj_img2.length<9">
 							<image src="/static/images/upimg1.png" @tap="upimg" data-type="2" mode="aspectFit"></image>
@@ -132,8 +131,8 @@
 				data_last:false,
 				datas:{
 					title:'',//title
-					genre:'',//众筹类型（自己填写）
-					total_raise_funds:'',//众筹金额
+					genre:'',//众帮类型（自己填写）
+					total_raise_funds:'',//众帮金额
 					initiator_name:'',//发起人
 					initiator_phone:'',//发起人联系方式
 					patient_name:'', //患者姓名
@@ -388,8 +387,8 @@
 							// that.show_tk=true
 							that.datas={
 								title:'',//title
-								genre:'',//众筹类型（自己填写）
-								total_raise_funds:'',//众筹金额
+								genre:'',//众帮类型（自己填写）
+								total_raise_funds:'',//众帮金额
 								initiator_name:'',//发起人
 								initiator_phone:'',//发起人联系方式
 								patient_name:'', //患者姓名

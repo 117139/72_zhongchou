@@ -5,21 +5,32 @@
 			<image class="loading_def_img" src="../../static/images/loading.gif" mode=""></image>
 		</view>
 		<view v-if="htmlReset==0">
-
+			<!-- #ifdef MP-WEIXIN -->
+			<view class="h_tip dis_flex aic ju_c">分享邀请更多，获得更多</view>
+				<!-- #endif -->
 			<!-- <scroll-view class="scroll_list1"   scroll-y="true" refresher-enabled='true' :refresher-triggered="triggered"
 				 :refresher-threshold="100" @refresherpulling="onPulling" @refresherrefresh="onRefresh" @refresherrestore="onRestore"
 				 @refresherabort="onAbort" @scrolltolower="getdata"> -->
 			<view class="fl_list">
-				<view class="pthz_li_padd" v-for="(item,index) in datas"  @tap="jump" :data-url="'/pagesA/details/details?id='+item.id+'&type=2'">
+				<view class="pthz_li_padd" v-for="(item,index) in datas" >
 					<view class="pthz_li">
-						<image class="pthz_li_img" :src="getimg(item.pic[0])" mode="aspectFill"></image>
+						<image class="pthz_li_img" :src="getimg(item.pic[0])" mode="aspectFill" 
+						 @tap="jump" :data-url="'/pagesA/details/details?id='+item.id+'&type=2'"></image>
 						<view class="pthz_box">
-							<view class="pthz_li_tit oh2">{{item.title}}</view>
-							<view class="pthz_znum">
+							<view class="pthz_li_tit oh2"  @tap="jump" :data-url="'/pagesA/details/details?id='+item.id+'&type=2'">{{item.title}}</view>
+							<view class="pthz_znum"  @tap="jump" :data-url="'/pagesA/details/details?id='+item.id+'&type=2'">
 								<view class="pthz_num" :style="'width:' + (item.yet_raise_funds*1/item.total_raise_funds*1) * 100 + '%'"></view>
 							</view>
-							<view class="pthz_pri">还需:<text>{{item.residue_raise_funds}}</text>元</view>
-							<view class="hz_btn hz_btn1" @tap.stop="jump" :data-url="'/pagesA/my_zc_edit/my_zc_edit?id='+item.id">编辑</view>
+							<view class="pthz_pri"  @tap="jump" :data-url="'/pagesA/details/details?id='+item.id+'&type=2'">还需:<text>{{item.residue_raise_funds}}</text>元</view>
+							<view class="dis_flex ju_a">
+								<view class="hz_btn hz_btn1" @tap.stop="jump" :data-url="'/pagesA/my_zc_edit/my_zc_edit?id='+item.id">编辑</view>
+								<!-- #ifdef MP-WEIXIN -->
+								<view class="hz_btn hz_btn1 dis_flex_c aic" style="position: relative;">
+									<button type="default" open-type="share" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;opacity: 0;"></button>
+									<text>分享</text>
+								</view>
+								<!-- #endif -->
+							</view>
 						</view>
 					</view>
 				</view>
@@ -90,6 +101,15 @@
 		},
 		onReachBottom() {
 			that.getdata()
+		},
+		onShareAppMessage() {
+			return {
+				title: '橙云众帮',
+				path: '/pagesA/details/details?pid=' + that.loginDatas.id+'&id='+that.g_id,
+				success: function(res) {
+					console.log('成功', res)
+				}
+			}
 		},
 		onLoad() {
 			that = this
@@ -211,7 +231,14 @@
 		flex-direction: column;
 		/*  #endif  */
 	}
-
+	.h_tip{
+		width: 100%;
+		height: 50upx;
+		border-top: 1px solid #E8E8E8;
+		border-bottom: 1px solid #E8E8E8;
+		font-size: 24upx;
+		color: #F92929;
+	}
 	.scroll_list1 {
 		position: absolute;
 		top: 0upx;
@@ -282,7 +309,7 @@
 	.pthz_pri {
 		font-size: 24upx;
 		color: #333;
-		margin-bottom: 30upx;
+		margin-bottom: 26upx;
 	}
 
 	.pthz_pri text {
@@ -305,7 +332,7 @@
 	}
 
 	.hz_btn1 {
-
+		margin: 0 10upx;
 		background: linear-gradient(-90deg, rgba(252, 85, 52, 0.89), rgba(255, 190, 51, 0.89));
 		box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.21);
 	}

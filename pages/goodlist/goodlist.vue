@@ -50,24 +50,7 @@
 				StatusBar: this.StatusBar,
 				CustomBar: this.CustomBar,
 				htmlReset:-1,
-				tabs:[
-					{
-						name:'项目众筹',
-						id:1,
-					},
-					{
-						name:'爱心众筹',
-						id:2,
-					},
-					{
-						name:'疾病众筹',
-						id:3,
-					},
-					{
-						name:'公司众筹',
-						id:4,
-					},
-				],
+				tabs:[],
 				fw_cur:0,
 				
 				
@@ -128,7 +111,7 @@
 					var cate_list=JSON.parse(uni.getStorageSync('cate_list'))
 					that.tabs=cate_list
 					that.fw_cur=cate_list[0].id
-					that.getdata()
+					that.getcate()
 				}else{
 					that.getcate()
 				}
@@ -336,6 +319,7 @@
 		display: flex;
 		flex-direction: column;
 		/*  #endif  */
+		
 		padding-top: 100upx;
 	}
 	.list_tit{
@@ -346,7 +330,10 @@
 		border-bottom: 1px solid #F1F1F1;
 		position: fixed;
 		background: #fff;
+		top: 0;
+		/* #ifdef H5 */
 		top: calc(44px + env(safe-area-inset-top));
+		/* #endif */
 		z-index: 100;
 	}
 	.list_tit_li{
